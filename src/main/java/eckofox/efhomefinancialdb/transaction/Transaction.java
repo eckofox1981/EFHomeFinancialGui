@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.transaction;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.filemanager.FileManager;
 import eckofox.efhomefinancialdb.transaction.idnumber.IdNumber;
 import eckofox.efhomefinancialdb.user.User;
@@ -9,7 +9,7 @@ import eckofox.efhomefinancialdb.user.account.Account;
 import java.io.*;
 
 public class Transaction implements FileManager {
-    protected Application application;
+    protected App app;
     protected IdNumber idNumber;
     protected User user;
     protected int id;
@@ -20,14 +20,14 @@ public class Transaction implements FileManager {
     protected String dirPath;
     protected String filePath;
 
-    public Transaction(Application application) {
-        this.application = application;
-        user = application.getActiveUser();
+    public Transaction(App app) {
+        this.app = app;
+        user = app.getActiveUser();
     }
 
     public Transaction(int id, String date, double amount, String comment) {
-        this.application = getApplication();
-        this.user = application.getActiveUser();
+        this.app = getApplication();
+        this.user = app.getActiveUser();
         this.id = id;
         this.date = date;
         this.amount = amount;
@@ -35,8 +35,8 @@ public class Transaction implements FileManager {
         setPaths();
     }
 
-    public Transaction(Application application, String date, double amount, String comment) {
-        this.application = application;
+    public Transaction(App app, String date, double amount, String comment) {
+        this.app = app;
         this.date = date;
         this.amount = amount;
         this.comment = comment;
@@ -50,7 +50,7 @@ public class Transaction implements FileManager {
     public void saving() {
         fileWriter();
         System.out.println("Transaction number " + id + " saved.");
-        application.getActiveUser().getAcountList().stream()
+        app.getActiveUser().getAcountList().stream()
                 .peek(Account::setBalanceFromTransactions).
                 forEach(a -> System.out.print(a.getName() + ": " + a.getBalance() + " | "));
         System.out.println();
@@ -187,8 +187,8 @@ public class Transaction implements FileManager {
         this.amount = amount;
     }
 
-    public Application getApplication() {
-        return application;
+    public App getApplication() {
+        return app;
     }
 
     public User getUser() {

@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.command.user;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 import eckofox.efhomefinancialdb.date.DateUtility;
 import eckofox.efhomefinancialdb.transaction.Transaction;
@@ -15,13 +15,13 @@ public class ViewCommand extends Command {
     private List<Transaction> transactionList = new ArrayList<>();
     private String filterTitle;
 
-    public ViewCommand(Application application) {
+    public ViewCommand(App app) {
         super("view-transaction",
                 """
                         view-transaction [DAY/WEEK/MONTH/YEAR] [first date of period] [ALL/PROFIT/LOSS]:
                                   displays the transactions for the period indicated from the first date input, filtered according
                                   to ALL (all transactions), PROFIT (transactions for income) or LOSS (transaction for expends).
-                                  view-transaction all: shows all recorded transactions.""", application);
+                                  view-transaction all: shows all recorded transactions.""", app);
     }
 
     /**
@@ -38,7 +38,7 @@ public class ViewCommand extends Command {
             showDescription();
             return;
         }
-        transactionList = application.getTransactionGatherer().getTransactionList();
+        transactionList = app.getTransactionGatherer().getTransactionList();
 
         commandAnalyzer(splitArgs);
     }
@@ -46,7 +46,7 @@ public class ViewCommand extends Command {
 
     /**
      * sets up the search parameters and handles error.
-     * Most of the time, if a search parameter other than date is missing or incorrect the application
+     * Most of the time, if a search parameter other than date is missing or incorrect the app
      * will display all transaction for the time period (in some cases all transactions are shown anyway).
      * During development, it was deemed more important to get more transactions shown than to have the user go
      * through writing new arguments in the commandLine (this is true at least so long as there are not many
@@ -66,7 +66,7 @@ public class ViewCommand extends Command {
                 return;
             }
             type = "ALL";
-            System.out.println("No type of transaction typed, the application will display all types (profit/loss).");
+            System.out.println("No type of transaction typed, the app will display all types (profit/loss).");
         } else if (args.length == 4) {
             date = args[2];
             if (!DateUtility.checkIsDate(date)) {
@@ -100,7 +100,7 @@ public class ViewCommand extends Command {
                 || typeOfPeriod.equalsIgnoreCase("YEAR")) {
             return typeOfPeriod.toUpperCase();
         } else {
-            System.out.println("Typed period type not recognized [DAY/WEEK/MONTH/YEAR].\nApplication will show all transactions.");
+            System.out.println("Typed period type not recognized [DAY/WEEK/MONTH/YEAR].\nApp will show all transactions.");
             showDescription();
             return "ALL";
         }
@@ -190,7 +190,7 @@ public class ViewCommand extends Command {
         if (typeFromUser.equalsIgnoreCase("all")) {
             return typeFromUser;
         }
-        System.out.println("Type of transaction not recognized, the application will display all types (profit/loss).");
+        System.out.println("Type of transaction not recognized, the app will display all types (profit/loss).");
         return "ALL";
     }
 

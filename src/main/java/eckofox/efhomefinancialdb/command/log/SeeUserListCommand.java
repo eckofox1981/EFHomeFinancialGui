@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.command.log;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 
 import java.io.File;
@@ -10,8 +10,8 @@ import java.util.List;
 public class SeeUserListCommand extends Command {
 
 
-    public SeeUserListCommand(Application application) {
-        super("seeuser", "seeuser: shows you the list of registered users.", application);
+    public SeeUserListCommand(App app) {
+        super("seeuser", "seeuser: shows you the list of registered users.", app);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SeeUserListCommand extends Command {
     private List<String> collectUsers() {
         List<String> userList = new ArrayList<>();
 
-        File usersDir = new File(application.getDirPath());
+        File usersDir = new File(app.getDirPath());
         if (!usersDir.exists() || !usersDir.isDirectory()) {
             System.out.println("No user registered.");
             return userList;

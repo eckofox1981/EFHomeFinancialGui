@@ -1,19 +1,19 @@
 package eckofox.efhomefinancialdb.menu;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Menu {
-    protected Application application;
+    protected App app;
     protected String name;
     protected List<Command> commandList = new ArrayList<>();
 
-    public Menu(String name, Application application) {
+    public Menu(String name, App app) {
         this.name = name;
-        this.application = application;
+        this.app = app;
     }
 
     /**
@@ -21,7 +21,7 @@ public abstract class Menu {
      * list.
      */
     public void runMenu() {
-        application.setActiveMenu(this);
+        app.setActiveMenu(this);
         activeMenuDisplay();
     }
 

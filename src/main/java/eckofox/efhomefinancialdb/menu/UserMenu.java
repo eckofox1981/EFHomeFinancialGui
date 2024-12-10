@@ -1,13 +1,13 @@
 package eckofox.efhomefinancialdb.menu;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.ExitCommand;
 import eckofox.efhomefinancialdb.command.log.LogOutCommand;
 import eckofox.efhomefinancialdb.command.user.*;
 
 public class UserMenu extends Menu {
-    public UserMenu(Application application) {
-        super("User Menu", application);
+    public UserMenu(App app) {
+        super("User Menu", app);
     }
 
     /**
@@ -16,21 +16,21 @@ public class UserMenu extends Menu {
 
     @Override
     public void createCommandList() {
-        commandList.add(new BalanceCommand(application));
-        commandList.add(new DeleteCommand(application));
-        commandList.add(new EnterDeposit(application));
-        commandList.add(new EnterWithdrawal(application));
-        commandList.add(new TransferCommand(application));
-        commandList.add(new ViewCommand(application));
-        commandList.add(new LogOutCommand(application));
-        commandList.add(new ExitCommand(application));
+        commandList.add(new BalanceCommand(app));
+        commandList.add(new DeleteCommand(app));
+        commandList.add(new EnterDeposit(app));
+        commandList.add(new EnterWithdrawal(app));
+        commandList.add(new TransferCommand(app));
+        commandList.add(new ViewCommand(app));
+        commandList.add(new LogOutCommand(app));
+        commandList.add(new ExitCommand(app));
     }
 
     @Override
     public void runMenu() {
-        application.setActiveMenu(this);
+        app.setActiveMenu(this);
         activeMenuDisplay();
-        String args = application.scanner.nextLine();
+        String args = app.scanner.nextLine();
         readCommand(args);
     }
 }

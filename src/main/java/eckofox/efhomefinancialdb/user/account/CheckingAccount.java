@@ -1,14 +1,14 @@
 package eckofox.efhomefinancialdb.user.account;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionType;
 import eckofox.efhomefinancialdb.user.User;
 
 public class CheckingAccount extends Account {
 
-    public CheckingAccount(Application application, User user) {
-        super(application, "Checking account");
+    public CheckingAccount(App app, User user) {
+        super(app, "Checking account");
         this.setUser(user);
         createFile();
         fileWriter();
@@ -18,7 +18,7 @@ public class CheckingAccount extends Account {
     public void setBalanceFromTransactions() {
         double newBalance = 0;
 
-        for (Transaction transaction : application.getTransactionGatherer().getTransactionList()) {
+        for (Transaction transaction : app.getTransactionGatherer().getTransactionList()) {
             if (transaction.getTransactionType().equals(TransactionType.TRANSFER)) {
                 newBalance += transferCheck(transaction);
             } else {

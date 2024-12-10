@@ -1,14 +1,14 @@
 package eckofox.efhomefinancialdb.menu;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.ExitCommand;
 import eckofox.efhomefinancialdb.command.log.LoginCommand;
 import eckofox.efhomefinancialdb.command.log.NewUserCommand;
 import eckofox.efhomefinancialdb.command.log.SeeUserListCommand;
 
 public class LoginMenu extends Menu {
-    public LoginMenu(Application application) {
-        super("Login Menu", application);
+    public LoginMenu(App app) {
+        super("Login Menu", app);
     }
 
     /**
@@ -17,17 +17,17 @@ public class LoginMenu extends Menu {
 
     @Override
     public void createCommandList() {
-        commandList.add(new LoginCommand(application));
-        commandList.add(new NewUserCommand(application));
-        commandList.add(new SeeUserListCommand(application));
-        commandList.add(new ExitCommand(application));
+        commandList.add(new LoginCommand(app));
+        commandList.add(new NewUserCommand(app));
+        commandList.add(new SeeUserListCommand(app));
+        commandList.add(new ExitCommand(app));
     }
 
     @Override
     public void runMenu() {
-        application.setActiveMenu(this);
+        app.setActiveMenu(this);
         activeMenuDisplay();
-        String args = application.scanner.nextLine();
+        String args = app.scanner.nextLine();
         readCommand(args);
     }
 }

@@ -7,6 +7,7 @@ import eckofox.efhomefinancialdb.menu.UserMenu;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionGatherer;
 import eckofox.efhomefinancialdb.user.User;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -15,10 +16,10 @@ import java.io.IOException;
 
 import java.util.Scanner;
 
-public class Application extends javafx.application.Application {
+public class App extends Application {
 
     /**
-     * activeUser and activeMenu are used to set up different phases of the application.
+     * activeUser and activeMenu are used to set up different phases of the app.
      * for example the activeMenu is referenced for the different menu command
      * activeUser is obviously referenced for accessing/creating user data.
      */
@@ -35,7 +36,7 @@ public class Application extends javafx.application.Application {
     private TransactionGatherer transactionGatherer;
     public Scanner scanner;
 
-    public Application() {
+    public App() {
         this.userMenu = new UserMenu(this);
         this.loginMenu = new LoginMenu(this);
         this.newUserMenu = new NewUserMenu(this);
@@ -47,8 +48,8 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(eckofox.efhomefinancialdb.HelloApplication.class.getResource("login-screen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 400, 400);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/eckofox/efhomefinancialdb/login-screen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Welcome");
         stage.setScene(scene);
         stage.show();
@@ -56,12 +57,12 @@ public class Application extends javafx.application.Application {
 
 
     public static void main(String[] args){
-            Application application = new Application();
-            application.loginMenu.createCommandList();
-            application.userMenu.createCommandList();
+            App app = new App();
+            app.loginMenu.createCommandList();
+            app.userMenu.createCommandList();
 
             launch();
-            application.activeMenu = application.loginMenu;
+            app.activeMenu = app.loginMenu;
 
     }
 

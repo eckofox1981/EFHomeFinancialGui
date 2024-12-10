@@ -1,15 +1,15 @@
 package eckofox.efhomefinancialdb.command.user;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 import eckofox.efhomefinancialdb.transaction.Deposit;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 
 public class EnterDeposit extends Command implements EnterTransactionManager {
 
-    public EnterDeposit(Application application) {
+    public EnterDeposit(App app) {
         super("deposit",
-                "deposit: follow the prompts to enter a deposit.", application);
+                "deposit: follow the prompts to enter a deposit.", app);
     }
 
     /**
@@ -26,7 +26,7 @@ public class EnterDeposit extends Command implements EnterTransactionManager {
     @Override
     public void createTransaction(String date, String amountIn, String comment) {
         double amount = Double.parseDouble(amountIn);
-        Transaction transaction = new Deposit(application, date, amount, comment);
+        Transaction transaction = new Deposit(app, date, amount, comment);
         transaction.saving();
     }
 }

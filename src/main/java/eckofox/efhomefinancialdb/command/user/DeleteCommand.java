@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.command.user;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 
@@ -9,9 +9,9 @@ import java.util.Optional;
 public class DeleteCommand extends Command {
 
 
-    public DeleteCommand(Application application) {
+    public DeleteCommand(App app) {
         super("delete-transaction",
-                "delete-transaction [transaction id#]: deletes a transaction from the records.", application);
+                "delete-transaction [transaction id#]: deletes a transaction from the records.", app);
     }
 
 
@@ -58,11 +58,11 @@ public class DeleteCommand extends Command {
 
         System.out.println("Are you sure you want to delete the following transaction (yes/no):");
 
-        application.getTransactionGatherer().getTransactionList().stream()
+        app.getTransactionGatherer().getTransactionList().stream()
                 .filter(a -> a.getId() == idNumber)
                 .forEach(a -> System.out.println(a.getId() + " " + a.getDate() + " " + a.getAmount() + " " + a.getComment()));
 
-        String answer = application.scanner.nextLine();
+        String answer = app.scanner.nextLine();
 
         if (answer.equalsIgnoreCase("yes") || answer.equalsIgnoreCase("y")) {
             deleteFile(idNumber);
@@ -83,7 +83,7 @@ public class DeleteCommand extends Command {
      * @param idNumber
      */
     private void deleteFile(int idNumber) {
-        Optional<Transaction> transaction = Optional.ofNullable(application.getTransactionGatherer().getTransactionList()
+        Optional<Transaction> transaction = Optional.ofNullable(app.getTransactionGatherer().getTransactionList()
                 .stream()
                 .filter(a -> a.getId() == idNumber)
                 .findFirst()

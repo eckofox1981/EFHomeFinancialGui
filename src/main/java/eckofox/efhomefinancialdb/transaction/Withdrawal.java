@@ -1,13 +1,13 @@
 package eckofox.efhomefinancialdb.transaction;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.transaction.idnumber.IdNumber;
 
 public class Withdrawal extends Transaction {
 
-    public Withdrawal(Application application, String date, double amount, String comment) {
-        super(application, date, amount, comment);
-        user = application.getActiveUser();
+    public Withdrawal(App app, String date, double amount, String comment) {
+        super(app, date, amount, comment);
+        user = app.getActiveUser();
         idNumber = new IdNumber(this);
         idNumber.generateIdNumber();
         id = idNumber.getIdNumber();

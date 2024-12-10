@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.menu;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.user.User;
 
 import java.io.File;
@@ -8,37 +8,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewUserMenu extends Menu {
-    public NewUserMenu(Application application) {
-        super("create new user", application);
+    public NewUserMenu(App app) {
+        super("create new user", app);
     }
 
     @Override
     public void runMenu() {
-        application.setActiveMenu(this);
+        app.setActiveMenu(this);
         activeMenuDisplay();
         String name;
         do {
             System.out.print("Enter your name: ");
-            name = application.scanner.nextLine();
+            name = app.scanner.nextLine();
         } while (!userNameCheck(name));
 
         String password;
         String passwordComfirmation;
         do {
             System.out.print("Enter your password: ");
-            password = application.scanner.nextLine();
+            password = app.scanner.nextLine();
             System.out.print("Comfirm your password: ");
-            passwordComfirmation = application.scanner.nextLine();
+            passwordComfirmation = app.scanner.nextLine();
             if (!passwordComfirmation.equals(password)) {
                 System.out.println("Password comfirmation failed, please try again.");
             }
         } while (!passwordComfirmation.equals(password));
 
-        User user = new User(application, name, password);
-        application.setActiveUser(user);
+        User user = new User(app, name, password);
+        app.setActiveUser(user);
         user.saving();
 
-        application.getUserMenu().runMenu();
+        app.getUserMenu().runMenu();
     }
 
     /**
@@ -67,7 +67,7 @@ public class NewUserMenu extends Menu {
     private List<String> collectUsers() {
         List<String> userList = new ArrayList<>();
 
-        File usersDir = new File(application.getDirPath());
+        File usersDir = new File(app.getDirPath());
         if (!usersDir.exists() || !usersDir.isDirectory()) {
             return userList;
         }

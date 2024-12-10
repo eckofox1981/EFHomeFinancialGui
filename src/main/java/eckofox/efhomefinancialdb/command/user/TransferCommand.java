@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.command.user;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 import eckofox.efhomefinancialdb.date.DateUtility;
 import eckofox.efhomefinancialdb.transaction.Transaction;
@@ -9,12 +9,12 @@ import eckofox.efhomefinancialdb.transaction.Withdrawal;
 
 public class TransferCommand extends Command implements EnterTransactionManager {
 
-    public TransferCommand(Application application) {
+    public TransferCommand(App app) {
         super("transfer-to",
                 """
                         transfer-to [checking/saving] [DATE(YYYY-MM-DD)] [amount]: transfer the amount to the account specified from the account not mentioned.
                                   Example: "transfer-to saving 2023-07-04 1000" - transfers 1000 from the checking account to the saving account at the given date.
-                                  The transaction is automatically recorded.""", application);
+                                  The transaction is automatically recorded.""", app);
     }
 
     /**
@@ -80,7 +80,7 @@ public class TransferCommand extends Command implements EnterTransactionManager 
     @Override
     public void createTransaction(String date, String amountIn, String comment) {
         double amount = Double.parseDouble(amountIn);
-        Transaction transaction = new Withdrawal(application, date, amount, comment);
+        Transaction transaction = new Withdrawal(app, date, amount, comment);
         transaction.setTransactionType(TransactionType.TRANSFER);
         transaction.saving();
     }

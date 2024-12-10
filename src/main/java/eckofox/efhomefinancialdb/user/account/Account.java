@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.user.account;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.filemanager.FileManager;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.user.User;
@@ -8,15 +8,15 @@ import eckofox.efhomefinancialdb.user.User;
 import java.io.*;
 
 public abstract class Account implements FileManager {
-    protected Application application;
+    protected App app;
     private String name;
     private User user;
     private double balance;
     private String dirPath;
     private String filepath;
 
-    public Account(Application application, String name) {
-        this.application = application;
+    public Account(App app, String name) {
+        this.app = app;
         this.name = name;
     }
 

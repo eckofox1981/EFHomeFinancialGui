@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.transaction;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class TransactionGatherer {
     private List<Transaction> transactionList = new ArrayList<>();
-    private Application application;
+    private App app;
 
-    public TransactionGatherer(Application application) {
-        this.application = application;
+    public TransactionGatherer(App app) {
+        this.app = app;
     }
 
     /** Gathering process in short:
@@ -27,7 +27,7 @@ public class TransactionGatherer {
     private void transactionGatherer() {
         transactionList.clear();
 
-        Transaction genericTransaction = new Transaction(application);
+        Transaction genericTransaction = new Transaction(app);
 
         genericTransaction.setPaths();
 
@@ -43,7 +43,7 @@ public class TransactionGatherer {
         }
 
         for (File file : transactionFiles) {
-            Transaction transaction = new Transaction(application);
+            Transaction transaction = new Transaction(app);
             transaction.setFilePath(file.getPath());
             transaction.fileReader();
             transactionList.add(transaction);

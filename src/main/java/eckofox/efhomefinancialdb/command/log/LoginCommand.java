@@ -1,14 +1,14 @@
 package eckofox.efhomefinancialdb.command.log;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 import eckofox.efhomefinancialdb.user.User;
 
 import java.io.*;
 
 public class LoginCommand extends Command {
-    public LoginCommand(Application application) {
-        super("login", "login: gets you to the login menu.", application);
+    public LoginCommand(App app) {
+        super("login", "login: gets you to the login menu.", app);
     }
 
 
@@ -22,13 +22,13 @@ public class LoginCommand extends Command {
         String password;
         do {
             System.out.print("Enter your name: ");
-            name = application.scanner.nextLine();
+            name = app.scanner.nextLine();
             if (name.equalsIgnoreCase("exit")) {
                 System.out.println("Aborting login.");
                 return;
             }
             System.out.print("Enter your password: ");
-            password = application.scanner.nextLine();
+            password = app.scanner.nextLine();
         } while (!loginCheck(name, password));
     }
 
@@ -41,7 +41,7 @@ public class LoginCommand extends Command {
      * @return boolean till loop in 'run' above.
      */
     private boolean loginCheck(String name, String password) {
-        File userFile = new File(application.getDirPath() + name + "/" + "user - " + name + ".txt");
+        File userFile = new File(app.getDirPath() + name + "/" + "user - " + name + ".txt");
         if (!userFile.exists()) {
             System.out.println("User name not recognized.");
             return true;
@@ -56,11 +56,11 @@ public class LoginCommand extends Command {
             String userPass = lineReader.readLine();
 
             if (userName.equalsIgnoreCase(name) && userPass.equals(password)) {
-                User user = new User(application, name, password);
-                application.setActiveUser(user);
-                application.getActiveUser().createAccounts();
-                System.out.println("Login successful. Welcome " + application.getActiveUser().getName() + "!");
-                application.getUserMenu().runMenu();
+                User user = new User(app, name, password);
+                app.setActiveUser(user);
+                app.getActiveUser().createAccounts();
+                System.out.println("Login successful. Welcome " + app.getActiveUser().getName() + "!");
+                app.getUserMenu().runMenu();
                 return true;
             }
 

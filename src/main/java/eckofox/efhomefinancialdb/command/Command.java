@@ -1,9 +1,9 @@
 package eckofox.efhomefinancialdb.command;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 
 public abstract class Command {
-    protected Application application;
+    protected App app;
     private String command;
     private String description;
 
@@ -11,15 +11,15 @@ public abstract class Command {
      *
      * @param command
      * @param description
-     * @param application
+     * @param app
      * all COMMANDS have at least run() and showDescription() (implemented from CommandInterface)
      * other methods are private and used within the various command for its own purpose (extending from Command
      * but otherwise self-sustaining with some exceptions like dateUtility in ViewCommand).
      */
-    public Command(String command, String description, Application application) {
+    public Command(String command, String description, App app) {
         this.command = command;
         this.description = description;
-        this.application = application;
+        this.app = app;
     }
 
     public abstract void run(String commandArgs);
@@ -36,7 +36,7 @@ public abstract class Command {
         return description;
     }
 
-    public Application getApplication() {
-        return application;
+    public App getApplication() {
+        return app;
     }
 }

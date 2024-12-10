@@ -1,12 +1,12 @@
 package eckofox.efhomefinancialdb.command.log;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 
 public class LogOutCommand extends Command {
 
-    public LogOutCommand(Application application) {
-        super("logout", "logout: logs you out of the application adn returns you to the login menu.", application);
+    public LogOutCommand(App app) {
+        super("logout", "logout: logs you out of the app adn returns you to the login menu.", app);
     }
 
     /**
@@ -15,8 +15,8 @@ public class LogOutCommand extends Command {
      */
     @Override
     public void run(String commandArgs) {
-        application.setActiveUser(null);
+        app.setActiveUser(null);
         System.out.println("You're have been logged out.");
-        application.getLoginMenu().runMenu();
+        app.getLoginMenu().runMenu();
     }
 }

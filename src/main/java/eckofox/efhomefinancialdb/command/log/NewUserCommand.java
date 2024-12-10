@@ -1,11 +1,11 @@
 package eckofox.efhomefinancialdb.command.log;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.Command;
 
 public class NewUserCommand extends Command {
-    public NewUserCommand(Application application) {
-        super("newuser", "newuser: creates a new user.", application);
+    public NewUserCommand(App app) {
+        super("newuser", "newuser: creates a new user.", app);
     }
 
     //just send to the new user menu

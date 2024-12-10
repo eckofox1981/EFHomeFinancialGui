@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.user;
 
-import eckofox.efhomefinancialdb.application.Application;
+import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.filemanager.FileManager;
 import eckofox.efhomefinancialdb.user.account.Account;
 import eckofox.efhomefinancialdb.user.account.CheckingAccount;
@@ -13,15 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements FileManager {
-    private Application application;
+    private App app;
     private String name;
     private String password;
     private List<Account> acountList = new ArrayList<>();
     private String dirPath;
     private String filepath;
 
-    public User(Application application, String name, String password) {
-        this.application = application;
+    public User(App app, String name, String password) {
+        this.app = app;
         this.name = name;
         this.password = password;
         setPaths();
@@ -82,12 +82,12 @@ public class User implements FileManager {
     public void fileReader() {/*not used in this class*/}
 
     public void createAccounts() {
-        acountList.add(new CheckingAccount(application, this));
-        acountList.add(new SavingAccount(application, this));
+        acountList.add(new CheckingAccount(app, this));
+        acountList.add(new SavingAccount(app, this));
     }
 
     public void setPaths() {
-        dirPath = application.getDirPath() + name + "/";
+        dirPath = app.getDirPath() + name + "/";
         filepath = dirPath + "user - " + name + ".txt";
     }
 

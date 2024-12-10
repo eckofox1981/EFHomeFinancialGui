@@ -11,5 +11,6 @@ module eckofox.efhomefinancialdb {
     requires eu.hansolo.tilesfx;
 
     opens eckofox.efhomefinancialdb to javafx.fxml;
-    exports eckofox.efhomefinancialdb;
+    exports eckofox.efhomefinancialdb.application;
+    opens eckofox.efhomefinancialdb.controllers to javafx.fxml;
 }
