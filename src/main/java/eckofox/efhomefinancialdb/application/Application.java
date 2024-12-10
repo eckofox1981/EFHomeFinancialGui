@@ -7,10 +7,15 @@ import eckofox.efhomefinancialdb.menu.UserMenu;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionGatherer;
 import eckofox.efhomefinancialdb.user.User;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 import java.util.Scanner;
 
-public class Application {
+public class Application extends javafx.application.Application {
 
     /**
      * activeUser and activeMenu are used to set up different phases of the application.
@@ -40,20 +45,24 @@ public class Application {
         scanner = new Scanner(System.in);
     }
 
-    public static void main(String[] args) {
-        Application application = new Application();
-        application.loginMenu.createCommandList();
-        application.userMenu.createCommandList();
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(eckofox.efhomefinancialdb.HelloApplication.class.getResource("login-screen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 400, 400);
+        stage.setTitle("Welcome");
+        stage.setScene(scene);
+        stage.show();
+    }
 
-        System.out.println(application.applicationTitle());
-        System.out.println("Welcome to EF Home Financial. Please login or create new user.");
-        application.activeMenu = application.loginMenu;
 
-        while (application.running) {
-            application.activeMenu.runMenu();
-        }
+    public static void main(String[] args){
+            Application application = new Application();
+            application.loginMenu.createCommandList();
+            application.userMenu.createCommandList();
 
-        System.out.println("See you soon, goodbye!");
+            launch();
+            application.activeMenu = application.loginMenu;
+
     }
 
     public void setActiveUser(User user) {
@@ -88,12 +97,4 @@ public class Application {
         return dirPath;
     }
 
-    private String applicationTitle() {
-        return """
-                  _____ _____   _   _                      _____                                 _ 
-                 | ____|  ___| | | | | ___  _ __ ___   ___|  ___(o)_ __   __ _ _ __   ___(o) __ _| |
-                 |  _| | |_    | |_| |/ _ \\| '_ ` _ \\ / _ \\ |_  | | '_ \\ / _` | '_ \\ / __| |/ _` | |
-                 | |___|  _|   |  _  | (_) | | | | | |  __/  _| | | | | | (_| | | | | (__| | (_| | | Terminal
-                 |_____|_|     |_| |_|\\___/|_| |_| |_|\\___|_|   |_|_| |_|\\__,_|_| |_|\\___|_|\\__,_|_|    Edition""";
-    }
 }
