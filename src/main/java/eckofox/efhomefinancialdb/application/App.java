@@ -13,8 +13,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -29,7 +35,6 @@ public class App extends Application {
     private Menu activeMenu;
 
     public boolean running = true;
-    private final String dirPath = "./zuluFiles/Users/"; //zuluFiles so it ends up at the bottom of the project window (zulu = z)
 
     private UserMenu userMenu;
     private LoginMenu loginMenu;
@@ -37,6 +42,7 @@ public class App extends Application {
     private Transaction transaction;
     private TransactionGatherer transactionGatherer;
     public Scanner scanner;
+    private Connection connection;
 
     public App() {
         this.userMenu = new UserMenu(this);
@@ -60,14 +66,15 @@ public class App extends Application {
 
 
     public static void main(String[] args){
+
+
             App app = new App();
-            app.loginMenu.createCommandList();
-            app.userMenu.createCommandList();
 
             launch();
             app.activeMenu = app.loginMenu;
 
     }
+
 
     public void setActiveUser(User user) {
         this.activeUser = user;
@@ -97,8 +104,11 @@ public class App extends Application {
         return transactionGatherer;
     }
 
-    public String getDirPath() {
-        return dirPath;
+    public Connection getConnection() {
+        return connection;
     }
 
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 }

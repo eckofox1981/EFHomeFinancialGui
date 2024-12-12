@@ -11,5 +11,7 @@ public interface DataBaseManager {
 
     void fetchData();
 
-    void toBEREMOVEDsetPaths();
+    //void updateData();
+
+    //void deleteData();
 }

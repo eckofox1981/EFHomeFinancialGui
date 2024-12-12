@@ -17,14 +17,12 @@ public class User implements DataBaseManager {
     private String name;
     private String password;
     private List<Account> acountList = new ArrayList<>();
-    private String dirPath;
-    private String filepath;
+
 
     public User(App app, String name, String password) {
         this.app = app;
         this.name = name;
         this.password = password;
-        toBEREMOVEDsetPaths();
 
     }
 
@@ -33,7 +31,7 @@ public class User implements DataBaseManager {
      */
     @Override
     public void saving() {
-        toBEREMOVEDsetPaths();
+        createTable();
         insertData();
         createAccounts();
         System.out.println("User-" + name + " data saved");
@@ -41,7 +39,7 @@ public class User implements DataBaseManager {
 
     @Override
     public void createTable() {
-        File userDir = new File(dirPath);
+        File userDir = new File("dirPath");
         if (userDir.exists()) {
             return;
         }
@@ -52,7 +50,7 @@ public class User implements DataBaseManager {
     @Override
     public void toBEREMOVEDcreateFile() {
         createTable();
-        File userFile = new File(filepath);
+        File userFile = new File("filepath");
         if (userFile.exists()) {
             return;
         }
@@ -84,11 +82,6 @@ public class User implements DataBaseManager {
     public void createAccounts() {
         acountList.add(new CheckingAccount(app, this));
         acountList.add(new SavingAccount(app, this));
-    }
-
-    public void toBEREMOVEDsetPaths() {
-        dirPath = app.getDirPath() + name + "/";
-        filepath = dirPath + "user - " + name + ".txt";
     }
 
     public String getName() {
