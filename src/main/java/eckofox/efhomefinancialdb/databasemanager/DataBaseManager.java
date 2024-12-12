@@ -3,13 +3,13 @@ package eckofox.efhomefinancialdb.databasemanager;
 public interface DataBaseManager {
     void saving();
 
-    void creatingDataBase();
+    void createTable();
 
-    void insertRow();
+    void toBEREMOVEDcreateFile();
 
-    void fileWriter();
+    void insertData();
 
-    void fileReader();
+    void fetchData();
 
-    void setPaths();
+    void toBEREMOVEDsetPaths();
 }

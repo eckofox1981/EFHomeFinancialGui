@@ -24,8 +24,8 @@ public abstract class Account implements DataBaseManager {
      * creates the account file
      */
     @Override
-    public void createFile() {
-        setPaths();
+    public void toBEREMOVEDcreateFile() {
+        toBEREMOVEDsetPaths();
 
         File accountFile = new File(filepath);
         if (accountFile.exists()) {
@@ -42,8 +42,8 @@ public abstract class Account implements DataBaseManager {
      * after calling file creation, account data is appended onto on file
      */
     @Override
-    public void fileWriter() {
-        createFile();
+    public void insertData() {
+        toBEREMOVEDcreateFile();
         File userFile = new File(filepath);
         try {
             FileWriter writer = new FileWriter(userFile);
@@ -60,8 +60,8 @@ public abstract class Account implements DataBaseManager {
      * gather account data read from account file.
      */
     @Override
-    public void fileReader() {
-        setPaths();
+    public void fetchData() {
+        toBEREMOVEDsetPaths();
         File file = new File(filepath);
         if (!file.exists()) {
             System.out.println("No account file found.");
@@ -96,7 +96,7 @@ public abstract class Account implements DataBaseManager {
     abstract double transferCheck(Transaction transaction);
 
     @Override
-    public void setPaths() {
+    public void toBEREMOVEDsetPaths() {
         dirPath = user.getDirPath();
         filepath = dirPath + "account - " + name + ".txt";
     }

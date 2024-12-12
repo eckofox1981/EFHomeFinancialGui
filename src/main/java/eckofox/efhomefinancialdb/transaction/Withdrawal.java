@@ -12,7 +12,7 @@ public class Withdrawal extends Transaction {
         idNumber.generateIdNumber();
         id = idNumber.getIdNumber();
         transactionType = TransactionType.WITHDRAWAL; //difference from parent
-        setPaths();
+        toBEREMOVEDsetPaths();
     }
 
     /**

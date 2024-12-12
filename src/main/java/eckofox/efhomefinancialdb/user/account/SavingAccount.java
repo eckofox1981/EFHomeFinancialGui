@@ -10,8 +10,8 @@ public class SavingAccount extends Account {
     public SavingAccount(App app, User user) {
         super(app, "Saving account");
         this.setUser(user);
-        createFile();
-        fileWriter();
+        toBEREMOVEDcreateFile();
+        insertData();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SavingAccount extends Account {
     }
 
     @Override
-    public void createDir() {
+    public void createTable() {
         /* unused in this class*/
     }
 }

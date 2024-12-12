@@ -11,7 +11,7 @@ public class Deposit extends Transaction {
         idNumber.generateIdNumber();
         id = idNumber.getIdNumber();
         transactionType = TransactionType.DEPOSIT; //difference from parent
-        setPaths();
+        toBEREMOVEDsetPaths();
     }
 
     /**

@@ -35,13 +35,13 @@ public class IdNumber implements DataBaseManager {
      * the fileWrtier records this in the ledger.
      */
     public void generateIdNumber() {
-        fileReader();
+        fetchData();
         idNumber = idNumberOnFile + 1;
-        fileWriter();
+        insertData();
     }
 
 
-    public void setPaths() {
+    public void toBEREMOVEDsetPaths() {
         dirPath = user.getDirPath();
         filePath = dirPath + "idHistory - " + user.getName() + ".txt";
     }
@@ -50,7 +50,7 @@ public class IdNumber implements DataBaseManager {
     public void saving() {/*not necessary for this class*/}
 
     @Override
-    public void createDir() {
+    public void createTable() {
         File historyDir = new File(dirPath);
         if (historyDir.exists()) {
             return;
@@ -60,8 +60,8 @@ public class IdNumber implements DataBaseManager {
     }
 
     @Override
-    public void createFile() {
-        createDir();
+    public void toBEREMOVEDcreateFile() {
+        createTable();
         File historyFile = new File(filePath);
         if (historyFile.exists()) {
             return;
@@ -75,7 +75,7 @@ public class IdNumber implements DataBaseManager {
     }
 
     @Override
-    public void fileWriter() {
+    public void insertData() {
         try {
             FileWriter writer = new FileWriter(filePath, true);
 
@@ -92,11 +92,11 @@ public class IdNumber implements DataBaseManager {
     }
 
     @Override
-    public void fileReader() {
-        setPaths();
+    public void fetchData() {
+        toBEREMOVEDsetPaths();
         File historyFile = new File(filePath);
         if (!historyFile.exists()) {
-            createFile();
+            toBEREMOVEDcreateFile();
         }
 
         try (RandomAccessFile idFile = new RandomAccessFile(historyFile, "r")) {

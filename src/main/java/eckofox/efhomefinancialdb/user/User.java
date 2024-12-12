@@ -24,7 +24,7 @@ public class User implements DataBaseManager {
         this.app = app;
         this.name = name;
         this.password = password;
-        setPaths();
+        toBEREMOVEDsetPaths();
 
     }
 
@@ -33,14 +33,14 @@ public class User implements DataBaseManager {
      */
     @Override
     public void saving() {
-        setPaths();
-        fileWriter();
+        toBEREMOVEDsetPaths();
+        insertData();
         createAccounts();
         System.out.println("User-" + name + " data saved");
     }
 
     @Override
-    public void createDir() {
+    public void createTable() {
         File userDir = new File(dirPath);
         if (userDir.exists()) {
             return;
@@ -50,8 +50,8 @@ public class User implements DataBaseManager {
     }
 
     @Override
-    public void createFile() {
-        createDir();
+    public void toBEREMOVEDcreateFile() {
+        createTable();
         File userFile = new File(filepath);
         if (userFile.exists()) {
             return;
@@ -64,9 +64,9 @@ public class User implements DataBaseManager {
     }
 
     @Override
-    public void fileWriter() {
+    public void insertData() {
         try {
-            createFile();
+            toBEREMOVEDcreateFile();
             File userFile = new File(filepath);
             FileWriter writer = new FileWriter(userFile);
             writer.append(name).append("\n");
@@ -79,14 +79,14 @@ public class User implements DataBaseManager {
     }
 
     @Override
-    public void fileReader() {/*not used in this class*/}
+    public void fetchData() {/*not used in this class*/}
 
     public void createAccounts() {
         acountList.add(new CheckingAccount(app, this));
         acountList.add(new SavingAccount(app, this));
     }
 
-    public void setPaths() {
+    public void toBEREMOVEDsetPaths() {
         dirPath = app.getDirPath() + name + "/";
         filepath = dirPath + "user - " + name + ".txt";
     }

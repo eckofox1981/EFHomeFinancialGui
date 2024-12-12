@@ -32,7 +32,7 @@ public class Transaction implements DataBaseManager {
         this.date = date;
         this.amount = amount;
         this.comment = comment;
-        setPaths();
+        toBEREMOVEDsetPaths();
     }
 
     public Transaction(App app, String date, double amount, String comment) {
@@ -43,12 +43,12 @@ public class Transaction implements DataBaseManager {
     }
 
     /** SAVING PROCESS:
-     *  filewriter (after: createFile <- createDir) -> write down the main data of the transaction in plain text
+     *  filewriter (after: toBEREMOVEDcreateFile <- createTable) -> write down the main data of the transaction in plain text
      *  account balances are updated and displayed
      */
     @Override
     public void saving() {
-        fileWriter();
+        insertData();
         System.out.println("Transaction number " + id + " saved.");
         app.getActiveUser().getAcountList().stream()
                 .peek(Account::setBalanceFromTransactions).
@@ -60,7 +60,7 @@ public class Transaction implements DataBaseManager {
      * check if transactions directory exist and creates it, according to preconfigured directory path, if necessary.
      */
     @Override
-    public void createDir() {
+    public void createTable() {
         File transactionDir = new File(dirPath);
         if (transactionDir.exists()) {
             return;
@@ -74,8 +74,8 @@ public class Transaction implements DataBaseManager {
      * to be edited.
      */
     @Override
-    public void createFile() {
-        createDir();
+    public void toBEREMOVEDcreateFile() {
+        createTable();
         File transactionFile = new File(filePath);
         if (transactionFile.exists()) {
             System.out.println("File already exits.");
@@ -92,9 +92,9 @@ public class Transaction implements DataBaseManager {
      * edit the file with transaction data.
      */
     @Override
-    public void fileWriter() {
+    public void insertData() {
         try {
-            createFile();
+            toBEREMOVEDcreateFile();
 
             FileWriter writer = new FileWriter(filePath, true);
 
@@ -116,7 +116,7 @@ public class Transaction implements DataBaseManager {
      * reads of transaction file and sets the transaction fields.
      */
     @Override
-    public void fileReader() {
+    public void fetchData() {
         File transactionFile = new File(filePath);
 
         try (FileReader file = new FileReader(transactionFile.getAbsolutePath());
@@ -162,7 +162,7 @@ public class Transaction implements DataBaseManager {
     /**
      * FOLLOWING ARE SOMETIMES "UPGRADED" GETTERS AND SETTERS
      */
-    public void setPaths() {
+    public void toBEREMOVEDsetPaths() {
         setDirPath();
         setFilePath();
     }

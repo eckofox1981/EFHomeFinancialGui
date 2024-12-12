@@ -21,7 +21,7 @@ public class TransactionGatherer {
     /** Gathering process in short:
      * the transaction list is cleared (to avoid to add all transactions again)
      * a generic transaction is used to find the user's transaction directory
-     * each file is 'transaction.fileReader()' (see Transaction class) and resulting transaction added to the list
+     * each file is 'transaction.fetchData()' (see Transaction class) and resulting transaction added to the list
      * Error-handling accordingly
      */
     private void transactionGatherer() {
@@ -29,7 +29,7 @@ public class TransactionGatherer {
 
         Transaction genericTransaction = new Transaction(app);
 
-        genericTransaction.setPaths();
+        genericTransaction.toBEREMOVEDsetPaths();
 
         File transactionDir = new File(genericTransaction.getDirPath());
         if (!transactionDir.exists()) {
@@ -45,7 +45,7 @@ public class TransactionGatherer {
         for (File file : transactionFiles) {
             Transaction transaction = new Transaction(app);
             transaction.setFilePath(file.getPath());
-            transaction.fileReader();
+            transaction.fetchData();
             transactionList.add(transaction);
         }
     }
