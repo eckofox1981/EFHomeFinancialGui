@@ -1,7 +1,7 @@
 package eckofox.efhomefinancialdb.user;
 
 import eckofox.efhomefinancialdb.application.App;
-import eckofox.efhomefinancialdb.filemanager.FileManager;
+import eckofox.efhomefinancialdb.databasemanager.DataBaseManager;
 import eckofox.efhomefinancialdb.user.account.Account;
 import eckofox.efhomefinancialdb.user.account.CheckingAccount;
 import eckofox.efhomefinancialdb.user.account.SavingAccount;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements FileManager {
+public class User implements DataBaseManager {
     private App app;
     private String name;
     private String password;

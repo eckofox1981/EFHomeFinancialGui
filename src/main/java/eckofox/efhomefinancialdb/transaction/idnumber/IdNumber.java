@@ -1,6 +1,6 @@
 package eckofox.efhomefinancialdb.transaction.idnumber;
 
-import eckofox.efhomefinancialdb.filemanager.FileManager;
+import eckofox.efhomefinancialdb.databasemanager.DataBaseManager;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.user.User;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 
-public class IdNumber implements FileManager {
+public class IdNumber implements DataBaseManager {
 
     private int idNumber;
     private int idNumberOnFile;

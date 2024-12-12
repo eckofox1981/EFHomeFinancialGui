@@ -1,14 +1,14 @@
 package eckofox.efhomefinancialdb.transaction;
 
 import eckofox.efhomefinancialdb.application.App;
-import eckofox.efhomefinancialdb.filemanager.FileManager;
+import eckofox.efhomefinancialdb.databasemanager.DataBaseManager;
 import eckofox.efhomefinancialdb.transaction.idnumber.IdNumber;
 import eckofox.efhomefinancialdb.user.User;
 import eckofox.efhomefinancialdb.user.account.Account;
 
 import java.io.*;
 
-public class Transaction implements FileManager {
+public class Transaction implements DataBaseManager {
     protected App app;
     protected IdNumber idNumber;
     protected User user;
