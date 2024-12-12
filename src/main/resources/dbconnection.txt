@@ -1,1 +1,1 @@
-jdbc:postgresql://localhost/todo?user=postgres&password=password
+jdbc:postgresql://localhost/efhomefinancial?user=postgres&password=password

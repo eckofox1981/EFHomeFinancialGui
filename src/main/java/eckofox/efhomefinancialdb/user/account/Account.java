@@ -95,7 +95,6 @@ public abstract class Account implements DataBaseManager {
      */
     abstract double transferCheck(Transaction transaction);
 
-    @Override
     public void toBEREMOVEDsetPaths() {
         dirPath = user.getDirPath();
         filepath = dirPath + "account - " + name + ".txt";

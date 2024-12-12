@@ -13,6 +13,19 @@ import java.sql.Statement;
 public class DataBaseHandler {
     private App app;
 
+    public DataBaseHandler(App app) {
+        this.app = app;
+    }
+
+    public void settingUpConnectionAndTables(){
+        try {
+            connectToDatabase();
+        } catch (SQLException exception){
+            System.err.println("Could not start the connection att startup.");
+        }
+        settingUpTables();
+    }
+
     public void connectToDatabase() throws SQLException {
         File file = new File("src/main/resources/dbconnection.txt");
         String connectionString = "";
@@ -28,7 +41,7 @@ public class DataBaseHandler {
 
     public void settingUpTables(){
         settingUpUserTable();
-
+        settingUpTransactionTable();
     }
 
     private void settingUpUserTable() {
@@ -36,7 +49,6 @@ public class DataBaseHandler {
             //TODO: add account and transactions history to table
             Statement createUserTableStatement = app.getConnection().createStatement();
             createUserTableStatement.execute("CREATE TABLE IF NOT EXISTS users (name TEXT UNIQUE, password TEXT);");
-
 
         } catch (SQLException exception) {
             System.err.println("Issue with createUserTableStatement");
@@ -46,12 +58,11 @@ public class DataBaseHandler {
     private void settingUpTransactionTable(){
         try {
             Statement createTransactionTableStatement = app.getConnection().createStatement();
-            createTransactionTableStatement.execute("CREATE TABLE IF NOT EXISTS transacions (id SERIAL, user TEXT, date DATE, transaction_type TEXT, amount DECIMAL (20, 2), comment TEXT);");
-
+            createTransactionTableStatement.execute("CREATE TABLE IF NOT EXISTS transactions (id SERIAL, username TEXT, date DATE, transaction_type TEXT, amount DECIMAL (20, 2), comment TEXT);");
+            app.getConnection().close();
 
         } catch (SQLException exception) {
-            System.err.println("Issue with createUserTableStatement");
+            System.err.println(exception.getMessage());
         }
-    }
     }
 }

@@ -49,7 +49,6 @@ public class IdNumber implements DataBaseManager {
     @Override
     public void saving() {/*not necessary for this class*/}
 
-    @Override
     public void createTable() {
         File historyDir = new File(dirPath);
         if (historyDir.exists()) {

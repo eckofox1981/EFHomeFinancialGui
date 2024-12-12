@@ -27,32 +27,16 @@ public class SeeUserListCommand extends Command {
      * and prints each in the terminal.
      */
     public void showUser() {
-        List<String> userList = collectUsers();
-        userList.forEach(a -> System.out.print(a + " | "));
+
     }
 
     /**
      * checks the users' directories -> grabs the name of said directory (= username) -> adds String to List
      * @return the compiled List<String>.
      */
-    private List<String> collectUsers() {
-        List<String> userList = new ArrayList<>();
+    private void collectUsers() {
 
-        File usersDir = new File(app.getDirPath());
-        if (!usersDir.exists() || !usersDir.isDirectory()) {
-            System.out.println("No user registered.");
-            return userList;
-        }
 
-        File[] userDirectories = usersDir.listFiles(File::isDirectory);
-        if (userDirectories == null || userDirectories.length == 0) {
-            System.out.println("No user registered.");
-            return userList;
-        }
 
-        for (File userFile : userDirectories) {
-            userList.add(userFile.getName());
-        }
-        return userList;
     }
 }

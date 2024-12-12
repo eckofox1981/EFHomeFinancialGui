@@ -47,16 +47,6 @@ public class NewUserMenu extends Menu {
      * @return a boolean to allow to continue in the usercreation process
      */
     private boolean userNameCheck(String userName) {
-        if (userName.equalsIgnoreCase("exit")){
-            System.out.println("'EXIT' is not and available option.");
-            return false;
-        }
-        for (String user : collectUsers()) {
-            if (user.equals(userName)) {
-                System.out.println("Username already used. Please choose another name.");
-                return false;
-            }
-        }
         return true;
     }
 
@@ -64,24 +54,8 @@ public class NewUserMenu extends Menu {
      * user are collected before being
      * @return as a list in the userNameCheck for inspection
      */
-    private List<String> collectUsers() {
-        List<String> userList = new ArrayList<>();
-
-        File usersDir = new File(app.getDirPath());
-        if (!usersDir.exists() || !usersDir.isDirectory()) {
-            return userList;
-        }
-
-        File[] userDirectories = usersDir.listFiles(File::isDirectory);
-        if (userDirectories == null) {
-            return userList;
-        }
-
-        for (File userFile : userDirectories) {
-            userList.add(userFile.getName());
-        }
-
-        return userList;
+    private void collectUsers() {
+        //used to return a list
     }
 
     /**

@@ -1,5 +1,6 @@
 package eckofox.efhomefinancialdb.application;
 
+import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
 import eckofox.efhomefinancialdb.menu.LoginMenu;
 import eckofox.efhomefinancialdb.menu.Menu;
 import eckofox.efhomefinancialdb.menu.NewUserMenu;
@@ -43,6 +44,7 @@ public class App extends Application {
     private TransactionGatherer transactionGatherer;
     public Scanner scanner;
     private Connection connection;
+    private DataBaseHandler dataBaseHandler;
 
     public App() {
         this.userMenu = new UserMenu(this);
@@ -51,6 +53,7 @@ public class App extends Application {
         this.activeMenu = new LoginMenu(this);
         this.transaction = new Transaction(this);
         this.transactionGatherer = new TransactionGatherer(this);
+        this.dataBaseHandler = new DataBaseHandler(this);
         scanner = new Scanner(System.in);
     }
 
@@ -66,13 +69,15 @@ public class App extends Application {
 
 
     public static void main(String[] args){
-
-
             App app = new App();
-
+            app.dataBaseHandler.settingUpConnectionAndTables();
             launch();
-            app.activeMenu = app.loginMenu;
 
+            try {
+                app.connection.close();
+            } catch (SQLException exception) {
+                System.err.println("Could not close connection.");
+            }
     }
 
 
@@ -111,4 +116,5 @@ public class App extends Application {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
+
 }

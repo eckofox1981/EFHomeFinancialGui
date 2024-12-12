@@ -31,13 +31,12 @@ public class User implements DataBaseManager {
      */
     @Override
     public void saving() {
-        createTable();
         insertData();
         createAccounts();
         System.out.println("User-" + name + " data saved");
     }
 
-    @Override
+
     public void createTable() {
         File userDir = new File("dirPath");
         if (userDir.exists()) {
@@ -65,7 +64,7 @@ public class User implements DataBaseManager {
     public void insertData() {
         try {
             toBEREMOVEDcreateFile();
-            File userFile = new File(filepath);
+            File userFile = new File("filepath");
             FileWriter writer = new FileWriter(userFile);
             writer.append(name).append("\n");
             writer.append(password);
@@ -89,7 +88,7 @@ public class User implements DataBaseManager {
     }
 
     public String getDirPath() {
-        return dirPath;
+        return "dirPath";
     }
 
     public List<Account> getAcountList() {

@@ -59,7 +59,7 @@ public class Transaction implements DataBaseManager {
     /**
      * check if transactions directory exist and creates it, according to preconfigured directory path, if necessary.
      */
-    @Override
+
     public void createTable() {
         File transactionDir = new File(dirPath);
         if (transactionDir.exists()) {

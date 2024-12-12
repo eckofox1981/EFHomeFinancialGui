@@ -39,8 +39,4 @@ public class SavingAccount extends Account {
         /* unused in this class*/
     }
 
-    @Override
-    public void createTable() {
-        /* unused in this class*/
-    }
 }
