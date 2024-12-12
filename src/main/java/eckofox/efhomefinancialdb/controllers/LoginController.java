@@ -2,6 +2,7 @@ package eckofox.efhomefinancialdb.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -22,6 +23,10 @@ public class LoginController {
     private PasswordField newPasswordField;
     @FXML
     private PasswordField confirmNewPasswordField;
+    @FXML
+    private Label msgForUsers;
+    @FXML
+    private Label msgForNewUsers;
 
 
     @FXML
@@ -42,6 +47,12 @@ public class LoginController {
         System.out.println("new username value: " + newUsernameField.getText());
         System.out.println("new password value: " + newPasswordField.getText());
         System.out.println("new passwordconfirm value: " + confirmNewPasswordField.getText());
+        if (!passwordMatchControll4NewUser(newPasswordField.getText(), confirmNewPasswordField.getText())){
+            msgForNewUsers.setText("Passwords do not match, please try again.");
+        } else {
+            msgForNewUsers.setText("");
+        }
+
     }
 
 
