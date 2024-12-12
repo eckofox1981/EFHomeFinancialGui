@@ -3,7 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,7 +16,7 @@
 
 <AnchorPane prefHeight="304.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controllers.LoginController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="35.0" prefHeight="21.0" prefWidth="526.0" text="Welcome to EF Home Financial Database Edition">
+      <Label layoutX="59.0" layoutY="35.0" prefHeight="21.0" prefWidth="117.0" text="Welcome to ">
          <font>
             <Font name="Georgia" size="18.0" />
          </font>
@@ -37,6 +40,14 @@
                   <Font name="System Italic" size="12.0" />
                </font>
             </TextField>
+            <PasswordField fx:id="passwordField" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+            </PasswordField>
             <Label text="Password:" underline="true" GridPane.rowIndex="1">
                <font>
                   <Font size="14.0" />
@@ -53,14 +64,6 @@
                   <Insets right="10.0" />
                </padding>
             </Label>
-            <TextField fx:id="passwordField" minHeight="-Infinity" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <padding>
-                  <Insets left="19.0" right="3.0" />
-               </padding>
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </TextField>
             <HBox prefHeight="29.0" prefWidth="121.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Button fx:id="loginButton" mnemonicParsing="false" onAction="#setLoginButton" text="Login">
@@ -114,11 +117,6 @@
                   <Font name="System Italic" size="12.0" />
                </font>
             </TextField>
-            <Button fx:id="registerNewUserButton" mnemonicParsing="false" onAction="#setRegisterNewUserButton" text="Register" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets left="52.0" top="8.0" />
-               </GridPane.margin>
-            </Button>
             <Label text="Password:" underline="true" GridPane.rowIndex="3">
                <font>
                   <Font size="14.0" />
@@ -127,31 +125,43 @@
                   <Insets right="10.0" />
                </padding>
             </Label>
-            <TextField fx:id="newPasswordField" minHeight="-Infinity" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <padding>
-                  <Insets left="19.0" right="3.0" />
-               </padding>
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="confirmNewPasswordField" minHeight="-Infinity" promptText="Confirm password" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <padding>
-                  <Insets left="19.0" right="3.0" />
-               </padding>
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </TextField>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="178.0" text="Register new user" textAlignment="CENTER" GridPane.columnIndex="1">
                <font>
                   <Font name="Georgia" size="14.0" />
                </font>
             </Label>
+            <PasswordField fx:id="newPasswordField" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+            </PasswordField>
+            <PasswordField fx:id="confirmNewPasswordField" prefHeight="0.0" prefWidth="96.0" promptText="Confirm password" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+            </PasswordField>
+            <Button fx:id="registerNewUserButton" mnemonicParsing="false" onAction="#setRegisterNewUserButton" text="Register" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="52.0" top="8.0" />
+               </GridPane.margin>
+            </Button>
          </children>
          <opaqueInsets>
             <Insets bottom="4.0" />
          </opaqueInsets>
       </GridPane>
+      <ImageView fitHeight="59.0" fitWidth="365.0" layoutX="170.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../titleImage.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="msgForUsers" alignment="CENTER_RIGHT" layoutX="412.0" layoutY="82.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="52.0" prefWidth="108.0" textAlignment="CENTER" textFill="#ff8900" wrapText="true" />
+      <Label fx:id="msgForNewUsers" alignment="CENTER" contentDisplay="CENTER" layoutX="412.0" layoutY="199.0" prefHeight="52.0" prefWidth="108.0" textAlignment="CENTER" textFill="#ff8900" wrapText="true" />
    </children>
 </AnchorPane>

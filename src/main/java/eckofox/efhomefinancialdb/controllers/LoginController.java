@@ -15,13 +15,13 @@ public class LoginController {
     @FXML
     private TextField usernameField;
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
     @FXML
     private TextField  newUsernameField;
     @FXML
-    private TextField newPasswordField;
+    private PasswordField newPasswordField;
     @FXML
-    private TextField confirmNewPasswordField;
+    private PasswordField confirmNewPasswordField;
 
 
     @FXML
@@ -42,6 +42,15 @@ public class LoginController {
         System.out.println("new username value: " + newUsernameField.getText());
         System.out.println("new password value: " + newPasswordField.getText());
         System.out.println("new passwordconfirm value: " + confirmNewPasswordField.getText());
+    }
+
+
+    //----------------------------------------------------------------------------------------------------------------
+    private boolean passwordMatchControll4NewUser(String password, String confirmPassword){
+        if (!password.equals(confirmPassword)){
+            return false;
+        }
+        return true;
     }
 
 }
