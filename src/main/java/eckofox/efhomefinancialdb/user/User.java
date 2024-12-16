@@ -14,6 +14,7 @@ import java.util.List;
 
 public class User implements DataBaseManager {
     private App app;
+    private String userID;
     private String name;
     private String password;
     private List<Account> acountList = new ArrayList<>();
