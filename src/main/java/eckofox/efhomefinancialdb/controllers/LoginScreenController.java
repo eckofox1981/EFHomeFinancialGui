@@ -11,22 +11,12 @@ public class LoginScreenController {
     private Button loginButton;
     @FXML
     private Button registerButton;
-    @FXML
-    private Button registerNewUserButton;
+
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
-    @FXML
-    private TextField  newUsernameField;
-    @FXML
-    private PasswordField newPasswordField;
-    @FXML
-    private PasswordField confirmNewPasswordField;
-    @FXML
-    private Label msgForUsers;
-    @FXML
-    private Label msgForNewUsers;
+
 
 
     @FXML
@@ -43,25 +33,11 @@ public class LoginScreenController {
 
     @FXML
     public void setRegisterNewUserButton(javafx.event.ActionEvent event) {
-        System.out.println("register 2 button pressed");
-        System.out.println("new username value: " + newUsernameField.getText());
-        System.out.println("new password value: " + newPasswordField.getText());
-        System.out.println("new passwordconfirm value: " + confirmNewPasswordField.getText());
-        if (!passwordMatchControll4NewUser(newPasswordField.getText(), confirmNewPasswordField.getText())){
-            msgForNewUsers.setText("Passwords do not match, please try again.");
-        } else {
-            msgForNewUsers.setText("");
-        }
+
 
     }
 
 
-    //----------------------------------------------------------------------------------------------------------------
-    private boolean passwordMatchControll4NewUser(String password, String confirmPassword){
-        if (!password.equals(confirmPassword)){
-            return false;
-        }
-        return true;
-    }
+
 
 }

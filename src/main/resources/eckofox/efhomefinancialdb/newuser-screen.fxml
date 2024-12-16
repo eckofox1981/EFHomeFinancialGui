@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controllers.NewUserScreenController">
+   <children>
+      <GridPane layoutX="31.0" layoutY="73.0" prefHeight="149.0" prefWidth="276.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="10.0" prefWidth="96.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="209.0" minWidth="10.0" prefWidth="180.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="25.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="25.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="25.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="25.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="25.0" prefHeight="32.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="25.0" prefHeight="32.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="25.0" prefHeight="32.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label text="Password*:" underline="true" GridPane.rowIndex="5">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <Label text="Username*:" underline="true" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <Label text="Password*:" underline="true" GridPane.rowIndex="6">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="178.0" text="Register new user" textAlignment="CENTER" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Georgia" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="newUsernameField" minHeight="-Infinity" promptText="Enter user name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="newPasswordField" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+            </PasswordField>
+            <PasswordField fx:id="confirmNewPasswordField" prefHeight="0.0" prefWidth="96.0" promptText="Confirm password" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+            </PasswordField>
+            <HBox prefHeight="6.0" prefWidth="154.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <children>
+                  <Button fx:id="registerNewUserButton" mnemonicParsing="false" onAction="#setRegisterNewUserButton" text="Register" textAlignment="CENTER" />
+                  <Button fx:id="cancelNewUserButton" mnemonicParsing="false" onAction="#setRegisterNewUserButton" text="Cancel" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets left="26.0" top="9.0" />
+               </GridPane.margin>
+            </HBox>
+            <TextField fx:id="firstNameField" minHeight="-Infinity" promptText="Enter first name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="lastNameField" minHeight="-Infinity" promptText="Enter last name" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <Label text="First name:" underline="true" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <Label text="Last name:" underline="true" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <Label text="*mandatory" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Italic" size="10.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="12.0" top="-14.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="4.0" />
+         </opaqueInsets>
+      </GridPane>
+      <ImageView fitHeight="59.0" fitWidth="365.0" layoutX="68.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../titleImage.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="msgForNewUsers" alignment="CENTER" contentDisplay="CENTER" layoutX="307.0" layoutY="98.0" prefHeight="178.0" prefWidth="108.0" textAlignment="CENTER" textFill="#ff8900" wrapText="true" />
+   </children>
+</AnchorPane>
