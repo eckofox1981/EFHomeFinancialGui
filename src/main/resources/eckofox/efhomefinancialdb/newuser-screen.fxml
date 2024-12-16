@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="300.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controllers.NewUserScreenController">
    <children>
       <GridPane layoutX="31.0" layoutY="73.0" prefHeight="149.0" prefWidth="276.0">
@@ -70,6 +69,30 @@
                   <Font name="System Italic" size="12.0" />
                </font>
             </TextField>
+            <TextField fx:id="firstNameField" minHeight="-Infinity" promptText="Enter first name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="lastNameField" minHeight="-Infinity" promptText="Enter last name" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <padding>
+                  <Insets left="19.0" right="3.0" />
+               </padding>
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <Label text="Last name:" underline="true" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
             <PasswordField fx:id="newPasswordField" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="System Italic" size="12.0" />
@@ -89,7 +112,7 @@
             <HBox prefHeight="6.0" prefWidth="154.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <children>
                   <Button fx:id="registerNewUserButton" mnemonicParsing="false" onAction="#setRegisterNewUserButton" text="Register" textAlignment="CENTER" />
-                  <Button fx:id="cancelNewUserButton" mnemonicParsing="false" onAction="#setRegisterNewUserButton" text="Cancel" textAlignment="CENTER">
+                  <Button fx:id="cancelNewUserButton" mnemonicParsing="false" onAction="#setCancelNewUserButton" text="Cancel" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="8.0" />
                      </HBox.margin>
@@ -99,31 +122,7 @@
                   <Insets left="26.0" top="9.0" />
                </GridPane.margin>
             </HBox>
-            <TextField fx:id="firstNameField" minHeight="-Infinity" promptText="Enter first name" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <padding>
-                  <Insets left="19.0" right="3.0" />
-               </padding>
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="lastNameField" minHeight="-Infinity" promptText="Enter last name" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <padding>
-                  <Insets left="19.0" right="3.0" />
-               </padding>
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </TextField>
             <Label text="First name:" underline="true" GridPane.rowIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
-            </Label>
-            <Label text="Last name:" underline="true" GridPane.rowIndex="3">
                <font>
                   <Font size="14.0" />
                </font>

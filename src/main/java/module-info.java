@@ -10,6 +10,7 @@ module eckofox.efhomefinancialdb {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.sql;
+    requires java.desktop;
 
     opens eckofox.efhomefinancialdb to javafx.fxml;
     exports eckofox.efhomefinancialdb.application;
