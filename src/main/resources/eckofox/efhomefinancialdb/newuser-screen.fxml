@@ -93,7 +93,7 @@
                   <Insets right="10.0" />
                </padding>
             </Label>
-            <PasswordField fx:id="newPasswordField" promptText="Enter password" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <PasswordField fx:id="newPasswordField" promptText="Enter passwordHash" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="System Italic" size="12.0" />
                </font>
@@ -101,7 +101,7 @@
                   <Insets left="19.0" right="3.0" />
                </padding>
             </PasswordField>
-            <PasswordField fx:id="confirmNewPasswordField" prefHeight="0.0" prefWidth="96.0" promptText="Confirm password" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <PasswordField fx:id="confirmNewPasswordField" prefHeight="0.0" prefWidth="96.0" promptText="Confirm passwordHash" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <font>
                   <Font name="System Italic" size="12.0" />
                </font>

@@ -16,19 +16,19 @@ public class User implements DataBaseManager {
     private App app;
     private String userID;
     private String name;
-    private String password;
+    private String passwordHash;
     private List<Account> acountList = new ArrayList<>();
 
 
-    public User(App app, String name, String password) {
+    public User(App app, String name, String passwordHash) {
         this.app = app;
         this.name = name;
-        this.password = password;
+        this.passwordHash = passwordHash;
 
     }
 
     /**
-     * sets user paths, creates directory and file and writes username and password
+     * sets user paths, creates directory and file and writes username and passwordHash
      */
     @Override
     public void saving() {
@@ -68,7 +68,7 @@ public class User implements DataBaseManager {
             File userFile = new File("filepath");
             FileWriter writer = new FileWriter(userFile);
             writer.append(name).append("\n");
-            writer.append(password);
+            writer.append(passwordHash);
             writer.flush();
             writer.close();
         } catch (IOException e) {

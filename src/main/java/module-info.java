@@ -11,6 +11,7 @@ module eckofox.efhomefinancialdb {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires java.desktop;
+    requires jbcrypt;
 
     opens eckofox.efhomefinancialdb to javafx.fxml;
     exports eckofox.efhomefinancialdb.application;

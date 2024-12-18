@@ -1,1 +1,1 @@
-jdbc:postgresql://localhost/efhomefinancial?user=postgres&password=password
+jdbc:postgresql://localhost/efhomefinancial?user=postgres&passwordHash=passwordHash

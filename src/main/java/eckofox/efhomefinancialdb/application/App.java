@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -71,7 +72,10 @@ public class App extends Application {
     public static void main(String[] args){
             App app = new App();
             app.dataBaseHandler.settingUpConnectionAndTables();
-            launch();
+            //launch();
+            String password = "bajs1983";
+            String passwordHashed = BCrypt.hashpw(password, BCrypt.gensalt());
+        System.out.println(passwordHashed + " used to be: " + password);
 
             try {
                 app.connection.close();
