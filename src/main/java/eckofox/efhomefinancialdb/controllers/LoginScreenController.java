@@ -1,18 +1,25 @@
 package eckofox.efhomefinancialdb.controllers;
 
 import eckofox.efhomefinancialdb.application.App;
+import eckofox.efhomefinancialdb.user.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
+import java.util.UUID;
 
 public class LoginScreenController {
     Stage stage;
@@ -27,6 +34,8 @@ public class LoginScreenController {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Label msgForUsers;
 
     public LoginScreenController(App app) {
         this.app = app;
@@ -38,8 +47,12 @@ public class LoginScreenController {
 
     @FXML
     public void setLoginButton(javafx.event.ActionEvent event) {
-        System.out.println("login button pressed");
-        System.out.println("username value: " + usernameField.getText());
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        if (loginCheck(username, password)) {
+            //TODO open next window
+        }
+        //nothing
     }
 
     @FXML
@@ -74,9 +87,112 @@ public class LoginScreenController {
         }
     }
 
-    @FXML
-    public void setRegisterNewUserButton(javafx.event.ActionEvent event) {
+    private boolean loginCheck(String username, String password){
+        if (!userNameExists(username)){
+            msgForUsers.setText("This username doesn't exist.\nPlease check spelling or register.");
+            return false;
+        }
 
+        if (!passwordCheck(username, password)) {
+            msgForUsers.setText("Password did not match records.");
+            return false;
+        }
+
+        setActiveUser(username);
+        return true;
+    }
+
+    private boolean userNameExists (String username) {
+        try {
+            app.getDataBaseHandler().connectToDatabase();
+        } catch (SQLException e) {
+            System.err.println("Could not connect to database in userNameExists. " + e.getMessage());
+        }
+        try (PreparedStatement usernameIsPresentStatement =
+                     app.getConnection().prepareStatement("SELECT username FROM users WHERE username = ?;")) {
+            usernameIsPresentStatement.setString(1, username);
+            try (ResultSet result = usernameIsPresentStatement.executeQuery()) {
+                while (result.next()) {
+                    if (result.getString("username").equals(username)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Unable to query in checkUsernameUsage. " + e.getMessage());
+        }
+        return false;
+    }
+
+    private boolean passwordCheck (String username, String password) {
+        String passwordHash = "";
+        try {
+            app.getDataBaseHandler().connectToDatabase();
+        } catch (SQLException e) {
+            System.err.println("Could not connect to database in passwordCheck. " + e.getMessage());
+        }
+
+        try (PreparedStatement checkPasswordHashStatement =
+                     app.getConnection().prepareStatement("SELECT passwordhash FROM users WHERE username =?")){
+            checkPasswordHashStatement.setString(1, username);
+
+            try (ResultSet result = checkPasswordHashStatement.executeQuery()){
+                if (result.next()) {
+                    passwordHash = result.getString("passwordhash");
+                }
+            } catch (SQLException e) {
+                System.err.println("Unable to execute query at passworCheck. " + e.getMessage());
+            }
+        } catch (SQLException sqlException) {
+            System.err.println("Error with prepared statement checkpasswordCheck. " + sqlException.getMessage());
+        }
+
+        if (BCrypt.checkpw(password, passwordHash)) {
+            System.out.println("Login succesfull");
+            msgForUsers.setText("Logged in.");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println("Nah, it'll be fine");
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    private void setActiveUser(String username){
+        User user = new User();
+        try {
+            app.getDataBaseHandler().connectToDatabase();
+        } catch (SQLException e) {
+            System.err.println("Could not connect to database in setActiveUser. " + e.getMessage());
+        }
+
+        try (PreparedStatement selectAllStatement = app.getConnection().prepareStatement("SELECT * FROM users WHERE username = ?;")){
+            selectAllStatement.setString(1, username);
+            try (ResultSet result = selectAllStatement.executeQuery()) {
+                while (result.next()) {
+                    user = userFromResult(result);
+                    app.setActiveUser(user);
+                    msgForUsers.setText("DEBUG: är du " + app.getActiveUser().getUsername() + "?");
+                }
+            } catch (SQLException e) {
+                System.err.println("Error while creating user at setActiveUser. " + e.getMessage());
+            }
+
+        }catch (SQLException sqlException) {
+            System.err.println("Error with prepared statement in setActiveUser. " + sqlException.getMessage());
+        }
+    }
+
+    private User userFromResult (ResultSet result) throws SQLException {
+        UUID userid = UUID.fromString(result.getString("userid"));
+        String username = result.getString("username");
+        String firstname = result.getString("firstname");
+        String lastname = result.getString("lastname");
+
+        return new User(app, userid, username, firstname, lastname);
 
     }
 

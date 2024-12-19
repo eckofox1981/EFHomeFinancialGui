@@ -1,9 +1,7 @@
 package eckofox.efhomefinancialdb.application;
 
 import eckofox.efhomefinancialdb.controllers.LoginScreenController;
-import eckofox.efhomefinancialdb.controllers.NewUserScreenController;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
-import eckofox.efhomefinancialdb.menu.LoginMenu;
 import eckofox.efhomefinancialdb.menu.Menu;
 import eckofox.efhomefinancialdb.menu.UserMenu;
 import eckofox.efhomefinancialdb.transaction.Transaction;

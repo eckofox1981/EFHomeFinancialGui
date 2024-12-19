@@ -21,7 +21,7 @@
             <Font name="Georgia" size="18.0" />
          </font>
       </Label>
-      <GridPane layoutX="125.0" layoutY="72.0" prefHeight="96.0" prefWidth="276.0">
+      <GridPane layoutX="95.0" layoutY="75.0" prefHeight="96.0" prefWidth="276.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="10.0" prefWidth="96.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="209.0" minWidth="10.0" prefWidth="180.0" />
@@ -85,6 +85,6 @@
             <Image url="@../../titleImage.png" />
          </image>
       </ImageView>
-      <Label fx:id="msgForUsers" alignment="CENTER_RIGHT" layoutX="412.0" layoutY="82.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="52.0" prefWidth="108.0" textAlignment="CENTER" textFill="#ff8900" wrapText="true" />
+      <Label fx:id="msgForUsers" alignment="CENTER_RIGHT" layoutX="378.0" layoutY="75.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="79.0" prefWidth="141.0" textAlignment="CENTER" textFill="#ff8900" wrapText="true" />
    </children>
 </AnchorPane>

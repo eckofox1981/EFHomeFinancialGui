@@ -34,6 +34,18 @@ public class User implements DataBaseManager {
         this.passwordHash = passwordHash;
     }
 
+    public User(App app, UUID userID, String username, String firstname, String lastname) {
+        this.app = app;
+        this.userID = userID;
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    public User() {
+
+    }
+
     /**
      * sets user paths, creates directory and file and writes username and passwordHash
      */
