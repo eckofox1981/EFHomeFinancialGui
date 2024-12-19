@@ -43,7 +43,7 @@ public class IdNumber implements DataBaseManager {
 
     public void toBEREMOVEDsetPaths() {
         dirPath = user.getDirPath();
-        filePath = dirPath + "idHistory - " + user.getName() + ".txt";
+        filePath = dirPath + "idHistory - " + user.getUsername() + ".txt";
     }
 
     @Override

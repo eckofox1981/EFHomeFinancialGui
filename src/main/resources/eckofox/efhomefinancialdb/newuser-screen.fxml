@@ -149,5 +149,6 @@
          </image>
       </ImageView>
       <Label fx:id="msgForNewUsers" alignment="CENTER" contentDisplay="CENTER" layoutX="307.0" layoutY="98.0" prefHeight="178.0" prefWidth="108.0" textAlignment="CENTER" textFill="#ff8900" wrapText="true" />
+      <Button fx:id="okButton" layoutX="343.0" layoutY="259.0" mnemonicParsing="false" onAction="#setCancelNewUserButton" text="OK" visible="false" />
    </children>
 </AnchorPane>

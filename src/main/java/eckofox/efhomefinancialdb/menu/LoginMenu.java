@@ -3,7 +3,6 @@ package eckofox.efhomefinancialdb.menu;
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.command.ExitCommand;
 import eckofox.efhomefinancialdb.command.log.LoginCommand;
-import eckofox.efhomefinancialdb.command.log.NewUserCommand;
 import eckofox.efhomefinancialdb.command.log.SeeUserListCommand;
 
 public class LoginMenu extends Menu {
@@ -18,7 +17,6 @@ public class LoginMenu extends Menu {
     @Override
     public void createCommandList() {
         commandList.add(new LoginCommand(app));
-        commandList.add(new NewUserCommand(app));
         commandList.add(new SeeUserListCommand(app));
         commandList.add(new ExitCommand(app));
     }

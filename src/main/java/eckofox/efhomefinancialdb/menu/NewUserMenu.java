@@ -34,9 +34,9 @@ public class NewUserMenu extends Menu {
             }
         } while (!passwordComfirmation.equals(password));
 
-        User user = new User(app, name, password);
-        app.setActiveUser(user);
-        user.saving();
+//        User user = new User(app, name, password);
+//        app.setActiveUser(user);
+//        user.saving();
 
         app.getUserMenu().runMenu();
     }

@@ -1,6 +1,7 @@
 package eckofox.efhomefinancialdb.controllers;
 
 import eckofox.efhomefinancialdb.application.App;
+import eckofox.efhomefinancialdb.user.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,12 +12,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 
 public class NewUserScreenController {
     private Stage stage;
+    private App app;
     @FXML
     private TextField newUsernameField;
     @FXML
@@ -24,7 +28,7 @@ public class NewUserScreenController {
     @FXML
     private PasswordField confirmNewPasswordField;
     @FXML
-    private Label msgForUsers;
+    private Button okButton;
     @FXML
     private Label msgForNewUsers;
     @FXML
@@ -36,19 +40,36 @@ public class NewUserScreenController {
     @FXML
     private TextField lastNameField;
 
+    public NewUserScreenController() { //for FXML to use
+    }
+
+    public NewUserScreenController(App app) {
+        this.app = app;
+    }
+
     public void initData(Stage stage) {
         this.stage = stage;
     }
 
     @FXML
     public void setRegisterNewUserButton(javafx.event.ActionEvent event) {
-        String newMsg = (newUsernameField.getText() + " " + firstNameField.getText() + " " + lastNameField.getText());
-        if (newPasswordField.getText().equals(confirmNewPasswordField.getText())) {
-            newMsg += " PASS MATCH";
+        String username = newUsernameField.getText();
+        String firstname = firstNameField.getText();
+        String lastname = lastNameField.getText();
+        String passwordHash;
+        if (passwordMatchControlNewUser(newPasswordField.getText(), confirmNewPasswordField.getText())){
+            passwordHash = passwordEncryption(newPasswordField.getText());
+            UUID uuid = UUID.randomUUID();
+            User user = new User(app, uuid, username, firstname, lastname, passwordHash);
+            user.saving();
+            msgForNewUsers.setText("Hello " + username + ", account saved.");
+            okButton.setVisible(true);
         } else {
-            newMsg += " PASS MISMATCH";
+            msgForNewUsers.setText("Passwords didn't match, please try again.");
+            newPasswordField.clear();
+            confirmNewPasswordField.clear();
         }
-        msgForNewUsers.setText(newMsg);
+
     }
 
     @FXML
@@ -84,5 +105,9 @@ public class NewUserScreenController {
             return false;
         }
         return true;
+    }
+
+    private String passwordEncryption (String confirmedPassword){
+        return BCrypt.hashpw(confirmedPassword, BCrypt.gensalt());
     }
 }

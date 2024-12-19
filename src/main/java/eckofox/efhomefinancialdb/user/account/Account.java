@@ -47,7 +47,7 @@ public abstract class Account implements DataBaseManager {
         File userFile = new File(filepath);
         try {
             FileWriter writer = new FileWriter(userFile);
-            writer.append(user.getName()).append(" - ").append(name).append("\n");
+            writer.append(user.getUsername()).append(" - ").append(name).append("\n");
             writer.append(String.valueOf(balance));
             writer.flush();
             writer.close();

@@ -11,20 +11,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class User implements DataBaseManager {
     private App app;
-    private String userID;
-    private String name;
+    private UUID userID;
+    private String username;
+    private String firstname;
+    private String lastname;
     private String passwordHash;
     private List<Account> acountList = new ArrayList<>();
 
 
-    public User(App app, String name, String passwordHash) {
+    public User(App app, UUID userID, String username, String firstname, String lastname, String passwordHash) {
         this.app = app;
-        this.name = name;
+        this.userID = userID;
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.passwordHash = passwordHash;
-
     }
 
     /**
@@ -32,9 +37,9 @@ public class User implements DataBaseManager {
      */
     @Override
     public void saving() {
-        insertData();
-        createAccounts();
-        System.out.println("User-" + name + " data saved");
+//        insertData();
+//        createAccounts();
+        System.out.println("User-" + username + " " + firstname + " " + lastname + " " + passwordHash + " data saved");
     }
 
 
@@ -67,7 +72,7 @@ public class User implements DataBaseManager {
             toBEREMOVEDcreateFile();
             File userFile = new File("filepath");
             FileWriter writer = new FileWriter(userFile);
-            writer.append(name).append("\n");
+            writer.append(username).append("\n");
             writer.append(passwordHash);
             writer.flush();
             writer.close();
@@ -84,8 +89,8 @@ public class User implements DataBaseManager {
         acountList.add(new SavingAccount(app, this));
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     public String getDirPath() {

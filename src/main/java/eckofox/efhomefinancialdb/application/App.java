@@ -1,5 +1,6 @@
 package eckofox.efhomefinancialdb.application;
 
+import eckofox.efhomefinancialdb.controllers.NewUserScreenController;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
 import eckofox.efhomefinancialdb.menu.LoginMenu;
 import eckofox.efhomefinancialdb.menu.Menu;
@@ -40,7 +41,7 @@ public class App extends Application {
 
     private UserMenu userMenu;
     private LoginMenu loginMenu;
-    private NewUserMenu newUserMenu;
+    private NewUserScreenController newUserMenu;
     private Transaction transaction;
     private TransactionGatherer transactionGatherer;
     public Scanner scanner;
@@ -50,7 +51,7 @@ public class App extends Application {
     public App() {
         this.userMenu = new UserMenu(this);
         this.loginMenu = new LoginMenu(this);
-        this.newUserMenu = new NewUserMenu(this);
+        this.newUserMenu = new NewUserScreenController(this);
         this.activeMenu = new LoginMenu(this);
         this.transaction = new Transaction(this);
         this.transactionGatherer = new TransactionGatherer(this);
@@ -72,10 +73,8 @@ public class App extends Application {
     public static void main(String[] args){
             App app = new App();
             app.dataBaseHandler.settingUpConnectionAndTables();
-            //launch();
-            String password = "bajs1983";
-            String passwordHashed = BCrypt.hashpw(password, BCrypt.gensalt());
-        System.out.println(passwordHashed + " used to be: " + password);
+            launch();
+
 
             try {
                 app.connection.close();
@@ -101,7 +100,7 @@ public class App extends Application {
         return userMenu;
     }
 
-    public Menu getNewUserMenu() {
+    public NewUserScreenController getNewUserMenu() {
         return newUserMenu;
     }
 
