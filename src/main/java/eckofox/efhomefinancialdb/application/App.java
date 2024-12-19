@@ -60,6 +60,9 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Welcome to EF Home Financial");
         stage.setScene(scene);
+        stage.setX(-1);  // Reset position
+        stage.setY(-1);  // Reset position
+        stage.centerOnScreen();
         stage.show();
     }
 
