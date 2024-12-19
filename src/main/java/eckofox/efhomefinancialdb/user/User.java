@@ -9,6 +9,8 @@ import eckofox.efhomefinancialdb.user.account.SavingAccount;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,39 +39,34 @@ public class User implements DataBaseManager {
      */
     @Override
     public void saving() {
-//        insertData();
-//        createAccounts();
+        try {
+            app.getDataBaseHandler().connectToDatabase();
+        } catch (SQLException e) {
+            System.err.println("Could not connect to database in 'user.saving'.");
+        }
+
+        try (PreparedStatement newUserStatement =
+                app.getConnection().prepareStatement("INSERT INTO users (userid, username, firstname, lastname, passwordhash) VALUES (?, ?, ?, ?, ?)")){
+            newUserStatement.setObject(1, userID);
+            newUserStatement.setString(2, username);
+            newUserStatement.setString(3, firstname);
+            newUserStatement.setString(4, lastname);
+            newUserStatement.setString(5, passwordHash);
+            newUserStatement.executeQuery();
+        } catch (SQLException e) {
+            System.err.println("Could save user in SQL database: " + e.getMessage());
+        }
         System.out.println("User-" + username + " " + firstname + " " + lastname + " " + passwordHash + " data saved");
     }
 
 
-    public void createTable() {
-        File userDir = new File("dirPath");
-        if (userDir.exists()) {
-            return;
-        }
-        userDir.mkdirs();
-        System.out.println("User directory created.");
-    }
 
-    @Override
-    public void toBEREMOVEDcreateFile() {
-        createTable();
-        File userFile = new File("filepath");
-        if (userFile.exists()) {
-            return;
-        }
-        try {
-            userFile.createNewFile();
-        } catch (IOException e) {
-            System.out.println("Could not create user file.");
-        }
-    }
+
+
 
     @Override
     public void insertData() {
         try {
-            toBEREMOVEDcreateFile();
             File userFile = new File("filepath");
             FileWriter writer = new FileWriter(userFile);
             writer.append(username).append("\n");

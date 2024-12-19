@@ -1,5 +1,6 @@
 package eckofox.efhomefinancialdb.application;
 
+import eckofox.efhomefinancialdb.controllers.LoginScreenController;
 import eckofox.efhomefinancialdb.controllers.NewUserScreenController;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
 import eckofox.efhomefinancialdb.menu.LoginMenu;
@@ -35,7 +36,7 @@ public class App extends Application {
 
     private UserMenu userMenu;
     private LoginMenu loginMenu;
-    private NewUserScreenController newUserMenu;
+    //private NewUserScreenController newUserMenu;
     private Transaction transaction;
     private TransactionGatherer transactionGatherer;
     public Scanner scanner;
@@ -45,7 +46,7 @@ public class App extends Application {
     public App() {
         this.userMenu = new UserMenu(this);
         this.loginMenu = new LoginMenu(this);
-        this.newUserMenu = new NewUserScreenController(this);
+        //this.newUserMenu = new NewUserScreenController(this);
         this.activeMenu = new LoginMenu(this);
         this.transaction = new Transaction(this);
         this.transactionGatherer = new TransactionGatherer(this);
@@ -56,8 +57,16 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/eckofox/efhomefinancialdb/login-screen.fxml"));
+        fxmlLoader.setControllerFactory(type -> {
+            if (type == LoginScreenController.class) {
+                return new LoginScreenController(this); // To be able to pass the app variable.
+            }
+            return null;
+        });
+
         stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/logo.png"))));
         Scene scene = new Scene(fxmlLoader.load());
+
         stage.setTitle("Welcome to EF Home Financial");
         stage.setScene(scene);
         stage.setX(-1);  // Reset position
@@ -97,9 +106,9 @@ public class App extends Application {
         return userMenu;
     }
 
-    public NewUserScreenController getNewUserMenu() {
-        return newUserMenu;
-    }
+//    public NewUserScreenController getNewUserMenu() {
+//        return newUserMenu;
+//    }
 
     public void setActiveMenu(Menu activeMenu) {
         this.activeMenu = activeMenu;
@@ -117,4 +126,7 @@ public class App extends Application {
         this.connection = connection;
     }
 
+    public DataBaseHandler getDataBaseHandler() {
+        return dataBaseHandler;
+    }
 }

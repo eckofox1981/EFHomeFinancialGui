@@ -40,9 +40,6 @@ public class NewUserScreenController {
     @FXML
     private TextField lastNameField;
 
-    public NewUserScreenController() { //for FXML to use
-    }
-
     public NewUserScreenController(App app) {
         this.app = app;
     }
@@ -54,6 +51,7 @@ public class NewUserScreenController {
     @FXML
     public void setRegisterNewUserButton(javafx.event.ActionEvent event) {
         String username = newUsernameField.getText();
+        //TODO check if username used
         String firstname = firstNameField.getText();
         String lastname = lastNameField.getText();
         String passwordHash;
@@ -77,6 +75,14 @@ public class NewUserScreenController {
         try {
             Stage currenStage = (Stage) registerNewUserButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/eckofox/efhomefinancialdb/login-screen.fxml"));
+
+            fxmlLoader.setControllerFactory(type -> {
+                if (type == LoginScreenController.class) {
+                    return new LoginScreenController(app); // To be able to pass the app variable.
+                }
+                return null;
+            });
+
             Parent root;
 
             root = fxmlLoader.load();

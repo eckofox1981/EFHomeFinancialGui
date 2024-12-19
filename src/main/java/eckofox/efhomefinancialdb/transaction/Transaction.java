@@ -73,7 +73,7 @@ public class Transaction implements DataBaseManager {
      * calls create dir to check directory then creates a file according to preconfigured filepath
      * to be edited.
      */
-    @Override
+
     public void toBEREMOVEDcreateFile() {
         createTable();
         File transactionFile = new File(filePath);
