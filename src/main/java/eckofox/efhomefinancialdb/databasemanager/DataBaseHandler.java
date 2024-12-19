@@ -49,7 +49,7 @@ public class DataBaseHandler {
             //TODO: add account and transactions history to table
             Statement createUserTableStatement = app.getConnection().createStatement();
             createUserTableStatement.execute(
-                    "CREATE TABLE IF NOT EXISTS users (userid UUID UNIQUE PRIMARY KEY, username TEXT UNIQUE, firstname TEXT, lastname TEXT, passwordhash TEXT);");
+                    "CREATE TABLE IF NOT EXISTS users (userid UUID UNIQUE PRIMARY KEY, username TEXT UNIQUE, firstname TEXT, lastname TEXT, passwordhash TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);");
 
         } catch (SQLException exception) {
             System.err.println("Issue with createUserTableStatement");
@@ -62,7 +62,7 @@ public class DataBaseHandler {
             createTransactionTableStatement.execute("CREATE TABLE IF NOT EXISTS transactions (id SERIAL, username TEXT, date DATE, transaction_type TEXT, amount DECIMAL (20, 2), comment TEXT);");
 
         } catch (SQLException exception) {
-            System.err.println(exception.getMessage());
+            System.err.println("Issue with create transaction table. " + exception.getMessage());
         }
     }
 }
