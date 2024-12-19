@@ -57,9 +57,9 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/eckofox/efhomefinancialdb/login-screen.fxml"));
-        fxmlLoader.setControllerFactory(type -> {
-            if (type == LoginScreenController.class) {
-                return new LoginScreenController(this); // To be able to pass the app variable.
+        fxmlLoader.setControllerFactory(type -> { //type = classtype
+            if (type == LoginScreenController.class) { //if class is the login controller it sends 'app' in the special
+                return new LoginScreenController(this); // constructor, not normally OK for FXML controller.
             }
             return null;
         });
@@ -68,10 +68,8 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("Welcome to EF Home Financial");
+
         stage.setScene(scene);
-        stage.setX(-1);  // Reset position
-        stage.setY(-1);  // Reset position
-        stage.centerOnScreen();
         stage.show();
     }
 

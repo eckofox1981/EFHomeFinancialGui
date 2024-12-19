@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -48,6 +47,7 @@ public class LoginScreenController {
         try {
             Stage currenStage = (Stage) registerButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/eckofox/efhomefinancialdb/newuser-screen.fxml"));
+
             fxmlLoader.setControllerFactory(type -> {
                 if (type == NewUserScreenController.class) {
                     return new NewUserScreenController(app); // To be able to pass the app variable.
@@ -55,22 +55,19 @@ public class LoginScreenController {
                 return null;
             });
 
-            Parent root1;
-
-            root1 = fxmlLoader.load();
+            Parent root = fxmlLoader.load();
 
             Stage stage = new Stage();
             stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/logo.png"))));
             stage.setTitle("EF Home Financial - register new user");
-            stage.setScene(new Scene(root1));
-
-
+            stage.setScene(new Scene(root));
 
             NewUserScreenController controller = fxmlLoader.getController();
             controller.initData(stage);
 
             currenStage.close();
-            stage.showAndWait();
+            stage.show();
+
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             ex.getStackTrace();

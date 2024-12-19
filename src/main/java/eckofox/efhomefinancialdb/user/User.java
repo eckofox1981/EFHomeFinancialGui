@@ -46,7 +46,7 @@ public class User implements DataBaseManager {
         }
 
         try (PreparedStatement newUserStatement =
-                app.getConnection().prepareStatement("INSERT INTO users (userid, username, firstname, lastname, passwordhash) VALUES (?, ?, ?, ?, ?)")){
+                app.getConnection().prepareStatement("INSERT INTO users (userid, username, firstname, lastname, passwordhash) VALUES (?, ?, ?, ?, ?);")){
             newUserStatement.setObject(1, userID);
             newUserStatement.setString(2, username);
             newUserStatement.setString(3, firstname);

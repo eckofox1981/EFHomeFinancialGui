@@ -15,6 +15,10 @@ import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -55,6 +59,9 @@ public class NewUserScreenController {
         String firstname = firstNameField.getText();
         String lastname = lastNameField.getText();
         String passwordHash;
+        if (checkUsernameUsage(username)){
+            return;
+        }
         if (passwordMatchControlNewUser(newPasswordField.getText(), confirmNewPasswordField.getText())){
             passwordHash = passwordEncryption(newPasswordField.getText());
             UUID uuid = UUID.randomUUID();
@@ -96,7 +103,7 @@ public class NewUserScreenController {
             controller.initData(stage);
 
             currenStage.close();
-            stage.showAndWait();
+            stage.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             ex.getStackTrace();
@@ -115,5 +122,29 @@ public class NewUserScreenController {
 
     private String passwordEncryption (String confirmedPassword){
         return BCrypt.hashpw(confirmedPassword, BCrypt.gensalt());
+    }
+
+    private boolean checkUsernameUsage (String username){
+        try{
+            app.getDataBaseHandler().connectToDatabase();
+        } catch (SQLException e){
+            System.err.println("Could not connect to database in checkUsernameUsage. " + e.getMessage());
+        }
+        try (PreparedStatement usernameIsUsedStatement =
+                app.getConnection().prepareStatement("SELECT username FROM users WHERE username = ?;")){
+            usernameIsUsedStatement.setString(1, username);
+            try (ResultSet result = usernameIsUsedStatement.executeQuery()) {
+                while (result.next()) {
+                    if (result.getString("username").equals(username)){
+                        msgForNewUsers.setText("The username '" + username + "' is already in used.");
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Unable to query in checkUsernameUsage. " + e.getMessage());
+        }
+
+        return false;
     }
 }
