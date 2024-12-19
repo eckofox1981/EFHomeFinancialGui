@@ -4,7 +4,6 @@ import eckofox.efhomefinancialdb.controllers.NewUserScreenController;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
 import eckofox.efhomefinancialdb.menu.LoginMenu;
 import eckofox.efhomefinancialdb.menu.Menu;
-import eckofox.efhomefinancialdb.menu.NewUserMenu;
 import eckofox.efhomefinancialdb.menu.UserMenu;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionGatherer;
@@ -14,15 +13,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.mindrot.jbcrypt.BCrypt;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;
