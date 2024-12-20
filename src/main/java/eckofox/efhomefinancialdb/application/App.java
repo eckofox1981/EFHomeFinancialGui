@@ -28,12 +28,8 @@ public class App extends Application {
      * activeUser is obviously referenced for accessing/creating user data.
      */
     private User activeUser;
-    private Menu activeMenu;
-
     public boolean running = true;
 
-    private UserMenu userMenu;
-    private LoginMenu loginMenu;
     //private NewUserScreenController newUserMenu;
     private Transaction transaction;
     private TransactionGatherer transactionGatherer;
@@ -42,10 +38,6 @@ public class App extends Application {
     private DataBaseHandler dataBaseHandler;
 
     public App() {
-        this.userMenu = new UserMenu(this);
-        this.loginMenu = new LoginMenu(this);
-        //this.newUserMenu = new NewUserScreenController(this);
-        this.activeMenu = new LoginMenu(this);
         this.transaction = new Transaction(this);
         this.transactionGatherer = new TransactionGatherer(this);
         this.dataBaseHandler = new DataBaseHandler(this);

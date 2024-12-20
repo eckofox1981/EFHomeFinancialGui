@@ -193,7 +193,37 @@ public class LoginScreenController {
         String lastname = result.getString("lastname");
 
         return new User(app, userid, username, firstname, lastname);
+    }
 
+    private void openMainScreent() {
+        try {
+            Stage currenStage = (Stage) loginButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/eckofox/efhomefinancialdb/main-screen.fxml"));
+
+            fxmlLoader.setControllerFactory(type -> {
+                if (type == MainScreenController.class) {
+                    return new MainScreenController(app); // To be able to pass the app variable.
+                }
+                return null;
+            });
+
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/logo.png"))));
+            stage.setTitle("EF Home Financial");
+            stage.setScene(new Scene(root));
+
+            NewUserScreenController controller = fxmlLoader.getController();
+            controller.initData(stage);
+
+            currenStage.close();
+            stage.show();
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.getStackTrace();
+        }
     }
 
     public void setApp(App app) {
