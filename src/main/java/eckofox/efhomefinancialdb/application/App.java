@@ -2,8 +2,6 @@ package eckofox.efhomefinancialdb.application;
 
 import eckofox.efhomefinancialdb.controllers.LoginScreenController;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
-import eckofox.efhomefinancialdb.menu.Menu;
-import eckofox.efhomefinancialdb.menu.UserMenu;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionGatherer;
 import eckofox.efhomefinancialdb.user.User;
@@ -84,22 +82,6 @@ public class App extends Application {
 
     public User getActiveUser() {
         return activeUser;
-    }
-
-    public Menu getLoginMenu() {
-        return loginMenu;
-    }
-
-    public Menu getUserMenu() {
-        return userMenu;
-    }
-
-//    public NewUserScreenController getNewUserMenu() {
-//        return newUserMenu;
-//    }
-
-    public void setActiveMenu(Menu activeMenu) {
-        this.activeMenu = activeMenu;
     }
 
     public TransactionGatherer getTransactionGatherer() {

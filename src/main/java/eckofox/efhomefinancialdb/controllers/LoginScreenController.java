@@ -50,7 +50,7 @@ public class LoginScreenController {
         String username = usernameField.getText();
         String password = passwordField.getText();
         if (loginCheck(username, password)) {
-            //TODO open next window
+            openMainScreen();
         }
         //nothing
     }
@@ -195,7 +195,7 @@ public class LoginScreenController {
         return new User(app, userid, username, firstname, lastname);
     }
 
-    private void openMainScreent() {
+    private void openMainScreen() {
         try {
             Stage currenStage = (Stage) loginButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/eckofox/efhomefinancialdb/main-screen.fxml"));
@@ -214,7 +214,7 @@ public class LoginScreenController {
             stage.setTitle("EF Home Financial");
             stage.setScene(new Scene(root));
 
-            NewUserScreenController controller = fxmlLoader.getController();
+            MainScreenController controller = fxmlLoader.getController();
             controller.initData(stage);
 
             currenStage.close();

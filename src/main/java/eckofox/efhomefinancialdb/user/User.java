@@ -102,6 +102,14 @@ public class User implements DataBaseManager {
         return username;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
     public String getDirPath() {
         return "dirPath";
     }

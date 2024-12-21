@@ -20,13 +20,13 @@
 
 <AnchorPane prefHeight="528.0" prefWidth="947.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controllers.MainScreenController">
    <children>
-      <Accordion prefHeight="528.0" prefWidth="947.0">
+      <Accordion fx:id="accordion" prefHeight="528.0" prefWidth="947.0">
         <panes>
           <TitledPane fx:id="dashboardPane" animated="false" style="-fx-background-color: yellow;" text="Dashboard">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="888.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="945.0">
                      <children>
-                        <VBox prefHeight="362.0" prefWidth="947.0">
+                        <VBox prefHeight="436.0" prefWidth="947.0">
                            <children>
                               <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="910.0" text="- DANEUSERNAME -" textOverrun="CENTER_ELLIPSIS">
                                  <font>
@@ -67,7 +67,7 @@
                                     <Insets top="16.0" />
                                  </padding>
                               </Label>
-                              <TableView fx:id="latestTransactionsTable" prefHeight="171.0" prefWidth="884.0">
+                              <TableView fx:id="latestTransactionsTable" prefHeight="242.0" prefWidth="947.0">
                                 <columns>
                                     <TableColumn prefWidth="75.0" text="ID" />
                                   <TableColumn prefWidth="75.0" text="Date" />
@@ -131,7 +131,7 @@
                                           <Insets bottom="1.0" left="-1.0" top="2.0" />
                                        </opaqueInsets>
                                     </TextField>
-                                    <TextField fx:id="commentField" minHeight="-Infinity" onKeyPressed="#enterPressed" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="147.0" promptText="Enter comment">
+                                    <TextField fx:id="commentField" minHeight="-Infinity" onKeyPressed="#enterPressed" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="293.0" promptText="Enter comment">
                                        <HBox.margin>
                                           <Insets bottom="1.0" right="5.0" top="1.0" />
                                        </HBox.margin>
