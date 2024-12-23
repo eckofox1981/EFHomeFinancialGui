@@ -1,0 +1,104 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
+    <mxGraphModel dx="928" dy="586" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0000FF;strokeWidth=5;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="CSIRv4RXPCGNGFPH0rIa-47" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="410" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-45" value="users_transactions" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="440" width="390" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-46" value="id SERIAL" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-45" vertex="1">
+          <mxGeometry y="20" width="120" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-47" value="&lt;font color=&quot;#009900&quot;&gt;userid UUID&lt;/font&gt;" style="swimlane;startSize=20;html=1;strokeColor=#0000FF;strokeWidth=5;" parent="CSIRv4RXPCGNGFPH0rIa-45" vertex="1">
+          <mxGeometry x="120" y="20" width="150" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="ifU1T9FJ0lVMCZAQscqx-13" value="&lt;pre&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&lt;font style=&quot;background-color: rgb(0, 0, 0);&quot; color=&quot;#009900&quot;&gt;CREATE TABLE users_transactions (id SERIAL PRIMARY KEY, userid UUID, transactionid);&lt;/font&gt;&lt;/font&gt;&lt;/pre&gt;" style="text;html=1;align=left;verticalAlign=middle;rounded=0;fillColor=default;fontFamily=Lucida Console;whiteSpace=wrap;" vertex="1" parent="CSIRv4RXPCGNGFPH0rIa-47">
+          <mxGeometry x="-120" y="160" width="470" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-48" value="&lt;font color=&quot;#009900&quot;&gt;transactionsid INT&lt;/font&gt;" style="swimlane;startSize=20;html=1;strokeWidth=5;strokeColor=#FF00FF;" parent="CSIRv4RXPCGNGFPH0rIa-45" vertex="1">
+          <mxGeometry x="270" y="20" width="120" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=5;strokeColor=#FF00FF;" parent="1" source="CSIRv4RXPCGNGFPH0rIa-39" target="CSIRv4RXPCGNGFPH0rIa-48" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-28" value="users" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;html=1;" parent="1" vertex="1">
+          <mxGeometry x="30" y="80" width="780" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-29" value="&lt;font color=&quot;#ff0000&quot;&gt;id UUID&lt;/font&gt;" style="swimlane;startSize=20;html=1;strokeColor=#0000FF;strokeWidth=5;" parent="CSIRv4RXPCGNGFPH0rIa-28" vertex="1">
+          <mxGeometry y="20" width="60" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-30" value="username TEXT" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-28" vertex="1">
+          <mxGeometry x="60" y="20" width="200" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ifU1T9FJ0lVMCZAQscqx-10" value="&lt;pre&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&lt;font style=&quot;background-color: rgb(0, 0, 0);&quot; color=&quot;#009900&quot;&gt;CREATE TABLE users (id UUID PRIMARY KEY, username TEXT UNIQUE, forename TEXT, lastna&lt;/font&gt;&lt;span style=&quot;background-color: rgb(0, 0, 0); color: rgb(0, 153, 0);&quot;&gt;me TEXT,&amp;nbsp; passwordHash TEXT,&amp;nbsp;&lt;br/&gt;date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);&lt;/span&gt;&lt;/font&gt;&lt;/pre&gt;" style="text;html=1;align=left;verticalAlign=middle;rounded=0;fillColor=default;fontFamily=Lucida Console;whiteSpace=wrap;" vertex="1" parent="CSIRv4RXPCGNGFPH0rIa-30">
+          <mxGeometry x="-40" y="90" width="750" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-33" value="forename TEXT" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-28" vertex="1">
+          <mxGeometry x="260" y="20" width="140" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-31" value="passwordHash TEXT" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-28" vertex="1">
+          <mxGeometry x="400" y="20" width="120" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-34" value="lastname TEXT" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-28" vertex="1">
+          <mxGeometry x="520" y="20" width="140" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-32" value="created TIMESTAMP" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-28" vertex="1">
+          <mxGeometry x="660" y="20" width="120" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-26" value="&lt;h1&gt;Database logic for EF Home Finance&lt;/h1&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="85" y="20" width="680" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-38" value="transactions_&#39;USERNAME&#39;" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="840" width="740" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-39" value="&lt;font color=&quot;#ff0000&quot;&gt;id SERIAL&lt;/font&gt;" style="swimlane;startSize=20;html=1;strokeWidth=5;strokeColor=#FF00FF;" parent="CSIRv4RXPCGNGFPH0rIa-38" vertex="1">
+          <mxGeometry y="20" width="80" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-40" value="date DATE" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-38" vertex="1">
+          <mxGeometry x="80" y="20" width="80" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-41" value="type TEXT" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-38" vertex="1">
+          <mxGeometry x="160" y="20" width="170" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ifU1T9FJ0lVMCZAQscqx-12" value="&lt;pre&gt;&lt;font face=&quot;Lucida Console&quot;&gt;&lt;font style=&quot;background-color: rgb(0, 0, 0);&quot; color=&quot;#009900&quot;&gt;CREATE TABLE transactions_&lt;i&gt;USERNAME&lt;/i&gt; (id SERIAL PRIMARY KEY, date DATE, type TEXT, amount DECIMAL&lt;/font&gt;&lt;span style=&quot;background-color: rgb(0, 0, 0); color: rgb(0, 153, 0);&quot;&gt;,&amp;nbsp; comment TEXT,&amp;nbsp;&lt;br&gt;date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);&lt;/span&gt;&lt;/font&gt;&lt;/pre&gt;" style="text;html=1;align=left;verticalAlign=middle;rounded=0;fillColor=default;fontFamily=Lucida Console;whiteSpace=wrap;" vertex="1" parent="CSIRv4RXPCGNGFPH0rIa-41">
+          <mxGeometry x="-150" y="65" width="680" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-42" value="amount DECIMAL (20, 2)" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-38" vertex="1">
+          <mxGeometry x="330" y="20" width="150" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-43" value="comment TEXT" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-38" vertex="1">
+          <mxGeometry x="480" y="20" width="140" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CSIRv4RXPCGNGFPH0rIa-44" value="created TIMESTAMP" style="swimlane;startSize=20;html=1;" parent="CSIRv4RXPCGNGFPH0rIa-38" vertex="1">
+          <mxGeometry x="620" y="20" width="120" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ifU1T9FJ0lVMCZAQscqx-1" value="accounts_&#39;USERNAME&#39;" style="swimlane;childLayout=stackLayout;resizeParent=1;resizeParentMax=0;startSize=20;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="360" width="400" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ifU1T9FJ0lVMCZAQscqx-2" value="userId UUID" style="swimlane;startSize=20;html=1;strokeColor=#0000FF;strokeWidth=5;" vertex="1" parent="ifU1T9FJ0lVMCZAQscqx-1">
+          <mxGeometry y="20" width="100" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="ifU1T9FJ0lVMCZAQscqx-6" value="name TEXT" style="swimlane;startSize=20;html=1;" vertex="1" parent="ifU1T9FJ0lVMCZAQscqx-1">
+          <mxGeometry x="100" y="20" width="120" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="ifU1T9FJ0lVMCZAQscqx-7" value="amount DECIMAL (20, 2)" style="swimlane;startSize=20;html=1;" vertex="1" parent="ifU1T9FJ0lVMCZAQscqx-1">
+          <mxGeometry x="220" y="20" width="180" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="ifU1T9FJ0lVMCZAQscqx-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=-0.012;entryY=0.046;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#0000FF;strokeWidth=4;" edge="1" parent="1" source="CSIRv4RXPCGNGFPH0rIa-29" target="ifU1T9FJ0lVMCZAQscqx-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="60" y="320" />
+              <mxPoint x="60" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
