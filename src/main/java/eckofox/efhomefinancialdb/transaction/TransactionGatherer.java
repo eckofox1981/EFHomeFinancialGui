@@ -20,7 +20,7 @@ public class TransactionGatherer {
 
     /** Gathering process in short:
      * the transaction list is cleared (to avoid to add all transactions again)
-     * a generic transaction is used to find the user's transaction directory
+     * a generic transaction is used to find the userId's transaction directory
      * each file is 'transaction.fetchData()' (see Transaction class) and resulting transaction added to the list
      * Error-handling accordingly
      */

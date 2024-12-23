@@ -48,7 +48,7 @@ public class ViewCommand extends Command {
      * sets up the search parameters and handles error.
      * Most of the time, if a search parameter other than date is missing or incorrect the app
      * will display all transaction for the time period (in some cases all transactions are shown anyway).
-     * During development, it was deemed more important to get more transactions shown than to have the user go
+     * During development, it was deemed more important to get more transactions shown than to have the userId go
      * through writing new arguments in the commandLine (this is true at least so long as there are not many
      * transactions.
      * @param args
@@ -168,12 +168,12 @@ public class ViewCommand extends Command {
     }
 
     /**
-     * to allow some flexibility the user can search for "LOSS" or "PROFIT" and still get the proper DEPOSIT/WITHDRAWAL
+     * to allow some flexibility the userId can search for "LOSS" or "PROFIT" and still get the proper DEPOSIT/WITHDRAWAL
      * transaction. This method edits the inputs to the proper transaction type to b filtered.
-     * Error-handling: if the type is not recognized, the user is notified and all types of transactions are shown
+     * Error-handling: if the type is not recognized, the userId is notified and all types of transactions are shown
      * according to logic explained in the comment for commandAnalyzer above,
      * @param typeFromUser self-explanatory
-     * @return a String version of transaction type, eventually "ALL" if user input not recognized.
+     * @return a String version of transaction type, eventually "ALL" if userId input not recognized.
      */
     private String typeEditor(String typeFromUser) {
         if (typeFromUser.equalsIgnoreCase("profit") || typeFromUser.equalsIgnoreCase("deposit")) {

@@ -21,7 +21,7 @@ public class TransferCommand extends Command implements EnterTransactionManager 
      * since EnterDeposit, EnterWithdrawal and TransferCommand are very similar, they all used the
      * EnterTransactionManager-interface almost identically. The main difference will be at Transaction-creation which is
      * overriden (creates either Deposit, Withdrawal or Transfer).
-     * Since the TransferCommand itself is simpler for the user (all in one line) than other transactions (prompt after
+     * Since the TransferCommand itself is simpler for the userId (all in one line) than other transactions (prompt after
      * prompt) it requires a little bit more error handling through the commandAnalyzer but the interface is used
      * the same way.
      * @param commandArgs

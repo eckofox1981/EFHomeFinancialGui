@@ -56,12 +56,12 @@
                   <Insets right="10.0" />
                </padding>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="178.0" text="Register new user" textAlignment="CENTER" GridPane.columnIndex="1">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="178.0" text="Register new userId" textAlignment="CENTER" GridPane.columnIndex="1">
                <font>
                   <Font name="Georgia" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="newUsernameField" minHeight="-Infinity" promptText="Enter user name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="newUsernameField" minHeight="-Infinity" promptText="Enter userId name" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <padding>
                   <Insets left="19.0" right="3.0" />
                </padding>

@@ -26,7 +26,7 @@ public class IdNumber implements DataBaseManager {
      */
     public IdNumber(Transaction transaction) {
         this.transaction = transaction;
-        user = transaction.getUser();
+        user = transaction.getUserId();
     }
 
     /**

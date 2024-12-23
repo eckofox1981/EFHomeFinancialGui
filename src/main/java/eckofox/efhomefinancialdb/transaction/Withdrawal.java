@@ -7,7 +7,7 @@ public class Withdrawal extends Transaction {
 
     public Withdrawal(App app, String date, double amount, String comment) {
         super(app, date, amount, comment);
-        user = app.getActiveUser();
+        userId = app.getActiveUser();
         idNumber = new IdNumber(this);
         idNumber.generateIdNumber();
         id = idNumber.getIdNumber();

@@ -11,7 +11,7 @@ import java.io.*;
 public class Transaction implements DataBaseManager {
     protected App app;
     protected IdNumber idNumber;
-    protected User user;
+    protected User userId;
     protected int id;
     protected TransactionType transactionType;
     protected String date;
@@ -22,17 +22,16 @@ public class Transaction implements DataBaseManager {
 
     public Transaction(App app) {
         this.app = app;
-        user = app.getActiveUser();
+        userId = app.getActiveUser();
     }
 
     public Transaction(int id, String date, double amount, String comment) {
         this.app = getApplication();
-        this.user = app.getActiveUser();
+        this.userId = app.getActiveUser();
         this.id = id;
         this.date = date;
         this.amount = amount;
         this.comment = comment;
-        toBEREMOVEDsetPaths();
     }
 
     public Transaction(App app, String date, double amount, String comment) {
@@ -150,7 +149,7 @@ public class Transaction implements DataBaseManager {
     }
 
     /**
-     * withdrawal are set as negative as to make it user-friendlier (user doesn't have to type -amount)
+     * withdrawal are set as negative as to make it userId-friendlier (userId doesn't have to type -amount)
      */
     private void amountIsPositive() {
         if (transactionType.equals(TransactionType.WITHDRAWAL)) {
@@ -168,7 +167,7 @@ public class Transaction implements DataBaseManager {
     }
 
     public void setDirPath() {
-        dirPath = user.getDirPath() + "transactionFiles/";
+        dirPath = userId.getDirPath() + "transactionFiles/";
     }
 
     public void setFilePath() {
@@ -179,8 +178,8 @@ public class Transaction implements DataBaseManager {
         this.filePath = filePath;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     public void setAmount(double amount) {
@@ -191,8 +190,8 @@ public class Transaction implements DataBaseManager {
         return app;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserId() {
+        return userId;
     }
 
     public int getId() {

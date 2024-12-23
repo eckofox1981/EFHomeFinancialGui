@@ -17,7 +17,7 @@ public class DeleteCommand extends Command {
 
     /**
      * double checks that enough args have been received before sending them to commanAnalyzer() as a String-array
-     * @param commandArgs from user
+     * @param commandArgs from userId
      */
     @Override
     public void run(String commandArgs) {
@@ -39,9 +39,9 @@ public class DeleteCommand extends Command {
 
 
     /**
-     * checks that user argument are correctly formatted (in this case an Integer) and then ask for
-     * user confirmation before sending transaction ID-number to deleteFile.
-     * Before confirmation, the user can see the transaction (stored by TransactionGatherer)
+     * checks that userId argument are correctly formatted (in this case an Integer) and then ask for
+     * userId confirmation before sending transaction ID-number to deleteFile.
+     * Before confirmation, the userId can see the transaction (stored by TransactionGatherer)
      * @param args split args from 'run'
      */
     private void commandAnalyzer(String[] args) {

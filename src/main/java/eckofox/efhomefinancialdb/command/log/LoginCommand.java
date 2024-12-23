@@ -14,7 +14,7 @@ public class LoginCommand extends Command {
 
     /**
      * loops through the login process, see comment for loginCheck
-     * @param commandArgs (user input)
+     * @param commandArgs (userId input)
      */
     @Override
     public void run(String commandArgs) {
@@ -31,9 +31,9 @@ public class LoginCommand extends Command {
     }
 
     /**
-     * checks first if a user file based on the name input exist (path setting convention is robust enough to allow
+     * checks first if a userId file based on the name input exist (path setting convention is robust enough to allow
      * proper generation.
-     * IF NO USER FILE is found, the user is sent out of the loop above to be allowed to create a newuser.
+     * IF NO USER FILE is found, the userId is sent out of the loop above to be allowed to create a newuser.
      * @param name self-explanatory
      * @param password self-explanatory
      * @return boolean till loop in 'run' above.

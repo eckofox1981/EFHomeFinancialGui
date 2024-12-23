@@ -72,7 +72,7 @@ public class LoginScreenController {
 
             Stage stage = new Stage();
             stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/logo.png"))));
-            stage.setTitle("EF Home Financial - register new user");
+            stage.setTitle("EF Home Financial - register new userId");
             stage.setScene(new Scene(root));
 
             NewUserScreenController controller = fxmlLoader.getController();
@@ -103,11 +103,6 @@ public class LoginScreenController {
     }
 
     private boolean userNameExists (String username) {
-        try {
-            app.getDataBaseHandler().connectToDatabase();
-        } catch (SQLException e) {
-            System.err.println("Could not connect to database in userNameExists. " + e.getMessage());
-        }
         try (PreparedStatement usernameIsPresentStatement =
                      app.getConnection().prepareStatement("SELECT username FROM users WHERE username = ?;")) {
             usernameIsPresentStatement.setString(1, username);
@@ -126,11 +121,6 @@ public class LoginScreenController {
 
     private boolean passwordCheck (String username, String password) {
         String passwordHash = "";
-        try {
-            app.getDataBaseHandler().connectToDatabase();
-        } catch (SQLException e) {
-            System.err.println("Could not connect to database in passwordCheck. " + e.getMessage());
-        }
 
         try (PreparedStatement checkPasswordHashStatement =
                      app.getConnection().prepareStatement("SELECT passwordhash FROM users WHERE username =?")){
@@ -163,11 +153,6 @@ public class LoginScreenController {
 
     private void setActiveUser(String username){
         User user = new User();
-        try {
-            app.getDataBaseHandler().connectToDatabase();
-        } catch (SQLException e) {
-            System.err.println("Could not connect to database in setActiveUser. " + e.getMessage());
-        }
 
         try (PreparedStatement selectAllStatement = app.getConnection().prepareStatement("SELECT * FROM users WHERE username = ?;")){
             selectAllStatement.setString(1, username);
@@ -175,10 +160,9 @@ public class LoginScreenController {
                 while (result.next()) {
                     user = userFromResult(result);
                     app.setActiveUser(user);
-                    msgForUsers.setText("DEBUG: är du " + app.getActiveUser().getUsername() + "?");
                 }
             } catch (SQLException e) {
-                System.err.println("Error while creating user at setActiveUser. " + e.getMessage());
+                System.err.println("Error while creating userId at setActiveUser. " + e.getMessage());
             }
 
         }catch (SQLException sqlException) {

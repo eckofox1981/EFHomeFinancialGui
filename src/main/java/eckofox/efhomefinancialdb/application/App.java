@@ -23,7 +23,7 @@ public class App extends Application {
     /**
      * activeUser and activeMenu are used to set up different phases of the app.
      * for example the activeMenu is referenced for the different menu command
-     * activeUser is obviously referenced for accessing/creating user data.
+     * activeUser is obviously referenced for accessing/creating userId data.
      */
     private User activeUser;
     public boolean running = true;
@@ -40,11 +40,13 @@ public class App extends Application {
         this.transactionGatherer = new TransactionGatherer(this);
         this.dataBaseHandler = new DataBaseHandler(this);
         scanner = new Scanner(System.in);
+        dataBaseHandler.settingUpConnectionAndTables();
     }
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/eckofox/efhomefinancialdb/login-screen.fxml"));
+
         fxmlLoader.setControllerFactory(type -> { //type = classtype
             if (type == LoginScreenController.class) { //if class is the login controller it sends 'app' in the special
                 return new LoginScreenController(this); // constructor, not normally OK for FXML controller.
@@ -63,16 +65,12 @@ public class App extends Application {
 
 
     public static void main(String[] args){
-            App app = new App();
-            app.dataBaseHandler.settingUpConnectionAndTables();
+
+
             launch();
+            //NOTE: launch makes an instance of app
 
 
-            try {
-                app.connection.close();
-            } catch (SQLException exception) {
-                System.err.println("Could not close connection.");
-            }
     }
 
 

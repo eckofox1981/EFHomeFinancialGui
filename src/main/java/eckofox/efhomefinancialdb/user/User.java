@@ -47,16 +47,10 @@ public class User implements DataBaseManager {
     }
 
     /**
-     * sets user paths, creates directory and file and writes username and passwordHash
+     * sets userId paths, creates directory and file and writes username and passwordHash
      */
     @Override
     public void saving() {
-        try {
-            app.getDataBaseHandler().connectToDatabase();
-        } catch (SQLException e) {
-            System.err.println("Could not connect to database in 'user.saving'.");
-        }
-
         try (PreparedStatement newUserStatement =
                 app.getConnection().prepareStatement("INSERT INTO users (userid, username, firstname, lastname, passwordhash) VALUES (?, ?, ?, ?, ?);")){
             newUserStatement.setObject(1, userID);
@@ -64,11 +58,11 @@ public class User implements DataBaseManager {
             newUserStatement.setString(3, firstname);
             newUserStatement.setString(4, lastname);
             newUserStatement.setString(5, passwordHash);
-            newUserStatement.executeQuery();
+            newUserStatement.executeUpdate(); //executeUpdate => DELETE, UPDATE, INSERT INTO
         } catch (SQLException e) {
-            System.err.println("Could save user in SQL database: " + e.getMessage());
+            System.err.println("Issue saving userId in SQL database: " + e.getMessage());
         }
-        System.out.println("User-" + username + " " + firstname + " " + lastname + " " + passwordHash + " data saved");
+        System.out.println("DEBUG: Account saved = " + username + " " + userID);
     }
 
 
@@ -86,7 +80,7 @@ public class User implements DataBaseManager {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            System.out.println("Could not edit user file.");
+            System.out.println("Could not edit userId file.");
         }
     }
 
@@ -96,6 +90,10 @@ public class User implements DataBaseManager {
     public void createAccounts() {
         acountList.add(new CheckingAccount(app, this));
         acountList.add(new SavingAccount(app, this));
+    }
+
+    public UUID getUserID() {
+        return userID;
     }
 
     public String getUsername() {

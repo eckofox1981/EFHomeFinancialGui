@@ -1,9 +1,15 @@
 package eckofox.efhomefinancialdb.controllers;
 
 import eckofox.efhomefinancialdb.application.App;
+import eckofox.efhomefinancialdb.date.DateUtility;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.spi.CalendarDataProvider;
 
 public class MainScreenController {
     private App app;
@@ -19,6 +25,7 @@ public class MainScreenController {
     }
     @FXML
     private Accordion accordion;
+    //-----------------DASHBOARD-----------------
     @FXML
     private TitledPane dashboardPane;
     @FXML
@@ -33,6 +40,11 @@ public class MainScreenController {
     private Label savingAccountLabel;
     @FXML
     private TableView latestTransactionsTable;
+    //-----------------TRANSACTIONS-----------------
+    @FXML
+    private TitledPane transactionsPane;
+    @FXML
+    private ChoiceBox fromAccountDropDown;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -63,6 +75,9 @@ public class MainScreenController {
     private TableView transactionsTable;
     @FXML
     private Button deleteButton;
+    //-----------------HELP-----------------
+    @FXML
+    private TitledPane helpPane;
 
     public void settingUpDashBoard(){
         userNameLabel.setText("- " + app.getActiveUser().getUsername() + " -");
@@ -135,7 +150,19 @@ public class MainScreenController {
     }
 
     private String getJoinedMonthAndYear() {
-        //TODO method to get month and year account created
-        return "joined march 2004";
+        String joinedDate = "error fetching enrollment date.";
+        System.out.println("DEBUG: userID(?): " + app.getActiveUser().getUserID());
+        try (PreparedStatement fetchDateStatement = app.getConnection().prepareStatement("SELECT created_at FROM users WHERE username = ?;")) {
+            fetchDateStatement.setString(1, app.getActiveUser().getUsername());
+            try {
+                //TODO: FIX IT
+
+            } catch (SQLException ex) {
+                System.err.println("Error fetching date in getJoinedMonthAndYear. " + ex.getMessage());
+            }
+        } catch (SQLException e) {
+            System.err.println("Error with getJoinedMonthAndYear statement. " + e.getMessage());
+        }
+        return joinedDate;
     }
 }

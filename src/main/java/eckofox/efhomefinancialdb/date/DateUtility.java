@@ -27,9 +27,9 @@ public class DateUtility {
     }
 
     /***
-     * use the convertDateString to see if user input is Ok to be used as transaction date.
-     * @param sDate (user input)
-     * @return a boolean that is used to approve sDate or ask the user for a new, corrected, input.
+     * use the convertDateString to see if userId input is Ok to be used as transaction date.
+     * @param sDate (userId input)
+     * @return a boolean that is used to approve sDate or ask the userId for a new, corrected, input.
      */
     public static boolean checkIsDate(String sDate) {
         try {
@@ -60,10 +60,10 @@ public class DateUtility {
     }
 
     /**
-     * simple date converter, could be useful for future use, now just used to check correct format from user
-     * @param sDate date written by the user
+     * simple date converter, could be useful for future use, now just used to check correct format from userId
+     * @param sDate date written by the userId
      * @return Date but never actually used.
-     * @throws ParseException actually used as a mean to determined if user input is in the correct format.
+     * @throws ParseException actually used as a mean to determined if userId input is in the correct format.
      */
     private static Date convertDateString(String sDate) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
