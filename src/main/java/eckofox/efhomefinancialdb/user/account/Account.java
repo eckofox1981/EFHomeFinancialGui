@@ -12,8 +12,6 @@ public abstract class Account implements DataBaseManager {
     private String name;
     private User user;
     private double balance;
-    private String dirPath;
-    private String filepath;
 
     public Account(App app, String name) {
         this.app = app;
@@ -24,36 +22,14 @@ public abstract class Account implements DataBaseManager {
      * creates the account file
      */
 
-    public void toBEREMOVEDcreateFile() {
-        toBEREMOVEDsetPaths();
 
-        File accountFile = new File(filepath);
-        if (accountFile.exists()) {
-            return;
-        }
-        try {
-            accountFile.createNewFile();
-        } catch (IOException e) {
-            System.out.println("Could not create file.");
-        }
-    }
 
     /**
      * after calling file creation, account data is appended onto on file
      */
     @Override
     public void insertData() {
-        toBEREMOVEDcreateFile();
-        File userFile = new File(filepath);
-        try {
-            FileWriter writer = new FileWriter(userFile);
-            writer.append(user.getUsername()).append(" - ").append(name).append("\n");
-            writer.append(String.valueOf(balance));
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Could not write account file.");
-        }
+
     }
 
     /**
@@ -61,26 +37,7 @@ public abstract class Account implements DataBaseManager {
      */
     @Override
     public void fetchData() {
-        toBEREMOVEDsetPaths();
-        File file = new File(filepath);
-        if (!file.exists()) {
-            System.out.println("No account file found.");
-            return;
-        }
 
-        try (FileReader accountFile = new FileReader(file.getAbsolutePath());
-             BufferedReader lineReader = new BufferedReader(accountFile)) {
-
-            lineReader.readLine();
-            setBalance(Double.parseDouble(lineReader.readLine()));
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filepath);
-        } catch (IOException e) {
-            System.out.println("Problem reading file - " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid number format - Invalid balance format in file");
-        }
     }
 
     /**
@@ -95,10 +52,6 @@ public abstract class Account implements DataBaseManager {
      */
     abstract double transferCheck(Transaction transaction);
 
-    public void toBEREMOVEDsetPaths() {
-        dirPath = user.getDirPath();
-        filepath = dirPath + "account - " + name + ".txt";
-    }
 
     public String getName() {
         return name;

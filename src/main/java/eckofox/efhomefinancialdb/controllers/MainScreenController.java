@@ -152,7 +152,6 @@ public class MainScreenController {
 
     private String getJoinedMonthAndYear() {
         String joinedDate = "error fetching enrollment date.";
-        System.out.println("DEBUG: userID(?): " + app.getActiveUser().getUserID());
         try (PreparedStatement fetchDateStatement = app.getConnection().prepareStatement("SELECT created_at FROM users WHERE username = ?;")) {
             fetchDateStatement.setString(1, app.getActiveUser().getUsername());
             try {

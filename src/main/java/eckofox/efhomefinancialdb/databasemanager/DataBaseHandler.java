@@ -54,7 +54,18 @@ public class DataBaseHandler {
                             "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);");
 
         } catch (SQLException exception) {
-            System.err.println("Issue with createUserTableStatement");
+            System.err.println("Issue with createUserTableStatement." + exception.getMessage());
+        }
+    }
+
+    private void settingUpAccountTable(){
+        try {
+            Statement createAccountTableStatement = app.getConnection().createStatement();
+            createAccountTableStatement.execute(
+                    "CREATE TABLE IF NOT EXISTS accounts (accountid UUID UNIQUE PRIMARY KEY, name TEXT, userid UUID, " +
+                            "FOREIGN KEY (userid) REFERENCES users(userid));");
+        } catch (SQLException e) {
+            System.err.println("Issue with createAccountTableStatement. " + e.getMessage());
         }
     }
 
@@ -62,12 +73,25 @@ public class DataBaseHandler {
         try {
             Statement createTransactionTableStatement = app.getConnection().createStatement();
             createTransactionTableStatement.execute(
-                    "CREATE TABLE IF NOT EXISTS transactions (id SERIAL PRIMARY KEY, date DATE, " +
+                    "CREATE TABLE IF NOT EXISTS transactions (id UUID UNIQUE PRIMARY KEY, date DATE, " +
                             "transactiontype TEXT CHECK (transactiontype IN ('WITHDRAWAL', 'DEPOSIT', 'TRANSFER')), " +
                             "amount DECIMAL, comment TEXT, userid UUID, FOREIGN KEY (userid) REFERENCES users(userid));");
 
         } catch (SQLException exception) {
             System.err.println("Issue with create transaction table. " + exception.getMessage());
+        }
+    }
+
+    private void settingUpAccountTransactionTable() {
+        try {
+            Statement accountTransactionTableStatement = app.getConnection().createStatement();
+            accountTransactionTableStatement.execute(
+                    "CREATE TABLE IF NOT EXISTS account_transactions (id SERIAL PRIMARY KEY, accountid UUID, transactionid UUID," +
+                            "FOREIGN KEY (accountid) REFERENCES accounts(accountid), " +
+                            "FOREIGN KEY (transactionid) REFERECENCES transactions(id));"
+            )
+        } catch (SQLException e) {
+            System.err.println("Issue with junction table creation." + e.getMessage());
         }
     }
 }

@@ -10,7 +10,6 @@ public class CheckingAccount extends Account {
     public CheckingAccount(App app, User user) {
         super(app, "Checking account");
         this.setUser(user);
-        toBEREMOVEDcreateFile();
         insertData();
     }
 

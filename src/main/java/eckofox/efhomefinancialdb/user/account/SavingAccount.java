@@ -10,7 +10,6 @@ public class SavingAccount extends Account {
     public SavingAccount(App app, User user) {
         super(app, "Saving account");
         this.setUser(user);
-        toBEREMOVEDcreateFile();
         insertData();
     }
 

@@ -62,7 +62,6 @@ public class User implements DataBaseManager {
         } catch (SQLException e) {
             System.err.println("Issue saving userId in SQL database: " + e.getMessage());
         }
-        System.out.println("DEBUG: Account saved = " + username + " " + userID);
     }
 
 
