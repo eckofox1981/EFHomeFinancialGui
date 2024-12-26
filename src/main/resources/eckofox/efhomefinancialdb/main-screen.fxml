@@ -26,24 +26,24 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="945.0">
                      <children>
-                        <VBox prefHeight="436.0" prefWidth="947.0">
+                        <VBox prefHeight="482.0" prefWidth="1097.0">
                            <children>
-                              <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="947.0" text="- DANEUSERNAME -" textFill="#06e165" textOverrun="CENTER_ELLIPSIS">
+                              <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="1097.0" text="- DANEUSERNAME -" textFill="#06e165" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Bold" size="25.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="realNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="947.0" text="Daniel Johansson" textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
+                              <Label fx:id="realNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="1097.0" text="Daniel Johansson" textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Bold" size="19.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="joinedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="947.0" text="joined march 2024" textFill="#06e165" textOverrun="CENTER_ELLIPSIS">
+                              <Label fx:id="joinedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="1097.0" text="joined march 2024" textFill="#06e165" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Regular" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="checkingAccountLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="947.0" text="Checking Account: 2202020 SEK" textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
+                              <Label fx:id="checkingAccountLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="1097.0" text="Checking Account: 2202020 SEK" textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Regular" size="19.0" />
                                  </font>
@@ -51,7 +51,7 @@
                                     <Insets top="30.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="savingAccountLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="947.0" text="Saving Account: 21352135213651 SEK " textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
+                              <Label fx:id="savingAccountLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="1097.0" text="Saving Account: 21352135213651 SEK " textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Regular" size="19.0" />
                                  </font>
@@ -59,7 +59,7 @@
                                     <Insets top="1.0" />
                                  </padding>
                               </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="947.0" text="Latest transactions" textOverrun="CENTER_ELLIPSIS">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="1097.0" text="Latest transactions" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Regular" size="17.0" />
                                  </font>

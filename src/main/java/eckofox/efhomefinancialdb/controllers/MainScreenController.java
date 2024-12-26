@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.spi.CalendarDataProvider;
 
 public class MainScreenController {
@@ -155,8 +156,13 @@ public class MainScreenController {
         try (PreparedStatement fetchDateStatement = app.getConnection().prepareStatement("SELECT created_at FROM users WHERE username = ?;")) {
             fetchDateStatement.setString(1, app.getActiveUser().getUsername());
             try {
-                //TODO: FIX IT
+                ResultSet result = fetchDateStatement.executeQuery();
+                if (result.next()) {
+                    Timestamp timestamp = result.getTimestamp("created_at");
 
+                    SimpleDateFormat joinedDateFormat = new SimpleDateFormat("MMMM yyyy");
+                    joinedDate = "joined " + joinedDateFormat.format(timestamp);
+                }
             } catch (SQLException ex) {
                 System.err.println("Error fetching date in getJoinedMonthAndYear. " + ex.getMessage());
             }
