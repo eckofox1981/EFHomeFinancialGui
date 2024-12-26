@@ -162,6 +162,8 @@ public class LoginScreenController {
                 while (result.next()) {
                     user = userFromResult(result);
                     app.setActiveUser(user);
+                    app.getActiveUser().getAcountList().add(new CheckingAccount(app, user));
+                    app.getActiveUser().getAcountList().add(new SavingAccount(app, user));
                 }
             } catch (SQLException e) {
                 System.err.println("Error while creating userId at setActiveUser. " + e.getMessage());
@@ -170,12 +172,6 @@ public class LoginScreenController {
         }catch (SQLException sqlException) {
             System.err.println("Error with prepared statement in setActiveUser. " + sqlException.getMessage());
         }
-    }
-
-    private void settingUserAccounts(User user){
-        CheckingAccount checkingAccount = new CheckingAccount(app, user);
-        SavingAccount savingAccount = new SavingAccount(app, user);
-
     }
 
     private User userFromResult (ResultSet result) throws SQLException {

@@ -16,7 +16,7 @@ public class CheckingAccount extends Account {
     public void setBalanceFromTransactions() {
         double newBalance = 0;
 
-        for (Transaction transaction : app.getTransactionGatherer().getTransactionList()) {
+        for (Transaction transaction : app.getActiveTransactionList()) {
             if (transaction.getTransactionType().equals(TransactionType.TRANSFER)) {
                 newBalance += transferCheck(transaction);
             } else {
@@ -35,7 +35,8 @@ public class CheckingAccount extends Account {
     }
 
 
+    @Override
+    public void deleteData() {
 
-
-
+    }
 }

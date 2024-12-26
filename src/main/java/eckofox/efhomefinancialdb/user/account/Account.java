@@ -81,8 +81,12 @@ public abstract class Account implements DataBaseManager {
      * Transfer (extending Transaction) are submitted to a check to make sure
      * the proper account is awarded or debited
      */
-    abstract double transferCheck(Transaction transaction);
+    protected abstract double transferCheck(Transaction transaction);
 
+
+    public UUID getAccountId() {
+        return accountId;
+    }
 
     public String getName() {
         return name;

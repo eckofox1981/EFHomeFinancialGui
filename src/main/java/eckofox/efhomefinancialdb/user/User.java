@@ -87,6 +87,11 @@ public class User implements DataBaseManager {
     @Override
     public void fetchData() {/*not used in this class*/}
 
+    @Override
+    public void deleteData() {
+
+    }
+
     public void createAccounts() {
         acountList.add(new CheckingAccount(app, this));
         acountList.add(new SavingAccount(app, this));

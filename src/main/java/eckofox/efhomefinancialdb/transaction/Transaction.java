@@ -2,113 +2,70 @@ package eckofox.efhomefinancialdb.transaction;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseManager;
-import eckofox.efhomefinancialdb.transaction.idnumber.IdNumber;
 import eckofox.efhomefinancialdb.user.User;
 import eckofox.efhomefinancialdb.user.account.Account;
 
-import java.io.*;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.UUID;
 
 public class Transaction implements DataBaseManager {
     protected App app;
-    protected IdNumber idNumber;
-    protected User userId;
-    protected int id;
+    protected User user;
+    protected UUID id;
     protected TransactionType transactionType;
-    protected String date;
+    protected Account fromAccount;
+    protected Date date;
     protected double amount;
     protected String comment;
-    protected String dirPath;
-    protected String filePath;
 
     public Transaction(App app) {
         this.app = app;
-        userId = app.getActiveUser();
+        user = app.getActiveUser();
     }
 
-    public Transaction(int id, String date, double amount, String comment) {
-        this.app = getApplication();
-        this.userId = app.getActiveUser();
+    public Transaction(App app, User user, UUID id, TransactionType transactionType, Account fromAccount,
+                       Date date, double amount, String comment) {
+        this.app = app;
+        this.user = user;
         this.id = id;
+        this.transactionType = transactionType;
+        this.fromAccount = fromAccount;
         this.date = date;
         this.amount = amount;
         this.comment = comment;
     }
 
-    public Transaction(App app, String date, double amount, String comment) {
+    public Transaction(App app, Date date, double amount, String comment) {
         this.app = app;
         this.date = date;
         this.amount = amount;
         this.comment = comment;
     }
 
-    /** SAVING PROCESS:
-     *  filewriter (after: toBEREMOVEDcreateFile <- createTable) -> write down the main data of the transaction in plain text
-     *  account balances are updated and displayed
-     */
+
     @Override
     public void saving() {
-        insertData();
-        System.out.println("Transaction number " + id + " saved.");
-        app.getActiveUser().getAcountList().stream()
-                .peek(Account::setBalanceFromTransactions).
-                forEach(a -> System.out.print(a.getName() + ": " + a.getBalance() + " | "));
-        System.out.println();
-    }
-
-    /**
-     * check if transactions directory exist and creates it, according to preconfigured directory path, if necessary.
-     */
-
-    public void createTable() {
-        File transactionDir = new File(dirPath);
-        if (transactionDir.exists()) {
-            return;
-        }
-        transactionDir.mkdirs();
-        System.out.println("Transaction directory created.");
-    }
-
-    /**
-     * calls create dir to check directory then creates a file according to preconfigured filepath
-     * to be edited.
-     */
-
-    public void toBEREMOVEDcreateFile() {
-        createTable();
-        File transactionFile = new File(filePath);
-        if (transactionFile.exists()) {
-            System.out.println("File already exits.");
-            return;
-        }
-        try {
-            transactionFile.createNewFile();
-        } catch (IOException e) {
-            System.out.println("Could not create transaction file.");
+        try (PreparedStatement savingTransactionStatements = app.getConnection().prepareStatement(
+                "INSERT INTO transactions (id, date, transactiontype, amount, comment) " +
+                "VALUES (?, ?, ?, ?);")) {
+                savingTransactionStatements.setObject(1, id);
+                savingTransactionStatements.setDate(2, (java.sql.Date) date);
+                savingTransactionStatements.setString(3, String.valueOf(transactionType));
+                savingTransactionStatements.setDouble(4, amount);
+                savingTransactionStatements.setString(5, comment);
+                savingTransactionStatements.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Issue saving Transaction. " + e.getMessage());
         }
     }
 
-    /**
-     * edit the file with transaction data.
-     */
+
     @Override
     public void insertData() {
-        try {
-            toBEREMOVEDcreateFile();
 
-            FileWriter writer = new FileWriter(filePath, true);
-
-            writer.append(String.valueOf(id)).append("\n");
-            writer.append(date).append("\n");
-            writer.append(transactionType.toString()).append("\n");
-            amountIsPositive();
-            writer.append(String.valueOf(amount)).append("\n");
-            writer.append(comment).append("\n");
-
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Could not edit transaction file.");
-        }
     }
 
     /**
@@ -116,37 +73,14 @@ public class Transaction implements DataBaseManager {
      */
     @Override
     public void fetchData() {
-        File transactionFile = new File(filePath);
 
-        try (FileReader file = new FileReader(transactionFile.getAbsolutePath());
-                                BufferedReader lineReader = new BufferedReader(file)) {
-
-            id = Integer.parseInt(lineReader.readLine());
-            date = lineReader.readLine();
-            transactionType = TransactionType.valueOf(lineReader.readLine());
-            amount = Double.parseDouble(lineReader.readLine());
-            comment = lineReader.readLine();
-
-        } catch (FileNotFoundException e) { //never had it so far
-            System.out.println("File not found:" + transactionFile.getName());
-        } catch (IOException e) { //never had it so far
-            System.err.println("Error reading file: " + transactionFile.getName());
-        } catch (NumberFormatException e) { //had it after screwing in the files, should not happen through normal usage
-            System.err.println("Invalid data format in file: " + transactionFile.getName());
-        }
     }
 
-    /**
-     * deletes the transaction through its file path
-     */
-    public void deleteFile() {
-        File file = new File(filePath);
-        if (file.delete()) {
-            System.out.println("Transaction nr. " + id + " deleted.");
-        } else {
-            System.out.println("Could not erase transaction file nr " + id + ".");
-        }
+    @Override
+    public void deleteData() {
+
     }
+
 
     /**
      * withdrawal are set as negative as to make it userId-friendlier (userId doesn't have to type -amount)
@@ -157,29 +91,8 @@ public class Transaction implements DataBaseManager {
         }
     }
 
-
-    /**
-     * FOLLOWING ARE SOMETIMES "UPGRADED" GETTERS AND SETTERS
-     */
-    public void toBEREMOVEDsetPaths() {
-        setDirPath();
-        setFilePath();
-    }
-
-    public void setDirPath() {
-        dirPath = userId.getDirPath() + "transactionFiles/";
-    }
-
-    public void setFilePath() {
-        filePath = dirPath + id + " " + date + ".txt";
-    }
-
-    public void setFilePath(String filePath) { //overloaded for TransactionGatherer
-        this.filePath = filePath;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setAmount(double amount) {
@@ -190,19 +103,16 @@ public class Transaction implements DataBaseManager {
         return app;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public String getDate() {
+    public java.util.Date getDate() {
         return date;
     }
 
@@ -212,10 +122,6 @@ public class Transaction implements DataBaseManager {
 
     public String getComment() {
         return comment;
-    }
-
-    public String getDirPath() {
-        return dirPath;
     }
 
     public void setTransactionType(TransactionType transactionType) {

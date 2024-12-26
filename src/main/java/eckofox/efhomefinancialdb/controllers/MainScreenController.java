@@ -2,14 +2,19 @@ package eckofox.efhomefinancialdb.controllers;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.date.DateUtility;
+import eckofox.efhomefinancialdb.transaction.TransactionType;
+import eckofox.efhomefinancialdb.user.account.Account;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.spi.CalendarDataProvider;
 
 public class MainScreenController {
@@ -45,7 +50,7 @@ public class MainScreenController {
     @FXML
     private TitledPane transactionsPane;
     @FXML
-    private ChoiceBox fromAccountDropDown;
+    private ComboBox<Account> fromAccountDropDown;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -84,10 +89,42 @@ public class MainScreenController {
         userNameLabel.setText("- " + app.getActiveUser().getUsername() + " -");
         realNameLabel.setText(app.getActiveUser().getFirstname() + " " + app.getActiveUser().getLastname());
         joinedLabel.setText(getJoinedMonthAndYear());
-        checkingAccountLabel.setText("Checking Account: " + "");
-        savingAccountLabel.setText("Saving Account: " + "");
+        checkingAccountLabel.setText(app.getActiveUser().getAcountList().getFirst().getName() + ": " +
+                app.getActiveUser().getAcountList().getFirst().getBalance() + " SEK");
+        savingAccountLabel.setText(app.getActiveUser().getAcountList().getLast().getName() + ": " +
+                app.getActiveUser().getAcountList().getLast().getBalance() + " SEK");
         //TODO set up tableview.
         accordion.setExpandedPane(dashboardPane);
+    }
+
+    @FXML
+    private void initialize() {
+        //initializes dropdown for types
+        typeDropDown.getItems().setAll(FXCollections.observableArrayList(EnumSet.allOf(TransactionType.class)));
+        fromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
+
+        fromAccountDropDown.setConverter(new StringConverter<>() { //to be used as String and Object
+            public String toString(Account account) {
+                return (account != null) ? account.getName() : "";
+            }
+
+            public Account fromString(String string) {
+                if (string == null || string.isEmpty()) {
+                    return null;
+                }
+
+                for (Account account : fromAccountDropDown.getItems()) {
+                    if (account != null && account.getName().equals(string)) {
+                        return account; //
+                    }
+                }
+                return null;
+            }
+        });
+
+        typeDropDown.setValue("WITHDRAWAL");
+        fromAccountDropDown.setValue(fromAccountDropDown.getItems().get(0));
+
     }
 
     @FXML

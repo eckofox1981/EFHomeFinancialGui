@@ -3,7 +3,7 @@ package eckofox.efhomefinancialdb.application;
 import eckofox.efhomefinancialdb.controllers.LoginScreenController;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
 import eckofox.efhomefinancialdb.transaction.Transaction;
-import eckofox.efhomefinancialdb.transaction.TransactionGatherer;
+import eckofox.efhomefinancialdb.transaction.TransactionManager;
 import eckofox.efhomefinancialdb.user.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -26,21 +27,23 @@ public class App extends Application {
      * activeUser is obviously referenced for accessing/creating userId data.
      */
     private User activeUser;
+    private List <Transaction> activeTransactionList;
     public boolean running = true;
 
     //private NewUserScreenController newUserMenu;
     private Transaction transaction;
-    private TransactionGatherer transactionGatherer;
+    private TransactionManager transactionManager;
     public Scanner scanner;
     private Connection connection;
     private DataBaseHandler dataBaseHandler;
 
     public App() {
         this.transaction = new Transaction(this);
-        this.transactionGatherer = new TransactionGatherer(this);
+        this.transactionManager = new TransactionManager(this);
         this.dataBaseHandler = new DataBaseHandler(this);
         scanner = new Scanner(System.in);
         dataBaseHandler.settingUpConnectionAndTables();
+        activeTransactionList = new ArrayList<>();
     }
 
     @Override
@@ -82,8 +85,16 @@ public class App extends Application {
         return activeUser;
     }
 
-    public TransactionGatherer getTransactionGatherer() {
-        return transactionGatherer;
+    public List<Transaction> getActiveTransactionList() {
+        return activeTransactionList;
+    }
+
+    public void setActiveTransactionList(List<Transaction> activeTransactionList) {
+        this.activeTransactionList = activeTransactionList;
+    }
+
+    public TransactionManager getTransactionGatherer() {
+        return transactionManager;
     }
 
     public Connection getConnection() {

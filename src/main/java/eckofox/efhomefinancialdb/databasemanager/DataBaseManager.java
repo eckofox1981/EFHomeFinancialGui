@@ -7,6 +7,8 @@ public interface DataBaseManager {
 
     void fetchData();
 
+    void deleteData();
+
     //void updateData();
 
     //void deleteData();

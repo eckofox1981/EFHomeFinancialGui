@@ -43,7 +43,6 @@ public class DataBaseHandler {
         settingUpUserTable();
         settingUpAccountTable();
         settingUpTransactionTable();
-        settingUpAccountTransactionTable();
     }
 
     private void settingUpUserTable() {
@@ -77,22 +76,11 @@ public class DataBaseHandler {
             createTransactionTableStatement.execute(
                     "CREATE TABLE IF NOT EXISTS transactions (id UUID UNIQUE PRIMARY KEY, date DATE, " +
                             "transactiontype TEXT CHECK (transactiontype IN ('WITHDRAWAL', 'DEPOSIT', 'TRANSFER')), " +
-                            "amount DECIMAL, comment TEXT, userid UUID, FOREIGN KEY (userid) REFERENCES users(userid));");
+                            "amount DECIMAL, comment TEXT, accountid UUID, FOREIGN KEY (accountid) REFERENCES accounts(accountid));");
 
         } catch (SQLException exception) {
             System.err.println("Issue with create transaction table. " + exception.getMessage());
         }
     }
 
-    private void settingUpAccountTransactionTable() {
-        try {
-            Statement accountTransactionTableStatement = app.getConnection().createStatement();
-            accountTransactionTableStatement.execute(
-                    "CREATE TABLE IF NOT EXISTS account_transactions (id SERIAL PRIMARY KEY, accountid UUID, transactionid UUID," +
-                            "FOREIGN KEY (accountid) REFERENCES accounts(accountid), " +
-                            "FOREIGN KEY (transactionid) REFERENCES transactions(id));");
-        } catch (SQLException e) {
-            System.err.println("Issue with junction table creation." + e.getMessage());
-        }
-    }
 }
