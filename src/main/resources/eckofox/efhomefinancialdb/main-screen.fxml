@@ -288,9 +288,9 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <VBox fx:id="msgBox" prefHeight="54.0" prefWidth="508.0" style="-fx-border-style: solid;">
+                              <VBox fx:id="msgVbox" prefHeight="54.0" prefWidth="508.0" style="-fx-border-style: solid;">
                                  <children>
-                                    <Label fx:id="lastEntryTitle" contentDisplay="RIGHT" onMouseClicked="#resettingMsgColor" prefHeight="27.0" prefWidth="78.0" text="Message:" underline="true" wrapText="true">
+                                    <Label fx:id="lastEntryTitle" contentDisplay="RIGHT" onMouseClicked="#resettingMsgColor" prefHeight="8.0" prefWidth="78.0" text="Message:" underline="true" wrapText="true">
                                        <font>
                                           <Font name="Calibri Bold" size="14.0" />
                                        </font>
@@ -298,7 +298,7 @@
                                           <Insets bottom="9.0" />
                                        </padding>
                                     </Label>
-                                    <Label fx:id="lastEntryDisplay" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#resettingMsgColor" prefHeight="17.0" prefWidth="507.0">
+                                    <Label fx:id="msgBox" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#resettingMsgColor" prefHeight="48.0" prefWidth="1081.0">
                                        <font>
                                           <Font name="Calibri Bold" size="14.0" />
                                        </font>

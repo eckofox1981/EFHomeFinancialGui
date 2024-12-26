@@ -2,6 +2,7 @@ package eckofox.efhomefinancialdb.controllers;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.date.DateUtility;
+import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionType;
 import eckofox.efhomefinancialdb.user.account.Account;
 import javafx.collections.FXCollections;
@@ -11,10 +12,12 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.UUID;
 import java.util.spi.CalendarDataProvider;
 
 public class MainScreenController {
@@ -54,7 +57,7 @@ public class MainScreenController {
     @FXML
     private DatePicker datePicker;
     @FXML
-    private ChoiceBox typeDropDown;
+    private ChoiceBox<TransactionType> typeDropDown;
     @FXML
     private TextField amountField;
     @FXML
@@ -81,6 +84,8 @@ public class MainScreenController {
     private TableView transactionsTable;
     @FXML
     private Button deleteButton;
+    @FXML
+    private Label msgBox;
     //-----------------HELP-----------------
     @FXML
     private TitledPane helpPane;
@@ -98,8 +103,7 @@ public class MainScreenController {
     }
 
     @FXML
-    private void initialize() {
-        //initializes dropdown for types
+    private void initialize() { //initializes dashboard, dropdown-menus and tables.
         typeDropDown.getItems().setAll(FXCollections.observableArrayList(EnumSet.allOf(TransactionType.class)));
         fromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
 
@@ -107,12 +111,10 @@ public class MainScreenController {
             public String toString(Account account) {
                 return (account != null) ? account.getName() : "";
             }
-
             public Account fromString(String string) {
                 if (string == null || string.isEmpty()) {
                     return null;
                 }
-
                 for (Account account : fromAccountDropDown.getItems()) {
                     if (account != null && account.getName().equals(string)) {
                         return account; //
@@ -122,14 +124,31 @@ public class MainScreenController {
             }
         });
 
-        typeDropDown.setValue("WITHDRAWAL");
+        typeDropDown.setValue(TransactionType.valueOf("WITHDRAWAL"));
         fromAccountDropDown.setValue(fromAccountDropDown.getItems().get(0));
 
     }
 
     @FXML
     private void enter() {
+        Double amount = 0.0;
+        Date date = null;
+        try {
+            amount = Double.parseDouble(amountField.getText());
+        } catch (NumberFormatException e) {
+            msgBox.setText("Could not read amount, please check input. " + e.getMessage());
+            return;
+        }
+        try {
+            date = DateUtility.convertDateString(datePicker.getValue().toString());
+        } catch (ParseException e) {
+            msgBox.setText("Could not recognize date, please check input. " + e.getMessage());
+        }
 
+        System.out.println(typeDropDown.getValue());
+        Transaction transaction = new Transaction(app, app.getActiveUser(), UUID.randomUUID(), typeDropDown.getValue(), fromAccountDropDown.getValue(),
+                date, amount, commentField.getText());
+        transaction.saving();
     }
 
     @FXML

@@ -49,13 +49,14 @@ public class Transaction implements DataBaseManager {
     @Override
     public void saving() {
         try (PreparedStatement savingTransactionStatements = app.getConnection().prepareStatement(
-                "INSERT INTO transactions (id, date, transactiontype, amount, comment) " +
-                "VALUES (?, ?, ?, ?);")) {
+                "INSERT INTO transactions (id, date, transactiontype, amount, comment, accountid) " +
+                "VALUES (?, ?, ?, ?, ?, ?);")) {
                 savingTransactionStatements.setObject(1, id);
-                savingTransactionStatements.setDate(2, (java.sql.Date) date);
+                savingTransactionStatements.setDate(2, new java.sql.Date(date.getTime()));
                 savingTransactionStatements.setString(3, String.valueOf(transactionType));
                 savingTransactionStatements.setDouble(4, amount);
                 savingTransactionStatements.setString(5, comment);
+                savingTransactionStatements.setObject(6, fromAccount.getAccountId());
                 savingTransactionStatements.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Issue saving Transaction. " + e.getMessage());

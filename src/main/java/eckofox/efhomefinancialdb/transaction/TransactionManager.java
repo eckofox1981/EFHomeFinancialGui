@@ -31,7 +31,7 @@ public class TransactionManager {
     private void transactionGatherer() {
         app.getActiveTransactionList().clear();
 
-        ResultSet resultSet = fetchTransactions();
+        ResultSet resultSet = fetch5LatestTransactions();
         if (resultSet == null) {
             System.out.println("DEBUG: resultset = null");
             return;
@@ -54,14 +54,14 @@ public class TransactionManager {
 
     }
 
-    private ResultSet fetchTransactions() {
+    private ResultSet fetch5LatestTransactions() {
         ResultSet resultSet = null;
         try (PreparedStatement select5Transactions = app.getConnection().prepareStatement(
-                "SELECT * FROM transactions JOINS accounts ON transactions.accountid = accounts.accountid WHERE accountid = ? LIMIT 5;")) {
+                "SELECT * FROM transactions JOINS accounts ON transactions.accountid = accounts.accountid WHERE accountid = ? ORDER BY transactions.date LIMIT 5;")) {
             select5Transactions.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
             resultSet = select5Transactions.executeQuery();
         } catch (SQLException e){
-            System.err.println("Issue with fetchTransactions. " + e.getMessage());
+            System.err.println("Issue with fetch5LatestTransactions. " + e.getMessage());
         }
         return resultSet;
     }

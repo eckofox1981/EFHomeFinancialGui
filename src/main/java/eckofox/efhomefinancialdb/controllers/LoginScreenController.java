@@ -2,10 +2,12 @@ package eckofox.efhomefinancialdb.controllers;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.user.User;
+import eckofox.efhomefinancialdb.user.account.Account;
 import eckofox.efhomefinancialdb.user.account.CheckingAccount;
 import eckofox.efhomefinancialdb.user.account.SavingAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.AccessibleAction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -164,6 +166,8 @@ public class LoginScreenController {
                     app.setActiveUser(user);
                     app.getActiveUser().getAcountList().add(new CheckingAccount(app, user));
                     app.getActiveUser().getAcountList().add(new SavingAccount(app, user));
+                    app.getActiveUser().getAcountList().stream()
+                            .forEach(account -> account.fetchData());
                 }
             } catch (SQLException e) {
                 System.err.println("Error while creating userId at setActiveUser. " + e.getMessage());
@@ -221,4 +225,5 @@ public class LoginScreenController {
     public App getApp() {
         return app;
     }
+
 }

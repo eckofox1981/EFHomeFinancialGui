@@ -2,6 +2,7 @@ package eckofox.efhomefinancialdb.date;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -65,9 +66,10 @@ public class DateUtility {
      * @return Date but never actually used.
      * @throws ParseException actually used as a mean to determined if userId input is in the correct format.
      */
-    private static Date convertDateString(String sDate) throws ParseException {
+    public static Date convertDateString(String sDate) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         return formatter.parse(sDate);
     }
+
 }
