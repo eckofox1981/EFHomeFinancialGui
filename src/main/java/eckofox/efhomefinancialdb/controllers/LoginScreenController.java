@@ -2,6 +2,8 @@ package eckofox.efhomefinancialdb.controllers;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.user.User;
+import eckofox.efhomefinancialdb.user.account.CheckingAccount;
+import eckofox.efhomefinancialdb.user.account.SavingAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -168,6 +170,12 @@ public class LoginScreenController {
         }catch (SQLException sqlException) {
             System.err.println("Error with prepared statement in setActiveUser. " + sqlException.getMessage());
         }
+    }
+
+    private void settingUserAccounts(User user){
+        CheckingAccount checkingAccount = new CheckingAccount(app, user);
+        SavingAccount savingAccount = new SavingAccount(app, user);
+
     }
 
     private User userFromResult (ResultSet result) throws SQLException {

@@ -32,6 +32,7 @@ public class User implements DataBaseManager {
         this.firstname = firstname;
         this.lastname = lastname;
         this.passwordHash = passwordHash;
+        createAccounts();
     }
 
     public User(App app, UUID userID, String username, String firstname, String lastname) {

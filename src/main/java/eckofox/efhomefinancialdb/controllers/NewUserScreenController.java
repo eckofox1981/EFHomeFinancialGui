@@ -2,6 +2,8 @@ package eckofox.efhomefinancialdb.controllers;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.user.User;
+import eckofox.efhomefinancialdb.user.account.CheckingAccount;
+import eckofox.efhomefinancialdb.user.account.SavingAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -55,10 +57,10 @@ public class NewUserScreenController {
     @FXML
     public void setRegisterNewUserButton(javafx.event.ActionEvent event) {
         String username = newUsernameField.getText();
-        //TODO check if username used
         String firstname = firstNameField.getText();
         String lastname = lastNameField.getText();
         String passwordHash;
+
         if (checkUsernameUsage(username)){
             return;
         }
@@ -66,7 +68,11 @@ public class NewUserScreenController {
             passwordHash = passwordEncryption(newPasswordField.getText());
             UUID uuid = UUID.randomUUID();
             User user = new User(app, uuid, username, firstname, lastname, passwordHash);
+            CheckingAccount checkingAccount = new CheckingAccount(app, user);
+            SavingAccount savingAccount = new SavingAccount(app, user);
             user.saving();
+            checkingAccount.saving();
+            savingAccount.saving();
             msgForNewUsers.setText("Hello " + username + ", account saved.");
             okButton.setVisible(true);
         } else {

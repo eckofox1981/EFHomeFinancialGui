@@ -8,9 +8,8 @@ import eckofox.efhomefinancialdb.user.User;
 public class SavingAccount extends Account {
 
     public SavingAccount(App app, User user) {
-        super(app, "Saving account");
-        this.setUser(user);
-        insertData();
+        super(app, "Saving account", user);
+        setUserId(user.getUserID());
     }
 
     @Override
@@ -33,9 +32,5 @@ public class SavingAccount extends Account {
         return transaction.getAmount();
     }
 
-    @Override
-    public void saving() {
-        /* unused in this class*/
-    }
 
 }
