@@ -6,6 +6,8 @@ import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionManager;
 import eckofox.efhomefinancialdb.user.User;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -27,7 +29,8 @@ public class App extends Application {
      * activeUser is obviously referenced for accessing/creating userId data.
      */
     private User activeUser;
-    private List <Transaction> activeTransactionList;
+    private List<Transaction> activeTransactionList;
+    private List<Transaction> fiveLatestTransactionsList;
     public boolean running = true;
 
     //private NewUserScreenController newUserMenu;
@@ -44,6 +47,7 @@ public class App extends Application {
         scanner = new Scanner(System.in);
         dataBaseHandler.settingUpConnectionAndTables();
         activeTransactionList = new ArrayList<>();
+        fiveLatestTransactionsList = new ArrayList<>();
     }
 
     @Override
@@ -89,11 +93,19 @@ public class App extends Application {
         return activeTransactionList;
     }
 
+    public List<Transaction> getFiveLatestTransactionsList() {
+        return fiveLatestTransactionsList;
+    }
+
+    public void setFiveLatestTransactionsList(ObservableList<Transaction> fiveLatestTransactionsList) {
+        this.fiveLatestTransactionsList = fiveLatestTransactionsList;
+    }
+
     public void setActiveTransactionList(List<Transaction> activeTransactionList) {
         this.activeTransactionList = activeTransactionList;
     }
 
-    public TransactionManager getTransactionGatherer() {
+    public TransactionManager getTransactionManager() {
         return transactionManager;
     }
 

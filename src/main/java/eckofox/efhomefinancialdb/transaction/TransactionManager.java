@@ -28,25 +28,35 @@ public class TransactionManager {
      * each file is 'transaction.fetchData()' (see Transaction class) and resulting transaction added to the list
      * Error-handling accordingly
      */
-    private void transactionGatherer() {
-        app.getActiveTransactionList().clear();
+    public void GatherLast5items() {
 
-        ResultSet resultSet = fetch5LatestTransactions();
-        if (resultSet == null) {
-            System.out.println("DEBUG: resultset = null");
-            return;
-        }
-        try {
+        app.getFiveLatestTransactionsList().clear();
+
+//        ResultSet resultSet = fetch5LatestTransactions();
+//        if (resultSet == null) {
+//            System.out.println("DEBUG: resultset = null");
+//            return;
+//        }
+
+
+        try (PreparedStatement select5Transactions = app.getConnection().prepareStatement(
+                "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
+                        "transactions.amount, transactions.comment, transactions.accountid FROM transactions JOIN accounts ON transactions.accountid = accounts.accountid " +
+                        "WHERE accounts.accountid = ? ORDER BY transactions.date DESC LIMIT 5;")) {
+            select5Transactions.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+            ResultSet resultSet = select5Transactions.executeQuery();
+
             while (resultSet.next()) {
+
                 UUID id = (UUID) resultSet.getObject("id");
-                TransactionType transactionType = (TransactionType) resultSet.getObject("transactiontype");
+                TransactionType transactionType = TransactionType.valueOf(resultSet.getString("transactiontype"));
                 Account fromAccount = transactionAccountCheck((UUID) resultSet.getObject("accountid"));
                 Date date = resultSet.getDate("date");
                 Double amount = resultSet.getDouble("amount");
                 String comment = resultSet.getString("comment");
                 Transaction transaction = new Transaction(app, app.getActiveUser(), id, transactionType, fromAccount, date,
                         amount, comment);
-                app.getActiveTransactionList().add(transaction);
+                app.getFiveLatestTransactionsList().add(transaction);
             }
         } catch (SQLException e) {
             e.getMessage();
@@ -57,9 +67,13 @@ public class TransactionManager {
     private ResultSet fetch5LatestTransactions() {
         ResultSet resultSet = null;
         try (PreparedStatement select5Transactions = app.getConnection().prepareStatement(
-                "SELECT * FROM transactions JOINS accounts ON transactions.accountid = accounts.accountid WHERE accountid = ? ORDER BY transactions.date LIMIT 5;")) {
+                "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
+                        "transactions.amount, transactions.comment, transactions.accountid FROM transactions JOIN accounts ON transactions.accountid = accounts.accountid " +
+                        "WHERE accounts.accountid = ? ORDER BY transactions.date DESC LIMIT 5;")) {
             select5Transactions.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+
             resultSet = select5Transactions.executeQuery();
+            System.out.println(select5Transactions.toString());
         } catch (SQLException e){
             System.err.println("Issue with fetch5LatestTransactions. " + e.getMessage());
         }

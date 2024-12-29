@@ -145,7 +145,7 @@ public class LoginScreenController {
             System.out.println("Login succesfull");
             msgForUsers.setText("Logged in.");
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 System.out.println("Nah, it'll be fine");
             }

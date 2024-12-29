@@ -5,6 +5,7 @@ import eckofox.efhomefinancialdb.date.DateUtility;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionType;
 import eckofox.efhomefinancialdb.user.account.Account;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,11 +15,9 @@ import javafx.util.StringConverter;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.UUID;
-import java.util.spi.CalendarDataProvider;
 
 public class MainScreenController {
     private App app;
@@ -31,6 +30,7 @@ public class MainScreenController {
     public void initData (Stage stage){
         this.stage = stage;
         settingUpDashBoard();
+        initialize();
     }
     @FXML
     private Accordion accordion;
@@ -48,7 +48,16 @@ public class MainScreenController {
     @FXML
     private Label savingAccountLabel;
     @FXML
-    private TableView latestTransactionsTable;
+    private TableView fiveLatestTransactionsTable;
+    @FXML
+    private TableColumn<Transaction, String> fiveDateColumn;
+    @FXML
+    private TableColumn<Transaction, String> fiveTypeColumn;
+    @FXML
+    private TableColumn<Transaction, Double> fiveAmountColumn;
+    @FXML
+    private TableColumn<Transaction, String> fiveCommentColumn;
+
     //-----------------TRANSACTIONS-----------------
     @FXML
     private TitledPane transactionsPane;
@@ -98,12 +107,26 @@ public class MainScreenController {
                 app.getActiveUser().getAcountList().getFirst().getBalance() + " SEK");
         savingAccountLabel.setText(app.getActiveUser().getAcountList().getLast().getName() + ": " +
                 app.getActiveUser().getAcountList().getLast().getBalance() + " SEK");
-        //TODO set up tableview.
+
+        app.getTransactionManager().GatherLast5items();
+        System.out.println("5 LAST TRANSACTION:" + app.getFiveLatestTransactionsList().size());
+        app.getFiveLatestTransactionsList().forEach(a -> System.out.println("fist" + a.getDate().toString()));
+        fiveDateColumn.setCellValueFactory(cellData -> DateUtility.datePropertyFormat(cellData.getValue().getDate()));
+        fiveTypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
+        fiveAmountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
+        fiveCommentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
+
+
+        fiveLatestTransactionsTable.getItems().setAll(app.getFiveLatestTransactionsList());
+
         accordion.setExpandedPane(dashboardPane);
+
     }
 
     @FXML
     private void initialize() { //initializes dashboard, dropdown-menus and tables.
+
+
         typeDropDown.getItems().setAll(FXCollections.observableArrayList(EnumSet.allOf(TransactionType.class)));
         fromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
 
@@ -126,6 +149,8 @@ public class MainScreenController {
 
         typeDropDown.setValue(TransactionType.valueOf("WITHDRAWAL"));
         fromAccountDropDown.setValue(fromAccountDropDown.getItems().get(0));
+
+        ;
 
     }
 

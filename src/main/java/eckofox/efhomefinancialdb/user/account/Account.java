@@ -53,12 +53,10 @@ public abstract class Account implements DataBaseManager {
      */
     @Override
     public void fetchData() {
-        System.out.println(userId);
-        System.out.println(name);
         try (PreparedStatement selectAccountData = app.getConnection().prepareStatement("SELECT * FROM accounts WHERE userid = ? AND name = ?;")){
             selectAccountData.setObject(1, userId, java.sql.Types.OTHER);
             selectAccountData.setString(2, name);
-            System.out.println(selectAccountData.toString());
+
             try {
                 ResultSet result = selectAccountData.executeQuery();
                 if (result.next()){

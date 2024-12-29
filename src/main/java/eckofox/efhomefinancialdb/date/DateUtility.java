@@ -1,8 +1,13 @@
 package eckofox.efhomefinancialdb.date;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -70,6 +75,14 @@ public class DateUtility {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         return formatter.parse(sDate);
+    }
+
+    public static StringProperty datePropertyFormat(Date date) {
+        LocalDate localDate = date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return new SimpleStringProperty(localDate.format(formatter));
     }
 
 }

@@ -29,7 +29,7 @@
                      <children>
                         <VBox prefHeight="482.0" prefWidth="1097.0">
                            <children>
-                              <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="1097.0" text="- DANEUSERNAME -" textFill="#06e165" textOverrun="CENTER_ELLIPSIS">
+                              <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="1097.0" text="- DANEUSERNAME -" textFill="#a0a4a2" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Bold" size="25.0" />
                                  </font>
@@ -39,7 +39,7 @@
                                     <Font name="Quicksand Bold" size="19.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="joinedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="1097.0" text="joined march 2024" textFill="#06e165" textOverrun="CENTER_ELLIPSIS">
+                              <Label fx:id="joinedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="1097.0" text="joined march 2024" textFill="#a0a4a2" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Regular" size="14.0" />
                                  </font>
@@ -60,7 +60,7 @@
                                     <Insets top="1.0" />
                                  </padding>
                               </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="1097.0" text="Latest transactions" textOverrun="CENTER_ELLIPSIS">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="1097.0" text="Latest transactions" textFill="#a0a4a2" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Regular" size="17.0" />
                                  </font>
@@ -68,13 +68,12 @@
                                     <Insets top="16.0" />
                                  </padding>
                               </Label>
-                              <TableView fx:id="latestTransactionsTable" prefHeight="242.0" prefWidth="947.0">
+                              <TableView fx:id="fiveLatestTransactionsTable" prefHeight="242.0" prefWidth="947.0">
                                 <columns>
-                                    <TableColumn prefWidth="75.0" text="ID" />
-                                  <TableColumn prefWidth="75.0" text="Date" />
-                                  <TableColumn prefWidth="75.0" text="Type" />
-                                    <TableColumn prefWidth="112.0" text="Amount" />
-                                    <TableColumn fx:id="latestTransactionTableView" editable="false" prefWidth="608.0" text="Comment" />
+                                  <TableColumn fx:id="fiveDateColumn" prefWidth="105.0" text="Date" />
+                                  <TableColumn fx:id="fiveTypeColumn" prefWidth="121.0" text="Type" />
+                                    <TableColumn fx:id="fiveAmountColumn" prefWidth="168.0" text="Amount" />
+                                    <TableColumn fx:id="fiveCommentColumn" editable="false" prefWidth="702.0" text="Comment" />
                                 </columns>
                               </TableView>
                            </children>
@@ -258,7 +257,6 @@
                                     </VBox>
                                     <TableView fx:id="transactionsTable" editable="true" onKeyPressed="#deletePressed" onSort="#transactionTypeCheckBox" prefHeight="301.0" prefWidth="796.0">
                                        <columns>
-                                          <TableColumn fx:id="idColumn" editable="false" prefWidth="44.0" style="-fx-alignment: CENTER-RIGHT;" text="ID#" />
                                           <TableColumn fx:id="dateColumn" editable="false" prefWidth="78.0" style="-fx-alignment: CENTER;" text="Date" />
                                           <TableColumn fx:id="typeColumn" editable="false" prefWidth="87.0" style="-fx-alignment: CENTER;" text="Type" />
                                           <TableColumn fx:id="amountColumn" editable="false" prefWidth="85.0" style="-fx-alignment: CENTER-RIGHT;" text="Amount" />

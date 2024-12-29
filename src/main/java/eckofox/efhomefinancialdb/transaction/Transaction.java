@@ -4,6 +4,8 @@ import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseManager;
 import eckofox.efhomefinancialdb.user.User;
 import eckofox.efhomefinancialdb.user.account.Account;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 
 import java.sql.PreparedStatement;
@@ -128,5 +130,11 @@ public class Transaction implements DataBaseManager {
     public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
+
+    public DoubleProperty amountProperty() {
+        return new SimpleDoubleProperty(amount);
+    }
+
+
 
 }
