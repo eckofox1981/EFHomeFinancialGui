@@ -68,6 +68,22 @@ public class TransactionManager {
         )) {
             selectAllTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
             ResultSet resultSet = selectAllTransactionsStatement.executeQuery();
+            try{
+                while (resultSet.next()) {
+                    UUID id = (UUID) resultSet.getObject("id");
+                    TransactionType transactionType = TransactionType.valueOf(resultSet.getString("transactiontype"));
+                    Account fromAccount = transactionAccountCheck((UUID) resultSet.getObject("accountid"));
+                    Date date = resultSet.getDate("date");
+                    Double amount = resultSet.getDouble("amount");
+                    String comment = resultSet.getString("comment");
+                    Transaction transaction = new Transaction(app, app.getActiveUser(), id, transactionType, fromAccount, date,
+                            amount, comment);
+                    app.getActiveTransactionList().add(transaction);
+                }
+            } catch (SQLException ex) {
+                System.err.println("Issue with gathering all transactions in transactionFilter. " + ex.getMessage());
+            }
+
         }  catch (SQLException e) {
             System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
         }

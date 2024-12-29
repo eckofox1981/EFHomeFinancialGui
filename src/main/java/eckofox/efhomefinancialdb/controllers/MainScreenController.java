@@ -30,7 +30,7 @@ public class MainScreenController {
     public void initData (Stage stage){
         this.stage = stage;
         settingUpDashBoard();
-        initialize();
+        initializeTransactionPane();
         accordion.setExpandedPane(dashboardPane);
     }
     @FXML
@@ -91,16 +91,25 @@ public class MainScreenController {
     @FXML
     private CheckBox getEarningsCheckBox;
     @FXML
-    private TableView transactionsTable;
-    @FXML
     private Button deleteButton;
     @FXML
     private Label msgBox;
+    @FXML
+    private TableView<Transaction> transactionsTable;
+    @FXML
+    private TableColumn<Transaction, String> dateColumn;
+    @FXML
+    private TableColumn<Transaction, String> typeColumn;
+    @FXML
+    private TableColumn<Transaction, Double> amountColumn;
+    @FXML
+    private TableColumn<Transaction, String> commentColumn;
     //-----------------HELP-----------------
     @FXML
     private TitledPane helpPane;
 
     public void settingUpDashBoard(){
+        app.getTransactionManager().GatherLast5items();
         userNameLabel.setText("- " + app.getActiveUser().getUsername() + " -");
         realNameLabel.setText(app.getActiveUser().getFirstname() + " " + app.getActiveUser().getLastname());
         joinedLabel.setText(getJoinedMonthAndYear());
@@ -109,14 +118,10 @@ public class MainScreenController {
         savingAccountLabel.setText(app.getActiveUser().getAcountList().getLast().getName() + ": " +
                 app.getActiveUser().getAcountList().getLast().getBalance() + " SEK");
 
-        app.getTransactionManager().GatherLast5items();
-        System.out.println("5 LAST TRANSACTION:" + app.getFiveLatestTransactionsList().size());
-        app.getFiveLatestTransactionsList().forEach(a -> System.out.println("fist" + a.getDate().toString()));
         fiveDateColumn.setCellValueFactory(cellData -> DateUtility.datePropertyFormat(cellData.getValue().getDate()));
         fiveTypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
         fiveAmountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         fiveCommentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
-
 
         fiveLatestTransactionsTable.getItems().setAll(app.getFiveLatestTransactionsList());
 
@@ -124,9 +129,8 @@ public class MainScreenController {
     }
 
     @FXML
-    private void initialize() { //initializes dashboard, dropdown-menus and tables.
-
-
+    private void initializeTransactionPane() {
+        app.getTransactionManager().transactionFilter();//initializes dashboard, dropdown-menus and tables.
         typeDropDown.getItems().setAll(FXCollections.observableArrayList(EnumSet.allOf(TransactionType.class)));
         fromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
 
@@ -150,8 +154,12 @@ public class MainScreenController {
         typeDropDown.setValue(TransactionType.valueOf("WITHDRAWAL"));
         fromAccountDropDown.setValue(fromAccountDropDown.getItems().get(0));
 
-        ;
+        dateColumn.setCellValueFactory(cellData -> DateUtility.datePropertyFormat(cellData.getValue().getDate()));
+        typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
+        amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
+        commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
+        transactionsTable.getItems().setAll(app.getActiveTransactionList());
     }
 
     @FXML
