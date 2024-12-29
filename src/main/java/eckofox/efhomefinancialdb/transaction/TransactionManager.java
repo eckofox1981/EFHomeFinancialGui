@@ -29,15 +29,7 @@ public class TransactionManager {
      * Error-handling accordingly
      */
     public void GatherLast5items() {
-
         app.getFiveLatestTransactionsList().clear();
-
-//        ResultSet resultSet = fetch5LatestTransactions();
-//        if (resultSet == null) {
-//            System.out.println("DEBUG: resultset = null");
-//            return;
-//        }
-
 
         try (PreparedStatement select5Transactions = app.getConnection().prepareStatement(
                 "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
@@ -64,21 +56,25 @@ public class TransactionManager {
 
     }
 
-    private ResultSet fetch5LatestTransactions() {
-        ResultSet resultSet = null;
-        try (PreparedStatement select5Transactions = app.getConnection().prepareStatement(
-                "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
-                        "transactions.amount, transactions.comment, transactions.accountid FROM transactions JOIN accounts ON transactions.accountid = accounts.accountid " +
-                        "WHERE accounts.accountid = ? ORDER BY transactions.date DESC LIMIT 5;")) {
-            select5Transactions.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+    public void transactionFilter () {
+        app.getActiveTransactionList().clear();
 
-            resultSet = select5Transactions.executeQuery();
-            System.out.println(select5Transactions.toString());
-        } catch (SQLException e){
-            System.err.println("Issue with fetch5LatestTransactions. " + e.getMessage());
+        //hämtar allt
+        try (PreparedStatement selectAllTransactionsStatement = app.getConnection().prepareStatement(
+                "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
+                        "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
+                        "JOIN accounts ON transactions.accountid = accounts.accountid " +
+                        "WHERE accounts.accountid = ? ORDER BY transactions.date DESC"
+        )) {
+            selectAllTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+            ResultSet resultSet = selectAllTransactionsStatement.executeQuery();
+        }  catch (SQLException e) {
+            System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
         }
-        return resultSet;
+        //hämtar baserad på kriterier
     }
+
+
 
     private Account transactionAccountCheck(UUID accountId) {
         for (Account account : app.getActiveUser().getAcountList()){

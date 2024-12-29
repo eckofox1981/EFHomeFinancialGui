@@ -31,6 +31,7 @@ public class MainScreenController {
         this.stage = stage;
         settingUpDashBoard();
         initialize();
+        accordion.setExpandedPane(dashboardPane);
     }
     @FXML
     private Accordion accordion;
@@ -119,7 +120,6 @@ public class MainScreenController {
 
         fiveLatestTransactionsTable.getItems().setAll(app.getFiveLatestTransactionsList());
 
-        accordion.setExpandedPane(dashboardPane);
 
     }
 
@@ -174,6 +174,8 @@ public class MainScreenController {
         Transaction transaction = new Transaction(app, app.getActiveUser(), UUID.randomUUID(), typeDropDown.getValue(), fromAccountDropDown.getValue(),
                 date, amount, commentField.getText());
         transaction.saving();
+
+        settingUpDashBoard();
     }
 
     @FXML
