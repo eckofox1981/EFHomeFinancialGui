@@ -77,10 +77,13 @@ public class DateUtility {
         return formatter.parse(sDate);
     }
 
+    /**
+     * converts the transaction date into a StringProperty displayable on the tableview
+     * @param date
+     * @return a date string formated according to set standard below.
+     */
     public static StringProperty datePropertyFormat(Date date) {
-        LocalDate localDate = date.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+        LocalDate localDate = ((java.sql.Date) date).toLocalDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return new SimpleStringProperty(localDate.format(formatter));
     }
