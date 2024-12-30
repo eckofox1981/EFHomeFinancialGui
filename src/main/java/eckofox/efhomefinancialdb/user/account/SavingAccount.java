@@ -16,7 +16,7 @@ public class SavingAccount extends Account {
     public void setBalanceFromTransactions() {
         double newBalance = 0;
 
-        for (Transaction transaction : app.getActiveTransactionList()) {
+        for (Transaction transaction : app.getFilteredTransactionList()) {
             if (transaction.getTransactionType().equals(TransactionType.TRANSFER)) {
                 newBalance += transferCheck(transaction);
             }

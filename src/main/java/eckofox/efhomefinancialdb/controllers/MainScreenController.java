@@ -49,7 +49,7 @@ public class MainScreenController {
     @FXML
     private Label savingAccountLabel;
     @FXML
-    private TableView fiveLatestTransactionsTable;
+    private TableView allTransactionsTable;
     @FXML
     private TableColumn<Transaction, String> fiveDateColumn;
     @FXML
@@ -95,7 +95,7 @@ public class MainScreenController {
     @FXML
     private Label msgBox;
     @FXML
-    private TableView<Transaction> transactionsTable;
+    private TableView<Transaction> filteredTransactionsTable;
     @FXML
     private TableColumn<Transaction, String> dateColumn;
     @FXML
@@ -109,7 +109,7 @@ public class MainScreenController {
     private TitledPane helpPane;
 
     public void settingUpDashBoard(){
-        app.getTransactionManager().GatherLast5items();
+        app.getTransactionManager().gatherAllTransactions();
         userNameLabel.setText("- " + app.getActiveUser().getUsername() + " -");
         realNameLabel.setText(app.getActiveUser().getFirstname() + " " + app.getActiveUser().getLastname());
         joinedLabel.setText(getJoinedMonthAndYear());
@@ -123,9 +123,7 @@ public class MainScreenController {
         fiveAmountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         fiveCommentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
-        fiveLatestTransactionsTable.getItems().setAll(app.getFiveLatestTransactionsList());
-
-
+        allTransactionsTable.getItems().setAll(app.getAllTransactionsList());
     }
 
     @FXML
@@ -159,7 +157,7 @@ public class MainScreenController {
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
-        transactionsTable.getItems().setAll(app.getActiveTransactionList());
+        filteredTransactionsTable.getItems().setAll(app.getFilteredTransactionList());
     }
 
     @FXML

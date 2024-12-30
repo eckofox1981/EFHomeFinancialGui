@@ -6,7 +6,6 @@ import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionManager;
 import eckofox.efhomefinancialdb.user.User;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,8 +28,8 @@ public class App extends Application {
      * activeUser is obviously referenced for accessing/creating userId data.
      */
     private User activeUser;
-    private List<Transaction> activeTransactionList;
-    private List<Transaction> fiveLatestTransactionsList;
+    private List<Transaction> filteredTransactionList;
+    private List<Transaction> allTransactionsList;
     public boolean running = true;
 
     //private NewUserScreenController newUserMenu;
@@ -46,8 +45,8 @@ public class App extends Application {
         this.dataBaseHandler = new DataBaseHandler(this);
         scanner = new Scanner(System.in);
         dataBaseHandler.settingUpConnectionAndTables();
-        activeTransactionList = new ArrayList<>();
-        fiveLatestTransactionsList = new ArrayList<>();
+        filteredTransactionList = new ArrayList<>();
+        allTransactionsList = new ArrayList<>();
     }
 
     @Override
@@ -74,8 +73,7 @@ public class App extends Application {
     public static void main(String[] args){
 
 
-            launch();
-            //NOTE: launch makes an instance of app
+            launch(); //NOTE: launch makes an instance of app
 
 
     }
@@ -89,20 +87,12 @@ public class App extends Application {
         return activeUser;
     }
 
-    public List<Transaction> getActiveTransactionList() {
-        return activeTransactionList;
+    public List<Transaction> getFilteredTransactionList() {
+        return filteredTransactionList;
     }
 
-    public List<Transaction> getFiveLatestTransactionsList() {
-        return fiveLatestTransactionsList;
-    }
-
-    public void setFiveLatestTransactionsList(ObservableList<Transaction> fiveLatestTransactionsList) {
-        this.fiveLatestTransactionsList = fiveLatestTransactionsList;
-    }
-
-    public void setActiveTransactionList(List<Transaction> activeTransactionList) {
-        this.activeTransactionList = activeTransactionList;
+    public List<Transaction> getAllTransactionsList() {
+        return allTransactionsList;
     }
 
     public TransactionManager getTransactionManager() {

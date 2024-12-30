@@ -28,37 +28,8 @@ public class TransactionManager {
      * each file is 'transaction.fetchData()' (see Transaction class) and resulting transaction added to the list
      * Error-handling accordingly
      */
-    public void GatherLast5items() {
-        app.getFiveLatestTransactionsList().clear();
-
-        try (PreparedStatement select5Transactions = app.getConnection().prepareStatement(
-                "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
-                        "transactions.amount, transactions.comment, transactions.accountid FROM transactions JOIN accounts ON transactions.accountid = accounts.accountid " +
-                        "WHERE accounts.accountid = ? ORDER BY transactions.date DESC LIMIT 5;")) {
-            select5Transactions.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
-            ResultSet resultSet = select5Transactions.executeQuery();
-
-            while (resultSet.next()) {
-
-                UUID id = (UUID) resultSet.getObject("id");
-                TransactionType transactionType = TransactionType.valueOf(resultSet.getString("transactiontype"));
-                Account fromAccount = transactionAccountCheck((UUID) resultSet.getObject("accountid"));
-                Date date = resultSet.getDate("date");
-                Double amount = resultSet.getDouble("amount");
-                String comment = resultSet.getString("comment");
-                Transaction transaction = new Transaction(app, app.getActiveUser(), id, transactionType, fromAccount, date,
-                        amount, comment);
-                app.getFiveLatestTransactionsList().add(transaction);
-            }
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-
-    }
-
-    public void transactionFilter () {
-        app.getActiveTransactionList().clear();
-
+    public void gatherAllTransactions () {
+        app.getAllTransactionsList().clear();
         //hämtar allt
         try (PreparedStatement selectAllTransactionsStatement = app.getConnection().prepareStatement(
                 "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
@@ -78,7 +49,42 @@ public class TransactionManager {
                     String comment = resultSet.getString("comment");
                     Transaction transaction = new Transaction(app, app.getActiveUser(), id, transactionType, fromAccount, date,
                             amount, comment);
-                    app.getActiveTransactionList().add(transaction);
+                    app.getAllTransactionsList().add(transaction);
+                }
+            } catch (SQLException ex) {
+                System.err.println("Issue with gathering all transactions in gatherAllTransactions. " + ex.getMessage());
+            }
+
+        }  catch (SQLException e) {
+            System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
+        }
+
+    }
+
+    public void transactionFilter (/* vilkor*/) {
+        app.getFilteredTransactionList().clear();
+        String standardSelect = "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
+                "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
+                "JOIN accounts ON transactions.accountid = accounts.accountid ";
+        String dateSelect = "";
+        String typeSelect = "";
+        //hämtar baserad på kriterier
+        try (PreparedStatement selectFilteredTransactionsStatement = app.getConnection().prepareStatement(
+                standardSelect + "WHERE accounts.accountid = ? ORDER BY transactions.date DESC"
+        )) {
+            selectFilteredTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+            ResultSet resultSet = selectFilteredTransactionsStatement.executeQuery();
+            try{
+                while (resultSet.next()) {
+                    UUID id = (UUID) resultSet.getObject("id");
+                    TransactionType transactionType = TransactionType.valueOf(resultSet.getString("transactiontype"));
+                    Account fromAccount = transactionAccountCheck((UUID) resultSet.getObject("accountid"));
+                    Date date = resultSet.getDate("date");
+                    Double amount = resultSet.getDouble("amount");
+                    String comment = resultSet.getString("comment");
+                    Transaction transaction = new Transaction(app, app.getActiveUser(), id, transactionType, fromAccount, date,
+                            amount, comment);
+                    app.getFilteredTransactionList().add(transaction);
                 }
             } catch (SQLException ex) {
                 System.err.println("Issue with gathering all transactions in transactionFilter. " + ex.getMessage());
@@ -87,7 +93,7 @@ public class TransactionManager {
         }  catch (SQLException e) {
             System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
         }
-        //hämtar baserad på kriterier
+
     }
 
 

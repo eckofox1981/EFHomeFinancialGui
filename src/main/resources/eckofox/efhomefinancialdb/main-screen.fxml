@@ -68,7 +68,7 @@
                                     <Insets top="16.0" />
                                  </padding>
                               </Label>
-                              <TableView fx:id="fiveLatestTransactionsTable" prefHeight="242.0" prefWidth="947.0">
+                              <TableView fx:id="allTransactionsTable" prefHeight="242.0" prefWidth="947.0">
                                 <columns>
                                   <TableColumn fx:id="fiveDateColumn" prefWidth="105.0" text="Date" />
                                   <TableColumn fx:id="fiveTypeColumn" prefWidth="121.0" text="Type" />
@@ -157,44 +157,58 @@
                                     <Insets left="5.0" right="5.0" />
                                  </VBox.margin>
                               </HBox>
-                              <Label alignment="CENTER" prefHeight="18.0" prefWidth="947.0" text="Search in Transaction:" textAlignment="RIGHT" wrapText="true">
-                                 <font>
-                                    <Font name="Quicksand Bold" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets right="3.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <HBox prefHeight="40.0" prefWidth="1097.0" />
                               <HBox prefHeight="458.0" prefWidth="1097.0">
                                  <children>
-                                    <VBox onMouseClicked="#resettingMsgColor" prefHeight="290.0" prefWidth="166.0">
+                                    <VBox onMouseClicked="#resettingMsgColor" prefHeight="369.0" prefWidth="268.0">
                                        <children>
-                                          <Label alignment="BOTTOM_CENTER" prefHeight="77.0" prefWidth="166.0" text="Select first day of search:" textAlignment="CENTER" wrapText="true">
+                                          <Label alignment="BOTTOM_CENTER" prefHeight="77.0" prefWidth="189.0" text="Select first day of search:" textAlignment="CENTER" wrapText="true">
                                              <font>
-                                                <Font name="Quicksand Regular" size="14.0" />
+                                                <Font name="Quicksand Bold" size="16.0" />
                                              </font>
                                           </Label>
-                                          <DatePicker fx:id="firstDayPicker" editable="false" minHeight="-Infinity" onAction="#firstDayPicker" onMouseClicked="#resettingMsgColor" prefHeight="32.0" prefWidth="166.0" promptText="Choose date" showWeekNumbers="true">
+                                          <DatePicker fx:id="firstDayPicker" editable="false" minHeight="-Infinity" onAction="#firstDayPicker" onMouseClicked="#resettingMsgColor" prefHeight="32.0" prefWidth="191.0" promptText="Choose date" showWeekNumbers="true">
                                              <VBox.margin>
                                                 <Insets top="2.0" />
                                              </VBox.margin>
                                           </DatePicker>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="571.0" text="Search in Transaction:" textAlignment="RIGHT" wrapText="true">
+                                             <font>
+                                                <Font name="Quicksand Bold" size="16.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets right="3.0" />
+                                             </padding>
+                                             <VBox.margin>
+                                                <Insets top="25.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <TextField fx:id="searchField" minHeight="-Infinity" onKeyPressed="#enterPressed" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="293.0" promptText="type keyword to look for">
+                                             <opaqueInsets>
+                                                <Insets bottom="1.0" left="-1.0" top="2.0" />
+                                             </opaqueInsets>
+                                          </TextField>
+                                          <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" onAction="#enter" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="191.0" text="Search">
+                                             <opaqueInsets>
+                                                <Insets bottom="1.0" left="-1.0" top="2.0" />
+                                             </opaqueInsets>
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
+                                          </Button>
                                        </children>
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>
                                     </VBox>
-                                    <VBox onMouseClicked="#resettingMsgColor" prefHeight="233.0" prefWidth="117.0">
+                                    <VBox onMouseClicked="#resettingMsgColor" prefHeight="369.0" prefWidth="218.0">
                                        <children>
-                                          <Label alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="109.0" text="Choose transactions to display:" textAlignment="CENTER" wrapText="true">
+                                          <Label alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="131.0" text="Choose transactions to display:" textAlignment="CENTER" wrapText="true">
                                              <font>
-                                                <Font name="Quicksand Regular" size="14.0" />
+                                                <Font name="Quicksand Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <CheckBox fx:id="earningsCheckBox" mnemonicParsing="false" onAction="#transactionTypeCheckBox" prefHeight="17.0" prefWidth="102.0" selected="true" text="Earnings" textFill="#0a00ff">
+                                          <CheckBox fx:id="earningsCheckBox" mnemonicParsing="false" onAction="#transactionTypeCheckBox" prefHeight="17.0" prefWidth="217.0" selected="true" text="Earnings" textFill="#0a00ff">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -202,7 +216,7 @@
                                                 <Font name="Calibri" size="14.0" />
                                              </font>
                                           </CheckBox>
-                                          <CheckBox fx:id="spendingsCheckBox" mnemonicParsing="false" onAction="#transactionTypeCheckBox" prefHeight="17.0" prefWidth="102.0" selected="true" text="Spendings" textFill="#0a00ff">
+                                          <CheckBox fx:id="spendingsCheckBox" mnemonicParsing="false" onAction="#transactionTypeCheckBox" prefHeight="17.0" prefWidth="217.0" selected="true" text="Spendings" textFill="#0a00ff">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -210,7 +224,7 @@
                                                 <Font name="Calibri" size="14.0" />
                                              </font>
                                           </CheckBox>
-                                          <CheckBox fx:id="allTimeCheckBox" mnemonicParsing="false" onAction="#allTimeCheckBox" onMouseClicked="#resettingMsgColor" prefHeight="17.0" prefWidth="102.0" selected="true" text="All time">
+                                          <CheckBox fx:id="allTimeCheckBox" mnemonicParsing="false" onAction="#allTimeCheckBox" onMouseClicked="#resettingMsgColor" prefHeight="17.0" prefWidth="217.0" selected="true" text="All time">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -218,7 +232,7 @@
                                                 <Font name="Calibri" size="14.0" />
                                              </font>
                                           </CheckBox>
-                                          <CheckBox fx:id="dayCheckBox" mnemonicParsing="false" onAction="#dayCheckBox" prefHeight="17.0" prefWidth="102.0" text="Daily">
+                                          <CheckBox fx:id="dayCheckBox" mnemonicParsing="false" onAction="#dayCheckBox" prefHeight="17.0" prefWidth="217.0" text="Daily">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -226,7 +240,7 @@
                                                 <Font name="Calibri" size="14.0" />
                                              </font>
                                           </CheckBox>
-                                          <CheckBox fx:id="weekCheckBox" mnemonicParsing="false" onAction="#weekCheckBox" prefHeight="17.0" prefWidth="102.0" text="Weekly">
+                                          <CheckBox fx:id="weekCheckBox" mnemonicParsing="false" onAction="#weekCheckBox" prefHeight="17.0" prefWidth="217.0" text="Weekly">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -234,7 +248,7 @@
                                                 <Font name="Calibri" size="14.0" />
                                              </font>
                                           </CheckBox>
-                                          <CheckBox fx:id="monthCheckBox" mnemonicParsing="false" onAction="#monthCheckBox" prefHeight="17.0" prefWidth="102.0" text="Monthly">
+                                          <CheckBox fx:id="monthCheckBox" mnemonicParsing="false" onAction="#monthCheckBox" prefHeight="17.0" prefWidth="217.0" text="Monthly">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -242,7 +256,7 @@
                                                 <Font name="Calibri" size="14.0" />
                                              </font>
                                           </CheckBox>
-                                          <CheckBox fx:id="yearCheckBox" mnemonicParsing="false" onAction="#yearCheckBox" prefHeight="17.0" prefWidth="102.0" text="Yearly">
+                                          <CheckBox fx:id="yearCheckBox" mnemonicParsing="false" onAction="#yearCheckBox" prefHeight="17.0" prefWidth="217.0" text="Yearly">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -255,7 +269,7 @@
                                           <Insets left="8.0" top="5.0" />
                                        </padding>
                                     </VBox>
-                                    <TableView fx:id="transactionsTable" editable="true" onKeyPressed="#deletePressed" onSort="#transactionTypeCheckBox" prefHeight="301.0" prefWidth="796.0">
+                                    <TableView fx:id="filteredTransactionsTable" editable="true" onKeyPressed="#deletePressed" onSort="#transactionTypeCheckBox" prefHeight="369.0" prefWidth="812.0">
                                        <columns>
                                           <TableColumn fx:id="dateColumn" editable="false" prefWidth="78.0" style="-fx-alignment: CENTER;" text="Date" />
                                           <TableColumn fx:id="typeColumn" editable="false" prefWidth="87.0" style="-fx-alignment: CENTER;" text="Type" />
