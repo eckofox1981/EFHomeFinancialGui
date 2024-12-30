@@ -85,6 +85,6 @@
             <Image url="@../../titleImage.png" />
          </image>
       </ImageView>
-      <Label fx:id="msgForUsers" alignment="CENTER_RIGHT" layoutX="378.0" layoutY="75.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="79.0" prefWidth="141.0" textAlignment="CENTER" textFill="#ff8900" wrapText="true" />
+      <Label fx:id="msgForUsers" alignment="CENTER" contentDisplay="CENTER" layoutX="378.0" layoutY="75.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="79.0" prefWidth="141.0" textAlignment="CENTER" textFill="#ff8900" wrapText="true" />
    </children>
 </AnchorPane>

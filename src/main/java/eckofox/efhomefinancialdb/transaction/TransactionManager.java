@@ -66,9 +66,9 @@ public class TransactionManager {
         String standardSelect = "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
                 "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
                 "JOIN accounts ON transactions.accountid = accounts.accountid ";
-        String dateSelect = "";
-        String typeSelect = "";
-        String searchterms = "";
+        String dateSelect = dateSelect();
+        String typeSelect = typeSelect();
+        String searchTermSelect = searchTermSelect();
 
         //hämtar baserad på kriterier
         try (PreparedStatement selectFilteredTransactionsStatement = app.getConnection().prepareStatement(
@@ -95,7 +95,21 @@ public class TransactionManager {
         }  catch (SQLException e) {
             System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
         }
+    }
 
+    private String dateSelect () {
+        //TODO
+        return "TODO date";
+    }
+
+    private String typeSelect () {
+        //TODO
+        return "TODO type";
+    }
+
+    private String searchTermSelect () {
+        //TODO
+        return "TODO search";
     }
 
 

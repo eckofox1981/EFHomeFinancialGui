@@ -5,11 +5,13 @@ import eckofox.efhomefinancialdb.date.DateUtility;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionType;
 import eckofox.efhomefinancialdb.user.account.Account;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 import java.sql.*;
@@ -77,6 +79,10 @@ public class MainScreenController {
     @FXML
     private DatePicker firstDayPicker;
     @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
+    @FXML
     private CheckBox earningsCheckBox;
     @FXML
     private CheckBox spendingsCheckBox;
@@ -88,6 +94,8 @@ public class MainScreenController {
     private CheckBox weekCheckBox;
     @FXML
     private CheckBox monthCheckBox;
+    @FXML
+    private CheckBox yearCheckBox;
     @FXML
     private CheckBox getEarningsCheckBox;
     @FXML
@@ -185,47 +193,78 @@ public class MainScreenController {
     }
 
     @FXML
-    private void firstDayPicker() {
-
+    private void setAllTimeCheckBox (){
+        if (allTimeCheckBox.isSelected()) {
+            dayCheckBox.selectedProperty().setValue(false);
+            weekCheckBox.selectedProperty().setValue(false);
+            monthCheckBox.selectedProperty().setValue(false);
+            yearCheckBox.selectedProperty().setValue(false);
+            firstDayPicker.cancelEdit();
+        }
+        filteringTransactions();
     }
 
     @FXML
-    private void transactionTypeCheckBox() {
-
+    private void setDayCheckBox (){
+        if(dayCheckBox.isSelected()){
+            allTimeCheckBox.selectedProperty().setValue(false);
+            weekCheckBox.selectedProperty().setValue(false);
+            monthCheckBox.selectedProperty().setValue(false);
+            yearCheckBox.selectedProperty().setValue(false);
+        }
     }
 
     @FXML
-    private void allTimeCheckBox() {
-
+    private void setWeekCheckBox (){
+        if(weekCheckBox.isSelected()){
+            allTimeCheckBox.selectedProperty().setValue(false);
+            dayCheckBox.selectedProperty().setValue(false);
+            monthCheckBox.selectedProperty().setValue(false);
+            yearCheckBox.selectedProperty().setValue(false);
+        }
+    }
+    @FXML
+    private void setMonthCheckBox (){
+        if(monthCheckBox.isSelected()){
+            allTimeCheckBox.selectedProperty().setValue(false);
+            dayCheckBox.selectedProperty().setValue(false);
+            weekCheckBox.selectedProperty().setValue(false);
+            yearCheckBox.selectedProperty().setValue(false);
+        }
     }
 
     @FXML
-    private void dayCheckBox() {
-
+    private void setYearCheckBox () {
+        if(yearCheckBox.isSelected()){
+            allTimeCheckBox.selectedProperty().setValue(false);
+            dayCheckBox.selectedProperty().setValue(false);
+            weekCheckBox.selectedProperty().setValue(false);
+            monthCheckBox.selectedProperty().setValue(false);
+        }
     }
 
     @FXML
-    private void weekCheckBox() {
+    private void filteringTransactions() {
+        if (firstDayPicker.getValue() == null && !allTimeCheckBox.isSelected()){
+            System.out.println("test");
+            msgBox.setText("Period selection enabled but first day undefined. Please select a date.");
 
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event -> msgBox.setText(""));
+            pause.play();
+        }
+        System.out.println("test2");
+        //app.getTransactionManager().transactionFilter(datePicker.getValue(), searchField.getText(), earningsCheckBox.isSelected(),
+                //spendingsCheckBox.isSelected(), dayCheckBox.isSelected(), weekCheckBox.isSelected(), monthCheckBox.isSelected(), yearCheckBox.isSelected());
     }
 
     @FXML
-    private void monthCheckBox() {
-
-    }
-
-    @FXML
-    private void yearCheckBox() {
+    private void enterPressed () {
 
     }
 
     @FXML
     private void deletePressed() {
-
-    }
-
-    @FXML
-    private void enterPressed(){
 
     }
 
