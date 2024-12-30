@@ -75,6 +75,9 @@
                                     <TableColumn fx:id="fiveAmountColumn" prefWidth="168.0" text="Amount" />
                                     <TableColumn fx:id="fiveCommentColumn" editable="false" prefWidth="702.0" text="Comment" />
                                 </columns>
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
                               </TableView>
                            </children>
                         </VBox>
@@ -188,7 +191,7 @@
                                                 <Insets bottom="1.0" left="-1.0" top="2.0" />
                                              </opaqueInsets>
                                           </TextField>
-                                          <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" onAction="#enter" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="191.0" text="Search">
+                                          <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" mnemonicParsing="false" onAction="#filteringTransactions" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="191.0" text="Search">
                                              <opaqueInsets>
                                                 <Insets bottom="1.0" left="-1.0" top="2.0" />
                                              </opaqueInsets>
@@ -208,7 +211,7 @@
                                                 <Font name="Quicksand Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <CheckBox fx:id="earningsCheckBox" mnemonicParsing="false" prefHeight="17.0" prefWidth="217.0" selected="true" text="Earnings" textFill="#0a00ff">
+                                          <CheckBox fx:id="earningsCheckBox" mnemonicParsing="false" onAction="#filteringTransactions" prefHeight="17.0" prefWidth="217.0" selected="true" text="Earnings" textFill="#0a00ff">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -280,7 +283,7 @@
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                        <HBox.margin>
-                                          <Insets left="10.0" right="5.0" />
+                                          <Insets left="10.0" right="10.0" />
                                        </HBox.margin>
                                     </TableView>
                                  </children>
@@ -300,26 +303,28 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <VBox fx:id="msgVbox" prefHeight="54.0" prefWidth="508.0" style="-fx-border-style: solid;">
+                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: solid;">
                                  <children>
-                                    <Label fx:id="lastEntryTitle" contentDisplay="RIGHT" onMouseClicked="#resettingMsgColor" prefHeight="8.0" prefWidth="78.0" text="Message:" underline="true" wrapText="true">
-                                       <font>
-                                          <Font name="Calibri Bold" size="14.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets bottom="9.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label fx:id="msgBox" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#resettingMsgColor" prefHeight="48.0" prefWidth="1081.0">
+                                    <VBox fx:id="msgVbox" prefHeight="43.0" prefWidth="75.0">
+                                       <children>
+                                          <Label fx:id="lastEntryTitle" contentDisplay="RIGHT" onMouseClicked="#resettingMsgColor" prefHeight="16.0" prefWidth="78.0" text="Message:" underline="true" wrapText="true">
+                                             <font>
+                                                <Font name="Calibri Bold" size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets bottom="9.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label />
+                                       </children>
+                                    </VBox>
+                                    <Label fx:id="msgBox" alignment="CENTER" contentDisplay="RIGHT" onMouseClicked="#resettingMsgColor" prefHeight="46.0" prefWidth="1022.0" wrapText="true">
                                        <font>
                                           <Font name="Calibri Bold" size="14.0" />
                                        </font>
                                     </Label>
                                  </children>
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </VBox.margin>
-                              </VBox>
+                              </HBox>
                            </children>
                         </VBox>
                      </children></AnchorPane>
@@ -337,7 +342,8 @@
                               <Image url="@../../titleImage.png" />
                            </image>
                         </ImageView>
-                     </children></AnchorPane>
+                     </children>
+                  </AnchorPane>
             </content>
                <font>
                   <Font name="Quicksand Regular" size="16.0" />

@@ -100,8 +100,6 @@ public class LoginScreenController {
         }
     }
 
-
-
     private void openMainScreen() {
         try {
             Stage currenStage = (Stage) loginButton.getScene().getWindow();

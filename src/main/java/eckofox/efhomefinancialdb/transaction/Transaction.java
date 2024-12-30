@@ -36,7 +36,11 @@ public class Transaction implements DataBaseManager {
         this.transactionType = transactionType;
         this.fromAccount = fromAccount;
         this.date = date;
-        this.amount = amount;
+        if (transactionType.equals(TransactionType.WITHDRAWAL) || transactionType.equals(TransactionType.TRANSFER)) {
+            this.amount = -amount;
+        } else {
+            this.amount = amount;
+        }
         this.comment = comment;
     }
 

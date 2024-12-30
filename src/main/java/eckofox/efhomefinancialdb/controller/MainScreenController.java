@@ -136,7 +136,7 @@ public class MainScreenController {
 
     @FXML
     private void initializeTransactionPane() {
-        app.getTransactionManager().transactionFilter();//initializes dashboard, dropdown-menus and tables.
+        //initializes dashboard, dropdown-menus and tables.
         typeDropDown.getItems().setAll(FXCollections.observableArrayList(EnumSet.allOf(TransactionType.class)));
         fromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
 
@@ -164,6 +164,8 @@ public class MainScreenController {
         typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
+
+        filteringTransactions();
 
         filteredTransactionsTable.getItems().setAll(app.getFilteredTransactionList());
     }
@@ -199,7 +201,7 @@ public class MainScreenController {
             weekCheckBox.selectedProperty().setValue(false);
             monthCheckBox.selectedProperty().setValue(false);
             yearCheckBox.selectedProperty().setValue(false);
-            firstDayPicker.cancelEdit();
+            firstDayPicker.setValue(null);
         }
         filteringTransactions();
     }
@@ -212,6 +214,7 @@ public class MainScreenController {
             monthCheckBox.selectedProperty().setValue(false);
             yearCheckBox.selectedProperty().setValue(false);
         }
+        filteringTransactions();
     }
 
     @FXML
@@ -222,6 +225,7 @@ public class MainScreenController {
             monthCheckBox.selectedProperty().setValue(false);
             yearCheckBox.selectedProperty().setValue(false);
         }
+        filteringTransactions();
     }
     @FXML
     private void setMonthCheckBox (){
@@ -231,6 +235,7 @@ public class MainScreenController {
             weekCheckBox.selectedProperty().setValue(false);
             yearCheckBox.selectedProperty().setValue(false);
         }
+        filteringTransactions();
     }
 
     @FXML
@@ -241,21 +246,28 @@ public class MainScreenController {
             weekCheckBox.selectedProperty().setValue(false);
             monthCheckBox.selectedProperty().setValue(false);
         }
+        filteringTransactions();
     }
 
     @FXML
     private void filteringTransactions() {
         if (firstDayPicker.getValue() == null && !allTimeCheckBox.isSelected()){
-            System.out.println("test");
             msgBox.setText("Period selection enabled but first day undefined. Please select a date.");
 
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event -> msgBox.setText(""));
             pause.play();
         }
-        System.out.println("test2");
-        //app.getTransactionManager().transactionFilter(datePicker.getValue(), searchField.getText(), earningsCheckBox.isSelected(),
-                //spendingsCheckBox.isSelected(), dayCheckBox.isSelected(), weekCheckBox.isSelected(), monthCheckBox.isSelected(), yearCheckBox.isSelected());
+
+        msgBox.setText(firstDayPicker.getValue() + searchField.getText() +
+                earningsCheckBox.isSelected() + spendingsCheckBox.isSelected() + dayCheckBox.isSelected() +
+                weekCheckBox.isSelected() + monthCheckBox.isSelected() + yearCheckBox.isSelected());
+
+        app.getTransactionManager().transactionFilter(firstDayPicker.getValue(), searchField.getText(),
+                earningsCheckBox.isSelected(), spendingsCheckBox.isSelected(), dayCheckBox.isSelected(),
+                weekCheckBox.isSelected(), monthCheckBox.isSelected(), yearCheckBox.isSelected());
+
+        filteredTransactionsTable.getItems().setAll(app.getFilteredTransactionList());
     }
 
     @FXML
