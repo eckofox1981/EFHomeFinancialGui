@@ -35,6 +35,7 @@ public class TransactionManager {
     public void gatherAllTransactions () {
         app.getAllTransactionsList().clear();
         //hämtar allt
+        //TODO add transferCheckBox
         try (PreparedStatement selectAllTransactionsStatement = app.getConnection().prepareStatement(
                 "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
                         "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +

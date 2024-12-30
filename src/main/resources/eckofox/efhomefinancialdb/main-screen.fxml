@@ -211,7 +211,7 @@
                                                 <Font name="Quicksand Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <CheckBox fx:id="earningsCheckBox" mnemonicParsing="false" onAction="#filteringTransactions" prefHeight="17.0" prefWidth="217.0" selected="true" text="Earnings" textFill="#0a00ff">
+                                          <CheckBox fx:id="earningsCheckBox" mnemonicParsing="false" onAction="#setEarningsCheckBox" prefHeight="17.0" prefWidth="217.0" text="Earnings" textFill="#0a00ff">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>
@@ -219,7 +219,15 @@
                                                 <Font name="Calibri" size="14.0" />
                                              </font>
                                           </CheckBox>
-                                          <CheckBox fx:id="spendingsCheckBox" mnemonicParsing="false" onAction="#filteringTransactions" prefHeight="17.0" prefWidth="217.0" selected="true" text="Spendings" textFill="#0a00ff">
+                                          <CheckBox fx:id="spendingsCheckBox" mnemonicParsing="false" onAction="#setSpendingsCheckBox" prefHeight="17.0" prefWidth="217.0" text="Spendings" textFill="#0a00ff">
+                                             <padding>
+                                                <Insets top="3.0" />
+                                             </padding>
+                                             <font>
+                                                <Font name="Calibri" size="14.0" />
+                                             </font>
+                                          </CheckBox>
+                                          <CheckBox fx:id="transferCheckBox" mnemonicParsing="false" onAction="#setTransferCheckBox" prefHeight="17.0" prefWidth="217.0" text="Transfer" textFill="#0a00ff">
                                              <padding>
                                                 <Insets top="3.0" />
                                              </padding>

@@ -87,6 +87,8 @@ public class MainScreenController {
     @FXML
     private CheckBox spendingsCheckBox;
     @FXML
+    private CheckBox transferCheckBox;
+    @FXML
     private CheckBox allTimeCheckBox;
     @FXML
     private CheckBox dayCheckBox;
@@ -195,6 +197,33 @@ public class MainScreenController {
     }
 
     @FXML
+    private void setEarningsCheckBox (){
+        if (earningsCheckBox.isSelected()){
+            spendingsCheckBox.selectedProperty().setValue(false);
+            transferCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setSpendingsCheckBox (){
+        if (spendingsCheckBox.isSelected()){
+            earningsCheckBox.selectedProperty().setValue(false);
+            transferCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setTransferCheckBox (){
+        if (transferCheckBox.isSelected()){
+            spendingsCheckBox.selectedProperty().setValue(false);
+            earningsCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
     private void setAllTimeCheckBox (){
         if (allTimeCheckBox.isSelected()) {
             dayCheckBox.selectedProperty().setValue(false);
@@ -259,9 +288,7 @@ public class MainScreenController {
             pause.play();
         }
 
-        msgBox.setText(firstDayPicker.getValue() + searchField.getText() +
-                earningsCheckBox.isSelected() + spendingsCheckBox.isSelected() + dayCheckBox.isSelected() +
-                weekCheckBox.isSelected() + monthCheckBox.isSelected() + yearCheckBox.isSelected());
+        msgBox.setText(filteringMsg());
 
         app.getTransactionManager().transactionFilter(firstDayPicker.getValue(), searchField.getText(),
                 earningsCheckBox.isSelected(), spendingsCheckBox.isSelected(), dayCheckBox.isSelected(),
@@ -288,6 +315,31 @@ public class MainScreenController {
     @FXML
     private  void resettingMsgColor() {
 
+    }
+
+    private String filteringMsg() {
+        StringBuilder message = new StringBuilder("Showing ");
+        if (!earningsCheckBox.isSelected() && !spendingsCheckBox.isSelected() && !transferCheckBox.isSelected()) {
+            message.append("all ");
+        }
+        if (earningsCheckBox.isSelected()) {
+            message.append("incoming ");
+        }
+        if (spendingsCheckBox.isSelected()) {
+            message.append("outgoing ");
+        }
+        if (transferCheckBox.isSelected()) {
+            message.append("transfer-");
+        }
+
+        if (allTimeCheckBox.isSelected()) {
+            message.append("transactions");
+        } else {
+            message.append("transactions for the selected period, starting on ")
+                    .append(firstDayPicker.getValue().toString());
+        }
+        message.append(".");
+        return new String(message);
     }
 
     private String getJoinedMonthAndYear() {
