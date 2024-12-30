@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="178.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controllers.LoginScreenController">
+<AnchorPane prefHeight="178.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controller.LoginScreenController">
    <children>
       <Label layoutX="59.0" layoutY="35.0" prefHeight="21.0" prefWidth="117.0" text="Welcome to ">
          <font>

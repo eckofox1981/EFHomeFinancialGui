@@ -1,12 +1,11 @@
 package eckofox.efhomefinancialdb.application;
 
-import eckofox.efhomefinancialdb.controllers.LoginScreenController;
+import eckofox.efhomefinancialdb.controller.LoginScreenController;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionManager;
 import eckofox.efhomefinancialdb.user.User;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

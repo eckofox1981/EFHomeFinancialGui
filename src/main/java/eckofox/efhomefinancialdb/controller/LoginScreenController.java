@@ -1,13 +1,11 @@
-package eckofox.efhomefinancialdb.controllers;
+package eckofox.efhomefinancialdb.controller;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.user.User;
-import eckofox.efhomefinancialdb.user.account.Account;
 import eckofox.efhomefinancialdb.user.account.CheckingAccount;
 import eckofox.efhomefinancialdb.user.account.SavingAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.AccessibleAction;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

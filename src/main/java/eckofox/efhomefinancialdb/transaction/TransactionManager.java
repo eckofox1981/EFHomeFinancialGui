@@ -68,6 +68,8 @@ public class TransactionManager {
                 "JOIN accounts ON transactions.accountid = accounts.accountid ";
         String dateSelect = "";
         String typeSelect = "";
+        String searchterms = "";
+
         //hämtar baserad på kriterier
         try (PreparedStatement selectFilteredTransactionsStatement = app.getConnection().prepareStatement(
                 standardSelect + "WHERE accounts.accountid = ? ORDER BY transactions.date DESC"

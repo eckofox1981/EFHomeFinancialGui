@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="578.0" prefWidth="1097.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controllers.MainScreenController">
+<AnchorPane prefHeight="578.0" prefWidth="1097.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controller.MainScreenController">
    <children>
       <Accordion fx:id="accordion" prefHeight="578.0" prefWidth="1097.0">
         <panes>

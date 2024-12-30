@@ -15,5 +15,5 @@ module eckofox.efhomefinancialdb {
 
     opens eckofox.efhomefinancialdb to javafx.fxml;
     exports eckofox.efhomefinancialdb.application;
-    opens eckofox.efhomefinancialdb.controllers to javafx.fxml;
+    opens eckofox.efhomefinancialdb.controller to javafx.fxml;
 }

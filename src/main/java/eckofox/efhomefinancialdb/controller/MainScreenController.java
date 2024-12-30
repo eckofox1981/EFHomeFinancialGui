@@ -1,4 +1,4 @@
-package eckofox.efhomefinancialdb.controllers;
+package eckofox.efhomefinancialdb.controller;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.date.DateUtility;

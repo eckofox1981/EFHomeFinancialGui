@@ -1,4 +1,4 @@
-package eckofox.efhomefinancialdb.controllers;
+package eckofox.efhomefinancialdb.controller;
 
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.user.User;
@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Objects;
 import java.util.UUID;
 
