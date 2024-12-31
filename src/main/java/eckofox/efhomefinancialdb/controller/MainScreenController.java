@@ -291,7 +291,7 @@ public class MainScreenController {
         msgBox.setText(filteringMsg());
 
         app.getTransactionManager().transactionFilter(firstDayPicker.getValue(), searchField.getText(),
-                earningsCheckBox.isSelected(), spendingsCheckBox.isSelected(), dayCheckBox.isSelected(),
+                earningsCheckBox.isSelected(), spendingsCheckBox.isSelected(), transferCheckBox.isSelected(), dayCheckBox.isSelected(),
                 weekCheckBox.isSelected(), monthCheckBox.isSelected(), yearCheckBox.isSelected());
 
         filteredTransactionsTable.getItems().setAll(app.getFilteredTransactionList());

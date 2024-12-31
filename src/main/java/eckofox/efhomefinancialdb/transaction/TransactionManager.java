@@ -35,7 +35,6 @@ public class TransactionManager {
     public void gatherAllTransactions () {
         app.getAllTransactionsList().clear();
         //hämtar allt
-        //TODO add transferCheckBox
         try (PreparedStatement selectAllTransactionsStatement = app.getConnection().prepareStatement(
                 "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
                         "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
@@ -66,7 +65,7 @@ public class TransactionManager {
 
     }
 
-    public void transactionFilter (LocalDate datePicker, String searchWord, boolean earningCheckBox, boolean spendingCheckBox,
+    public void transactionFilter (LocalDate datePicker, String searchWord, boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox,
                                    boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
         app.getFilteredTransactionList().clear();
         String standardSelect = "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
@@ -78,7 +77,7 @@ public class TransactionManager {
             System.out.println(datePicker.toString());
         }
         String dateSelect = dateSelect(datePicker, dayCheckBox, weekCheckBox, monthCheckBox, yearCheckBox);
-        String typeSelect = typeSelect(earningCheckBox, spendingCheckBox);
+        String typeSelect = typeSelect(earningCheckBox, spendingCheckBox, transferCheckBox);
         String searchTermSelect = searchTermSelect(searchWord);
         String andDate = isAndWord(dateSelect);
         String andType = isAndWord(typeSelect);
@@ -154,8 +153,8 @@ public class TransactionManager {
         return lastDay;
     }
 
-    private String typeSelect (boolean earningCheckBox, boolean spendingCheckBox) {
-        if ((earningCheckBox && spendingCheckBox) || (!earningCheckBox && !spendingCheckBox)) {
+    private String typeSelect (boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox) {
+        if (!earningCheckBox && !spendingCheckBox && !transferCheckBox) {
             return "";
         }
         if (earningCheckBox) {
@@ -164,6 +163,9 @@ public class TransactionManager {
         if (spendingCheckBox) {
             return "transactions.transactiontype = 'WITHDRAWAL' ";
         }
+        if (transferCheckBox) {
+            return "transactions.transactiontype = 'TRANSFER' ";
+        }
         return "";
     }
 
@@ -171,8 +173,8 @@ public class TransactionManager {
         if (searchWord == "") {
             return "";
         }
-        return "(transactions.comment = '" + searchWord + "' OR transactions.transactiontype = '" + searchWord +
-                "' OR accounts.name = '" + searchWord + "') ";
+        return "(transactions.comment LIKE '%" + searchWord + "%' OR transactions.transactiontype LIKE '%" +
+                searchWord.toUpperCase() + "%' OR accounts.name LIKE '%" + searchWord + "%') ";
     }
 
 
