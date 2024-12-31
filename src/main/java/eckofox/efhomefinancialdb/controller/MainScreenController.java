@@ -10,6 +10,9 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
@@ -19,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.Optional;
 import java.util.UUID;
 
 public class MainScreenController {
@@ -303,13 +307,41 @@ public class MainScreenController {
     }
 
     @FXML
-    private void deletePressed() {
-
+    private void deletePressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.DELETE)) {
+            deleteSelectedTransaction();
+        }
     }
 
     @FXML
     private void deleteSelectedTransaction(){
+        if (filteredTransactionsTable.getSelectionModel().isEmpty()) {
+            msgBox.setTextFill(Color.ORANGE);
+            msgBox.setText("You need to select a transaction to be deleted.");
+            return;
+        }
+        Transaction selectedTransaction = filteredTransactionsTable.getSelectionModel().getSelectedItem();
+        String transactionDescription = String.valueOf(selectedTransaction.getDate().toString() + " " + selectedTransaction
+                .getTransactionType().toString() + " " + selectedTransaction.getAmount() + " SEK");
 
+        Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        deleteAlert.setTitle("Delete transaction");
+        deleteAlert.setContentText("You are about to delete transaction '" + transactionDescription +
+                "'. Do you wish to proceed?");
+        Optional<ButtonType> result = deleteAlert.showAndWait();
+
+        if (result.isEmpty()) {
+            msgBox.setText("Transaction not deleted.");
+        } else if (result.get() == ButtonType.OK) {
+            selectedTransaction.deleteData();
+            //TODO update account/balances
+            msgBox.setTextFill(Color.ORANGE);
+            msgBox.setText("Transaction '" + transactionDescription + "' deleted.");
+        } else if (result.get() == ButtonType.CANCEL) {
+            msgBox.setText("Transaction not deleted.");
+        }
+
+        filteringTransactions();
     }
 
     @FXML

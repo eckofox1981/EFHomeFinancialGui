@@ -85,7 +85,14 @@ public class Transaction implements DataBaseManager {
 
     @Override
     public void deleteData() {
-
+        try (PreparedStatement deleteStatement = app.getConnection().prepareStatement(
+                "DELETE FROM transactions WHERE transactions.id = ?;")) {
+            deleteStatement.setObject(1, id);
+            System.out.println("check if " + id.toString() + " deleted");
+            deleteStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Issue deleting transaction. " + e.getMessage());
+        }
     }
 
 
