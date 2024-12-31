@@ -72,6 +72,18 @@ public abstract class Account implements DataBaseManager {
         }
     }
 
+    @Override
+    public void deleteData() {
+        try (PreparedStatement deleteStatement = app.getConnection().prepareStatement(
+                "DELETE FROM accounts WHERE accountid = ?;")) {
+            deleteStatement.setObject(1, accountId);
+            System.out.println("check if " + accountId.toString() + " deleted");
+            deleteStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Issue deleting account " + name + ". " + e.getMessage());
+        }
+    }
+
     /**
      * setBalance will set the balance from the account but needs to be implemented differently
      * for Transfer-type transactions.

@@ -32,9 +32,4 @@ public class SavingAccount extends Account {
         return transaction.getAmount();
     }
 
-
-    @Override
-    public void deleteData() {
-
-    }
 }

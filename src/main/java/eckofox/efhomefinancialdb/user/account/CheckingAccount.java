@@ -27,9 +27,4 @@ public class CheckingAccount extends Account {
         return transaction.getAmount();
     }
 
-
-    @Override
-    public void deleteData() {
-
-    }
 }

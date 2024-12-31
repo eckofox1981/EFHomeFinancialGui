@@ -27,9 +27,9 @@ public class TransactionManager {
     }
 
     /** Gathering process in short:
-     * the transaction list is cleared (to avoid to add all transactions again)
-     * a generic transaction is used to find the userId's transaction directory
-     * each file is 'transaction.fetchData()' (see Transaction class) and resulting transaction added to the list
+     * the filteredTransactionList is cleared (to avoid to add all transactions again)
+     * an SQL statement is put edited depeinding on the user selections in the UI.
+     * resulting Resultset is used to make new Transaction which are added directly to the filteredTransactionList
      * Error-handling accordingly
      */
     public void gatherAllTransactions () {
