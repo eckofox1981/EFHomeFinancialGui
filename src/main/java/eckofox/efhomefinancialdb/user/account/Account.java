@@ -45,7 +45,14 @@ public abstract class Account implements DataBaseManager {
      */
     @Override
     public void insertData() {
+        double updatedBalance = 0.0;
 
+        for (Transaction transaction : app.getAllTransactionsList()) {
+            if (transaction.getFromAccount().equals(name)) {
+                updatedBalance += transaction.getAmount();
+            }
+        }
+        //TODO continue updating balance based on transactions
     }
 
     /**

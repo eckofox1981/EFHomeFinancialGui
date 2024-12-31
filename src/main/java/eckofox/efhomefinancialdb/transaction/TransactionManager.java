@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -71,11 +72,7 @@ public class TransactionManager {
         String standardSelect = "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
                 "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
                 "JOIN accounts ON transactions.accountid = accounts.accountid WHERE accounts.accountid = ? ";
-        if (datePicker == null) {
-            System.out.println("datepicker null");
-        } else {
-            System.out.println(datePicker.toString());
-        }
+
         String dateSelect = dateSelect(datePicker, dayCheckBox, weekCheckBox, monthCheckBox, yearCheckBox);
         String typeSelect = typeSelect(earningCheckBox, spendingCheckBox, transferCheckBox);
         String searchTermSelect = searchTermSelect(searchWord);
@@ -112,7 +109,7 @@ public class TransactionManager {
     }
 
     private String isAndWord (String selectStatementPart) {
-        if (selectStatementPart != "") {
+        if (!Objects.equals(selectStatementPart, "")) {
             return "AND ";
         }
         return "";

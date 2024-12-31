@@ -138,8 +138,8 @@ public class Transaction implements DataBaseManager {
         return comment;
     }
 
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
+    public Account getFromAccount() {
+        return fromAccount;
     }
 
     public DoubleProperty amountProperty() {
