@@ -12,24 +12,4 @@ public class SavingAccount extends Account {
         setUserId(user.getUserID());
     }
 
-    @Override
-    public void setBalanceFromTransactions() {
-        double newBalance = 0;
-
-        for (Transaction transaction : app.getFilteredTransactionList()) {
-            if (transaction.getTransactionType().equals(TransactionType.TRANSFER)) {
-                newBalance += transferCheck(transaction);
-            }
-        }
-        setBalance(newBalance);
-    }
-
-    @Override
-    protected double transferCheck(Transaction transaction) {
-        if (transaction.getComment().equalsIgnoreCase("TO-CHECKING")) {
-            return Math.abs(transaction.getAmount()) * -1;
-        }
-        return transaction.getAmount();
-    }
-
 }

@@ -73,8 +73,6 @@ public class LoginService {
                     app.setActiveUser(user);
                     app.getActiveUser().getAcountList().add(new CheckingAccount(app, user));
                     app.getActiveUser().getAcountList().add(new SavingAccount(app, user));
-                    app.getActiveUser().getAcountList().stream()
-                            .forEach(account -> account.fetchData());
                 }
             } catch (SQLException e) {
                 System.err.println("Error while creating userId at setActiveUser. " + e.getMessage());

@@ -14,17 +14,8 @@ public class CheckingAccount extends Account {
 
     @Override
     public void setBalanceFromTransactions() {
-        double newBalance = 0;
 
-        setBalance(newBalance);
     }
 
-    @Override
-    protected double transferCheck(Transaction transaction) {
-        if (transaction.getComment().equalsIgnoreCase("TO-SAVING")) {
-            return Math.abs(transaction.getAmount()) * -1;
-        }
-        return transaction.getAmount();
-    }
 
 }

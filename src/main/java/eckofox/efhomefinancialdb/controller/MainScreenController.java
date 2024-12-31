@@ -123,14 +123,13 @@ public class MainScreenController {
     private TitledPane helpPane;
 
     public void settingUpDashBoard(){
+        app.getActiveUser().getAcountList().forEach(Account::fetchData);
         app.getTransactionManager().gatherAllTransactions();
         userNameLabel.setText("- " + app.getActiveUser().getUsername() + " -");
         realNameLabel.setText(app.getActiveUser().getFirstname() + " " + app.getActiveUser().getLastname());
         joinedLabel.setText(getJoinedMonthAndYear());
-        checkingAccountLabel.setText(app.getActiveUser().getAcountList().getFirst().getName() + ": " +
-                app.getActiveUser().getAcountList().getFirst().getBalance() + " SEK");
-        savingAccountLabel.setText(app.getActiveUser().getAcountList().getLast().getName() + ": " +
-                app.getActiveUser().getAcountList().getLast().getBalance() + " SEK");
+
+        updatingAccountDisplay();
 
         fiveDateColumn.setCellValueFactory(cellData -> DateUtility.datePropertyFormat(cellData.getValue().getDate()));
         fiveTypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
@@ -174,6 +173,15 @@ public class MainScreenController {
         filteringTransactions();
 
         filteredTransactionsTable.getItems().setAll(app.getFilteredTransactionList());
+    }
+
+    @FXML
+    private void updatingAccountDisplay (){
+        app.getActiveUser().getAcountList().forEach(Account::setBalanceFromTransactions);
+        checkingAccountLabel.setText(app.getActiveUser().getAcountList().getFirst().getName() + ": " +
+                app.getActiveUser().getAcountList().getFirst().getBalance() + " SEK");
+        savingAccountLabel.setText(app.getActiveUser().getAcountList().getLast().getName() + ": " +
+                app.getActiveUser().getAcountList().getLast().getBalance() + " SEK");
     }
 
     @FXML
@@ -334,7 +342,8 @@ public class MainScreenController {
             msgBox.setText("Transaction not deleted.");
         } else if (result.get() == ButtonType.OK) {
             selectedTransaction.deleteData();
-            //TODO update account/balances
+            app.getActiveUser().getAcountList().forEach(Account::setBalanceFromTransactions);
+            updatingAccountDisplay();
             msgBox.setTextFill(Color.ORANGE);
             msgBox.setText("Transaction '" + transactionDescription + "' deleted.");
         } else if (result.get() == ButtonType.CANCEL) {

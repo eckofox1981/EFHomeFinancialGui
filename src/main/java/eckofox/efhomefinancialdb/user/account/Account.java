@@ -45,14 +45,14 @@ public abstract class Account implements DataBaseManager {
      */
     @Override
     public void insertData() {
-        double updatedBalance = 0.0;
-
-        for (Transaction transaction : app.getAllTransactionsList()) {
-            if (transaction.getFromAccount().equals(name)) {
-                updatedBalance += transaction.getAmount();
-            }
+        try (PreparedStatement updateBalanceStatement = app.getConnection().prepareStatement(
+                "UPDATE accounts SET balance = ? where accountid = ?;")) {
+            updateBalanceStatement.setDouble(1, balance);
+            updateBalanceStatement.setObject(2, accountId);
+            updateBalanceStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Issue with updating account balance statement. " + e.getMessage());
         }
-        //TODO continue updating balance based on transactions
     }
 
     /**
@@ -60,12 +60,12 @@ public abstract class Account implements DataBaseManager {
      */
     @Override
     public void fetchData() {
-        try (PreparedStatement selectAccountData = app.getConnection().prepareStatement("SELECT * FROM accounts WHERE userid = ? AND name = ?;")){
-            selectAccountData.setObject(1, userId, java.sql.Types.OTHER);
-            selectAccountData.setString(2, name);
+        try (PreparedStatement selectAccountDataStatement = app.getConnection().prepareStatement("SELECT * FROM accounts WHERE userid = ? AND name = ?;")){
+            selectAccountDataStatement.setObject(1, userId, java.sql.Types.OTHER);
+            selectAccountDataStatement.setString(2, name);
 
             try {
-                ResultSet result = selectAccountData.executeQuery();
+                ResultSet result = selectAccountDataStatement.executeQuery();
                 if (result.next()){
                     accountId = (UUID) result.getObject("accountid");
                     balance = result.getDouble("balance");
@@ -77,6 +77,9 @@ public abstract class Account implements DataBaseManager {
         } catch (SQLException e) {
             System.err.println("Issue with account fetch data statement=> " + name + ". " + e.getMessage());
         }
+        System.out.println("avant (apres fetch): " + balance);
+        setBalanceFromTransactions();
+        System.out.println("apres (apres fetch):" + balance);
     }
 
     @Override
@@ -95,14 +98,23 @@ public abstract class Account implements DataBaseManager {
      * setBalance will set the balance from the account but needs to be implemented differently
      * for Transfer-type transactions.
      */
-    public abstract void setBalanceFromTransactions();
-
-    /**
-     * Transfer (extending Transaction) are submitted to a check to make sure
-     * the proper account is awarded or debited
-     */
-    protected abstract double transferCheck(Transaction transaction);
-
+    public void setBalanceFromTransactions() {
+        double updatedBalance = 0.0;
+        System.out.println("DEBUG LIst size: " + app.getAllTransactionsList().size());
+        for (Transaction transaction : app.getAllTransactionsList()) {
+            System.out.println(" account from transaction" +transaction.getFromAccount().getAccountId().toString());
+            System.out.println("acount id" + accountId.toString());
+            if (transaction.getFromAccount().getAccountId().equals(accountId)) {
+                System.out.println("DEBUG transaction amount: " + transaction.getAmount());
+                updatedBalance += transaction.getAmount();
+                System.out.println("DEBUG " + name + " balance: " + updatedBalance);
+            }
+        }
+        System.out.println("avant" + updatedBalance + " " + balance);
+        balance = updatedBalance;
+        System.out.println("apres" + updatedBalance + " " + balance);
+        insertData();
+    }
 
     public UUID getAccountId() {
         return accountId;

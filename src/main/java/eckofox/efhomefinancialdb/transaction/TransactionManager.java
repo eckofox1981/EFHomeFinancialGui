@@ -27,15 +27,16 @@ public class TransactionManager {
         this.app = app;
     }
 
-    /** Gathering process in short:
+    /**
+     * Gathering process in short:
      * the filteredTransactionList is cleared (to avoid to add all transactions again)
      * an SQL statement is put edited depeinding on the user selections in the UI.
      * resulting Resultset is used to make new Transaction which are added directly to the filteredTransactionList
      * Error-handling accordingly
      */
-    public void gatherAllTransactions () {
+    public void gatherAllTransactions() {
         app.getAllTransactionsList().clear();
-        //hämtar allt
+
         try (PreparedStatement selectAllTransactionsStatement = app.getConnection().prepareStatement(
                 "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
                         "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
@@ -43,32 +44,38 @@ public class TransactionManager {
                         "WHERE accounts.accountid = ? ORDER BY transactions.date DESC"
         )) {
             selectAllTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+
             ResultSet resultSet = selectAllTransactionsStatement.executeQuery();
-            try{
+
+            try {
                 while (resultSet.next()) {
+
                     UUID id = (UUID) resultSet.getObject("id");
                     TransactionType transactionType = TransactionType.valueOf(resultSet.getString("transactiontype"));
                     Account fromAccount = transactionAccountCheck((UUID) resultSet.getObject("accountid"));
                     Date date = resultSet.getDate("date");
                     Double amount = resultSet.getDouble("amount");
                     String comment = resultSet.getString("comment");
+
                     Transaction transaction = new Transaction(app, app.getActiveUser(), id, transactionType, fromAccount, date,
                             amount, comment);
+
                     app.getAllTransactionsList().add(transaction);
                 }
             } catch (SQLException ex) {
                 System.err.println("Issue with gathering all transactions in gatherAllTransactions. " + ex.getMessage());
             }
 
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
         }
 
     }
 
-    public void transactionFilter (LocalDate datePicker, String searchWord, boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox,
-                                   boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
+    public void transactionFilter(LocalDate datePicker, String searchWord, boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox,
+                                  boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
         app.getFilteredTransactionList().clear();
+
         String standardSelect = "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
                 "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
                 "JOIN accounts ON transactions.accountid = accounts.accountid WHERE accounts.accountid = ? ";
@@ -80,14 +87,13 @@ public class TransactionManager {
         String andType = isAndWord(typeSelect);
         String andSearch = isAndWord(searchTermSelect);
 
-        //hämtar baserad på kriterier
         try (PreparedStatement selectFilteredTransactionsStatement = app.getConnection().prepareStatement(
-                standardSelect + andDate + dateSelect + andType +typeSelect + andSearch + searchTermSelect + "ORDER BY transactions.date DESC;"
-        )) {;
+                standardSelect + andDate + dateSelect + andType + typeSelect + andSearch + searchTermSelect + "ORDER BY transactions.date DESC;"
+        )) {
+            ;
             selectFilteredTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
-            System.out.println("DEBUG filterQUERY: " + selectFilteredTransactionsStatement);
             ResultSet resultSet = selectFilteredTransactionsStatement.executeQuery();
-            try{
+            try {
                 while (resultSet.next()) {
                     UUID id = (UUID) resultSet.getObject("id");
                     TransactionType transactionType = TransactionType.valueOf(resultSet.getString("transactiontype"));
@@ -103,19 +109,19 @@ public class TransactionManager {
                 System.err.println("Issue with gathering all transactions in transactionFilter. " + ex.getMessage());
             }
 
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
         }
     }
 
-    private String isAndWord (String selectStatementPart) {
+    private String isAndWord(String selectStatementPart) {
         if (!Objects.equals(selectStatementPart, "")) {
             return "AND ";
         }
         return "";
     }
 
-    private String dateSelect (LocalDate datePicker, boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
+    private String dateSelect(LocalDate datePicker, boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
 
         if (datePicker == null) {
             return "";
@@ -150,7 +156,7 @@ public class TransactionManager {
         return lastDay;
     }
 
-    private String typeSelect (boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox) {
+    private String typeSelect(boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox) {
         if (!earningCheckBox && !spendingCheckBox && !transferCheckBox) {
             return "";
         }
@@ -166,7 +172,7 @@ public class TransactionManager {
         return "";
     }
 
-    private String searchTermSelect (String searchWord) {
+    private String searchTermSelect(String searchWord) {
         if (searchWord == "") {
             return "";
         }
@@ -175,10 +181,9 @@ public class TransactionManager {
     }
 
 
-
     private Account transactionAccountCheck(UUID accountId) {
-        for (Account account : app.getActiveUser().getAcountList()){
-            if (account.getAccountId().equals(accountId)){
+        for (Account account : app.getActiveUser().getAcountList()) {
+            if (account.getAccountId().equals(accountId)) {
                 return account;
             }
         }
