@@ -12,10 +12,4 @@ public class CheckingAccount extends Account {
         setUserId(user.getUserID());
     }
 
-    @Override
-    public void setBalanceFromTransactions() {
-
-    }
-
-
 }

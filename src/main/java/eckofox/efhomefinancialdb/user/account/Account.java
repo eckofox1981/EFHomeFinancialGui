@@ -102,8 +102,8 @@ public abstract class Account implements DataBaseManager {
         double updatedBalance = 0.0;
         System.out.println("DEBUG LIst size: " + app.getAllTransactionsList().size());
         for (Transaction transaction : app.getAllTransactionsList()) {
-            System.out.println(" account from transaction" +transaction.getFromAccount().getAccountId().toString());
-            System.out.println("acount id" + accountId.toString());
+            System.out.println(" account from transaction " + transaction.getFromAccount().getAccountId().toString() + " " + transaction.getFromAccount().getName());
+            System.out.println("acount id " + accountId.toString() + " " + name);
             if (transaction.getFromAccount().getAccountId().equals(accountId)) {
                 System.out.println("DEBUG transaction amount: " + transaction.getAmount());
                 updatedBalance += transaction.getAmount();
