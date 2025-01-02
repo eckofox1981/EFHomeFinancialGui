@@ -9,7 +9,11 @@ import javafx.animation.PauseTransition;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -18,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,6 +55,8 @@ public class MainScreenController {
     private Label realNameLabel;
     @FXML
     private Label joinedLabel;
+    @FXML
+    private Button editUserButton;
     @FXML
     private Label checkingAccountLabel;
     @FXML
@@ -454,6 +461,37 @@ public class MainScreenController {
     }
 
     //---------------------------------- OTHER -------------------------------------------------------------------------
+    private void openEditUserScreen () {
+        try {
+            Stage currenStage = (Stage) editUserButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/eckofox/efhomefinancialdb/edituser-screen.fxml"));
+
+            fxmlLoader.setControllerFactory(type -> {
+                if (type == EditUserScreenController.class) {
+                    return new EditUserScreenController(app); // To be able to pass the app variable.
+                }
+                return null;
+            });
+
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/logo.png"))));
+            stage.setTitle("EF Home Financial - Edit user");
+            stage.setScene(new Scene(root));
+
+            MainScreenController controller = fxmlLoader.getController();
+            controller.initData(stage);
+
+            currenStage.close();
+            stage.show();
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.getStackTrace();
+        }
+    }
+
     private String getJoinedMonthAndYear() {
         String joinedDate = "error fetching enrollment date.";
         try (PreparedStatement fetchDateStatement = app.getConnection().prepareStatement("SELECT created_at FROM users WHERE username = ?;")) {

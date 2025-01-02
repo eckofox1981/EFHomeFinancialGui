@@ -44,6 +44,11 @@
                                     <Font name="Quicksand Regular" size="14.0" />
                                  </font>
                               </Label>
+                              <Button fx:id="editUserButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openEditUserScreen" prefWidth="126.0" text="Edit user" textAlignment="JUSTIFY">
+                                 <VBox.margin>
+                                    <Insets left="500.0" right="500.0" />
+                                 </VBox.margin>
+                              </Button>
                               <Label fx:id="checkingAccountLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="1097.0" text="Checking Account: 2202020 SEK" textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
                                  <font>
                                     <Font name="Quicksand Regular" size="19.0" />
@@ -60,9 +65,9 @@
                                     <Insets top="1.0" />
                                  </padding>
                               </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="1097.0" text="Latest transactions" textFill="#a0a4a2" textOverrun="CENTER_ELLIPSIS">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="1097.0" text="All transactions" textOverrun="CENTER_ELLIPSIS" underline="true">
                                  <font>
-                                    <Font name="Quicksand Regular" size="17.0" />
+                                    <Font name="Quicksand Bold" size="18.0" />
                                  </font>
                                  <padding>
                                     <Insets top="16.0" />
