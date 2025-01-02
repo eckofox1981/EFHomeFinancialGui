@@ -70,10 +70,10 @@
                               </Label>
                               <TableView fx:id="allTransactionsTable" prefHeight="242.0" prefWidth="947.0">
                                 <columns>
-                                  <TableColumn fx:id="fiveDateColumn" prefWidth="105.0" style="-fx-alignment: CENTER;" text="Date" />
-                                  <TableColumn fx:id="fiveTypeColumn" prefWidth="121.0" style="-fx-alignment: CENTER;" text="Type" />
-                                    <TableColumn fx:id="fiveAmountColumn" prefWidth="168.0" style="-fx-alignment: CENTER-RIGHT;" text="Amount" />
-                                    <TableColumn fx:id="fiveCommentColumn" editable="false" prefWidth="702.0" style="-fx-alignment: CENTER;" text="Comment" />
+                                  <TableColumn fx:id="allDateColumn" prefWidth="105.0" style="-fx-alignment: CENTER;" text="Date" />
+                                  <TableColumn fx:id="allTypeColumn" prefWidth="121.0" style="-fx-alignment: CENTER;" text="Type" />
+                                    <TableColumn fx:id="allAmountColumn" prefWidth="168.0" style="-fx-alignment: CENTER-RIGHT;" text="Amount" />
+                                    <TableColumn fx:id="allCommentColumn" editable="false" prefWidth="702.0" style="-fx-alignment: CENTER;" text="Comment" />
                                 </columns>
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" />
@@ -210,10 +210,24 @@
                                     </VBox>
                                     <VBox onMouseClicked="#resettingMsgColor" prefHeight="369.0" prefWidth="218.0">
                                        <children>
-                                          <Label alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="131.0" text="Choose transactions to display:" textAlignment="CENTER" wrapText="true">
+                                          <Label alignment="BOTTOM_CENTER" prefHeight="25.0" prefWidth="131.0" text="Choose account:" textAlignment="CENTER" wrapText="true">
+                                             <font>
+                                                <Font name="Quicksand Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="searchFromAccountDropDown" onAction="#filteringTransactions" prefHeight="30.0" prefWidth="174.0" />
+                                          <Label alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="131.0" text="no selection means both account." textAlignment="CENTER" wrapText="true">
+                                             <font>
+                                                <Font name="Quicksand Regular" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label alignment="BOTTOM_CENTER" prefHeight="55.0" prefWidth="131.0" text="Choose transactions to display:" textAlignment="CENTER" wrapText="true">
                                              <font>
                                                 <Font name="Quicksand Bold" size="14.0" />
                                              </font>
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
                                           </Label>
                                           <CheckBox fx:id="earningsCheckBox" mnemonicParsing="false" onAction="#setEarningsCheckBox" prefHeight="17.0" prefWidth="217.0" text="Earnings" textFill="#0a00ff">
                                              <padding>

@@ -57,13 +57,13 @@ public class MainScreenController {
     @FXML
     private TableView allTransactionsTable;
     @FXML
-    private TableColumn<Transaction, String> fiveDateColumn;
+    private TableColumn<Transaction, String> allDateColumn;
     @FXML
-    private TableColumn<Transaction, String> fiveTypeColumn;
+    private TableColumn<Transaction, String> allTypeColumn;
     @FXML
-    private TableColumn<Transaction, Double> fiveAmountColumn;
+    private TableColumn<Transaction, Double> allAmountColumn;
     @FXML
-    private TableColumn<Transaction, String> fiveCommentColumn;
+    private TableColumn<Transaction, String> allCommentColumn;
 
     //-----------------TRANSACTIONS-----------------
     @FXML
@@ -92,6 +92,8 @@ public class MainScreenController {
     private Button searchButton;
     @FXML
     private Button clearSearchButton;
+    @FXML
+    private ComboBox searchFromAccountDropDown;
     @FXML
     private CheckBox earningsCheckBox;
     @FXML
@@ -136,10 +138,10 @@ public class MainScreenController {
 
         updatingAccountDisplay();
 
-        fiveDateColumn.setCellValueFactory(cellData -> DateUtility.datePropertyFormat(cellData.getValue().getDate()));
-        fiveTypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
-        fiveAmountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
-        fiveCommentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
+        allDateColumn.setCellValueFactory(cellData -> DateUtility.datePropertyFormat(cellData.getValue().getDate()));
+        allTypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
+        allAmountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
+        allCommentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
         allTransactionsTable.getItems().setAll(app.getAllTransactionsList());
     }
@@ -175,6 +177,29 @@ public class MainScreenController {
         typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject());
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
+
+        searchFromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
+
+        searchFromAccountDropDown.setConverter(new StringConverter<Account>() {
+            public String toString(Account account) {
+                return (account != null) ? account.getName() : "";
+            }
+
+            public Account fromString(String string) {
+                if (string == null || string.isEmpty()) {
+                    return null;
+                }
+                for (Object item : searchFromAccountDropDown.getItems()) {
+                    if (item instanceof Account) {
+                        Account account = (Account) item;  // Cast to Account
+                        if (account.getName().equals(string)) {
+                            return account;
+                        }
+                    }
+                }
+                return null;
+            }
+        });
 
         filteringTransactions();
 
@@ -341,6 +366,7 @@ public class MainScreenController {
     private void setClearSearchButton() {
         firstDayPicker.setValue(null);
         searchField.clear();
+        searchFromAccountDropDown.setValue(null);
         earningsCheckBox.selectedProperty().setValue(false);
         spendingsCheckBox.selectedProperty().setValue(false);
         transferCheckBox.selectedProperty().setValue(false);
@@ -363,7 +389,7 @@ public class MainScreenController {
 
         msgBox.setText(filteringMsg());
 
-        app.getTransactionManager().transactionFilter(firstDayPicker.getValue(), searchField.getText(),
+        app.getTransactionManager().transactionFilter(firstDayPicker.getValue(), searchField.getText(), (Account) searchFromAccountDropDown.getValue(),
                 earningsCheckBox.isSelected(), spendingsCheckBox.isSelected(), transferCheckBox.isSelected(), dayCheckBox.isSelected(),
                 weekCheckBox.isSelected(), monthCheckBox.isSelected(), yearCheckBox.isSelected());
 
@@ -396,6 +422,11 @@ public class MainScreenController {
         } else {
             message.append("transactions for the selected period, starting on ")
                     .append(firstDayPicker.getValue().toString());
+        }
+
+        if (!searchFromAccountDropDown.getSelectionModel().isEmpty()) {
+            Account account = (Account) searchFromAccountDropDown.getSelectionModel().getSelectedItem();
+            message.append(" from " + account.getName());
         }
         message.append(".");
         return new String(message);

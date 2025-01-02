@@ -72,14 +72,15 @@ public class TransactionManager {
         }
     }
 
-    public void transactionFilter(LocalDate datePicker, String searchWord, boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox,
+    public void transactionFilter(LocalDate datePicker, String searchWord, Account account, boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox,
                                   boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
         app.getFilteredTransactionList().clear();
 
         String standardSelect = "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
                 "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
-                "JOIN accounts ON transactions.accountid = accounts.accountid WHERE accounts.accountid = ? ";
+                "JOIN accounts ON transactions.accountid = accounts.accountid WHERE  ";
 
+        String accountSelect = accountSelect(account);
         String dateSelect = dateSelect(datePicker, dayCheckBox, weekCheckBox, monthCheckBox, yearCheckBox);
         String typeSelect = typeSelect(earningCheckBox, spendingCheckBox, transferCheckBox);
         String searchTermSelect = searchTermSelect(searchWord);
@@ -88,11 +89,16 @@ public class TransactionManager {
         String andSearch = isAndWord(searchTermSelect);
 
         try (PreparedStatement selectFilteredTransactionsStatement = app.getConnection().prepareStatement(
-                standardSelect + andDate + dateSelect + andType + typeSelect + andSearch + searchTermSelect +
+                standardSelect + accountSelect +andDate + dateSelect + andType + typeSelect + andSearch + searchTermSelect +
                         "ORDER BY transactions.date DESC;"
         )) {
-            ;
-            selectFilteredTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+            if (account == null) {
+                selectFilteredTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+                selectFilteredTransactionsStatement.setObject(2, app.getActiveUser().getAcountList().getLast().getAccountId());
+            } else {
+                selectFilteredTransactionsStatement.setObject(1, account.getAccountId());
+            }
+
             ResultSet resultSet = selectFilteredTransactionsStatement.executeQuery();
             try {
                 while (resultSet.next()) {
@@ -111,7 +117,7 @@ public class TransactionManager {
             }
 
         } catch (SQLException e) {
-            System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
+            System.err.println("Issue with selectFilteredTransactionsStatement. " + e.getMessage());
         }
     }
 
@@ -120,6 +126,14 @@ public class TransactionManager {
             return "AND ";
         }
         return "";
+    }
+
+    private String accountSelect (Account account) {
+        if (account == null) {
+            return "accounts.accountid = ? OR accounts.accountid = ? ";
+        }
+
+        return "accounts.accountid = ? ";
     }
 
     private String dateSelect(LocalDate datePicker, boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
