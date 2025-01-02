@@ -20,10 +20,8 @@ import javafx.util.StringConverter;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Date;
-import java.util.EnumSet;
-import java.util.Optional;
-import java.util.UUID;
 
 public class MainScreenController {
     private App app;
@@ -178,10 +176,12 @@ public class MainScreenController {
     @FXML
     private void updatingAccountDisplay (){
         app.getActiveUser().getAcountList().forEach(Account::setBalanceFromTransactions);
-        checkingAccountLabel.setText(app.getActiveUser().getAcountList().getFirst().getName() + ": " +
-                app.getActiveUser().getAcountList().getFirst().getBalance() + " SEK");
-        savingAccountLabel.setText(app.getActiveUser().getAcountList().getLast().getName() + ": " +
-                app.getActiveUser().getAcountList().getLast().getBalance() + " SEK");
+        checkingAccountLabel.setText(String.format(new Locale("sv", "SE"), "%s: %, .2f SEK",
+                app.getActiveUser().getAcountList().getFirst().getName(),
+                app.getActiveUser().getAcountList().getFirst().getBalance()));
+        savingAccountLabel.setText(String.format(new Locale("sv", "SE"), "%s: %, .2f SEK",
+                app.getActiveUser().getAcountList().getLast().getName(),
+                app.getActiveUser().getAcountList().getLast().getBalance()));
     }
 
     @FXML
@@ -205,7 +205,10 @@ public class MainScreenController {
                 date, amount, commentField.getText());
         transaction.saving();
 
+        app.getActiveUser().getAcountList().forEach(Account::setBalanceFromTransactions);
+
         settingUpDashBoard();
+        filteringTransactions();
     }
 
     @FXML

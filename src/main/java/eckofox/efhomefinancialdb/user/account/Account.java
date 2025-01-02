@@ -3,6 +3,7 @@ package eckofox.efhomefinancialdb.user.account;
 import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseManager;
 import eckofox.efhomefinancialdb.transaction.Transaction;
+import eckofox.efhomefinancialdb.transaction.TransactionType;
 import eckofox.efhomefinancialdb.user.User;
 
 import java.sql.PreparedStatement;
@@ -100,19 +101,18 @@ public abstract class Account implements DataBaseManager {
      */
     public void setBalanceFromTransactions() {
         double updatedBalance = 0.0;
-        System.out.println("DEBUG LIst size: " + app.getAllTransactionsList().size());
         for (Transaction transaction : app.getAllTransactionsList()) {
-            System.out.println(" account from transaction " + transaction.getFromAccount().getAccountId().toString() + " " + transaction.getFromAccount().getName());
-            System.out.println("acount id " + accountId.toString() + " " + name);
             if (transaction.getFromAccount().getAccountId().equals(accountId)) {
-                System.out.println("DEBUG transaction amount: " + transaction.getAmount());
                 updatedBalance += transaction.getAmount();
-                System.out.println("DEBUG " + name + " balance: " + updatedBalance);
+            }
+            if (transaction.getTransactionType().equals(TransactionType.TRANSFER) &&
+            !transaction.getFromAccount().getAccountId().equals(accountId)) {
+                updatedBalance += -transaction.getAmount();
             }
         }
-        System.out.println("avant" + updatedBalance + " " + balance);
+
         balance = updatedBalance;
-        System.out.println("apres" + updatedBalance + " " + balance);
+
         insertData();
     }
 

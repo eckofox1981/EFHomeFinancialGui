@@ -69,7 +69,6 @@ public class TransactionManager {
         } catch (SQLException e) {
             System.err.println("Issue with selectAllTransactionsStatement. " + e.getMessage());
         }
-
     }
 
     public void transactionFilter(LocalDate datePicker, String searchWord, boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox,
@@ -88,7 +87,8 @@ public class TransactionManager {
         String andSearch = isAndWord(searchTermSelect);
 
         try (PreparedStatement selectFilteredTransactionsStatement = app.getConnection().prepareStatement(
-                standardSelect + andDate + dateSelect + andType + typeSelect + andSearch + searchTermSelect + "ORDER BY transactions.date DESC;"
+                standardSelect + andDate + dateSelect + andType + typeSelect + andSearch + searchTermSelect +
+                        "ORDER BY transactions.date DESC;"
         )) {
             ;
             selectFilteredTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
@@ -133,7 +133,7 @@ public class TransactionManager {
         }
 
         Calendar firstDayC = DateUtility.stringToCalendar(firstDay);
-        Calendar lastDayC = (Calendar) firstDayC.clone(); //learned from last project YEPOS !!
+        Calendar lastDayC = (Calendar) firstDayC.clone(); //learned from first project YEPOS !!
         lastDayC = addPeriodAccordingly(lastDayC, weekCheckBox, monthCheckBox, yearCheckBox);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

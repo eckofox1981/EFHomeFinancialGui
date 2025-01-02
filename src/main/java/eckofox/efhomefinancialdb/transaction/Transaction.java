@@ -36,7 +36,7 @@ public class Transaction implements DataBaseManager {
         this.transactionType = transactionType;
         this.fromAccount = fromAccount;
         this.date = date;
-        if (transactionType.equals(TransactionType.WITHDRAWAL) || transactionType.equals(TransactionType.TRANSFER)) {
+        if ((transactionType.equals(TransactionType.WITHDRAWAL) || transactionType.equals(TransactionType.TRANSFER)) && amount > 0) {
             this.amount = -amount;
         } else {
             this.amount = amount;
@@ -120,7 +120,6 @@ public class Transaction implements DataBaseManager {
     public User getUser() {
         return user;
     }
-
 
     public TransactionType getTransactionType() {
         return transactionType;
