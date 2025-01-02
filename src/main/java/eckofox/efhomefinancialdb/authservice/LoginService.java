@@ -88,8 +88,9 @@ public class LoginService {
         String username = result.getString("username");
         String firstname = result.getString("firstname");
         String lastname = result.getString("lastname");
+        String passwordHash = result.getString("passwordhash");
 
-        return new User(app, userid, username, firstname, lastname);
+        return new User(app, userid, username, firstname, lastname, passwordHash);
     }
 
 }

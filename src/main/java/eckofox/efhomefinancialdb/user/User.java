@@ -65,22 +65,23 @@ public class User implements DataBaseManager {
         }
     }
 
-
-
-
-
-
     @Override
     public void insertData() {
-        try {
-            File userFile = new File("filepath");
-            FileWriter writer = new FileWriter(userFile);
-            writer.append(username).append("\n");
-            writer.append(passwordHash);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Could not edit userId file.");
+        try (PreparedStatement updateStatement = app.getConnection().prepareStatement(
+                "UPDATE users SET username = ?, firstname = ?, lastname = ?, passwordhash = ? WHERE userid = ?")){
+            System.out.println("DEBUG: insert " + username);
+            updateStatement.setString(1, username);
+            System.out.println("DEBUG: insert " + firstname);
+            updateStatement.setString(2, firstname);
+            System.out.println("DEBUG: insert " + lastname);
+            updateStatement.setString(3, lastname);
+            System.out.println("DEBUG: insert " + passwordHash);
+            updateStatement.setString(4, passwordHash);
+            updateStatement.setObject(5, userID);
+            updateStatement.executeUpdate();
+
+        }catch (SQLException e) {
+            System.err.println("Issue with updateStatement");
         }
     }
 
@@ -89,7 +90,13 @@ public class User implements DataBaseManager {
 
     @Override
     public void deleteData() {
-
+        try (PreparedStatement deleteStatement = app.getConnection().prepareStatement(
+                "DELETE FROM users WHERE userid = ?;")) {
+            deleteStatement.setObject(1, userID);
+            deleteStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Issue with deleteStatement. " + e.getMessage());
+        }
     }
 
     public void createAccounts() {

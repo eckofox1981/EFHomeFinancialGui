@@ -461,6 +461,7 @@ public class MainScreenController {
     }
 
     //---------------------------------- OTHER -------------------------------------------------------------------------
+    @FXML
     private void openEditUserScreen () {
         try {
             Stage currenStage = (Stage) editUserButton.getScene().getWindow();
@@ -480,7 +481,7 @@ public class MainScreenController {
             stage.setTitle("EF Home Financial - Edit user");
             stage.setScene(new Scene(root));
 
-            MainScreenController controller = fxmlLoader.getController();
+            EditUserScreenController controller = fxmlLoader.getController();
             controller.initData(stage);
 
             currenStage.close();

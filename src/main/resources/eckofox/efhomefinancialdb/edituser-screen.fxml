@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="276.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controller.EditUserScreenController">
+   <children>
+      <HBox prefHeight="361.0" prefWidth="633.0">
+         <children>
+            <VBox prefHeight="354.0" prefWidth="285.0">
+               <children>
+                  <ImageView fitHeight="188.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../titleImage.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="3.0" top="5.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Label fx:id="realNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="1097.0" text="Daniel Johansson" textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
+                     <font>
+                        <Font name="Quicksand Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="1097.0" text="- DANEUSERNAME -" textFill="#a0a4a2" textOverrun="CENTER_ELLIPSIS">
+                     <font>
+                        <Font name="Quicksand Bold" size="25.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button fx:id="editNameButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#editName" prefWidth="140.0" text="Edit name" textOverrun="CENTER_ELLIPSIS">
+                     <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="changePassButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#changePassword" prefHeight="24.0" prefWidth="140.0" text="Change password" textOverrun="CENTER_ELLIPSIS">
+                     <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setExitButton" prefHeight="24.0" prefWidth="140.0" text="Exit" textOverrun="CENTER_ELLIPSIS">
+                     <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="deleteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setDeleteButton" prefHeight="24.0" prefWidth="140.0" text="DELETE USER" textFill="#ff6600" textOverrun="CENTER_ELLIPSIS">
+                     <VBox.margin>
+                        <Insets left="60.0" top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="346.0" prefWidth="348.0">
+               <children>
+                  <VBox fx:id="editNameVBox" prefHeight="156.0" prefWidth="343.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="346.0" text="Edit name">
+                           <font>
+                              <Font name="Quicksand Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="41.0" prefWidth="343.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="80.0" text="Username:">
+                                 <font>
+                                    <Font name="Quicksand Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="55.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="usernameField" prefHeight="25.0">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="39.0" prefWidth="343.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="80.0" text="First name:">
+                                 <font>
+                                    <Font name="Quicksand Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="55.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="firstNameField" prefHeight="25.0">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="45.0" prefWidth="343.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="80.0" text="Last name:">
+                                 <font>
+                                    <Font name="Quicksand Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="55.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="lastNameField" prefHeight="25.0">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="27.0" prefWidth="343.0" style="-fx-border-style: solid;">
+                           <children>
+                              <Label fx:id="nameMsgBox" alignment="CENTER" contentDisplay="RIGHT" prefHeight="21.0" prefWidth="341.0" wrapText="true">
+                                 <font>
+                                    <Font name="Calibri Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </VBox>
+                  <VBox fx:id="passwordVBox" layoutY="176.0" prefHeight="156.0" prefWidth="343.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="346.0" text="Change password">
+                           <font>
+                              <Font name="Quicksand Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="41.0" prefWidth="343.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="130.0" text="Old password:">
+                                 <font>
+                                    <Font name="Quicksand Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="oldPassField">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin>
+                              </PasswordField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="39.0" prefWidth="343.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="130.0" text="New password:">
+                                 <font>
+                                    <Font name="Quicksand Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="newPassField">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin>
+                              </PasswordField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="45.0" prefWidth="343.0">
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="130.0" text="Confirm password:">
+                                 <font>
+                                    <Font name="Quicksand Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <PasswordField fx:id="confirmPassField">
+                                 <HBox.margin>
+                                    <Insets left="4.0" />
+                                 </HBox.margin>
+                              </PasswordField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="27.0" prefWidth="343.0" style="-fx-border-style: solid;">
+                           <children>
+                              <Label fx:id="passMsgBox" alignment="CENTER" contentDisplay="RIGHT" prefHeight="21.0" prefWidth="341.0" wrapText="true">
+                                 <font>
+                                    <Font name="Calibri Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

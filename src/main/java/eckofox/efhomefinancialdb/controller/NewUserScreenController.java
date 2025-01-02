@@ -1,6 +1,7 @@
 package eckofox.efhomefinancialdb.controller;
 
 import eckofox.efhomefinancialdb.application.App;
+import eckofox.efhomefinancialdb.authservice.PasswordEncryption;
 import eckofox.efhomefinancialdb.user.User;
 import eckofox.efhomefinancialdb.user.account.CheckingAccount;
 import eckofox.efhomefinancialdb.user.account.SavingAccount;
@@ -64,7 +65,7 @@ public class NewUserScreenController {
             return;
         }
         if (passwordMatchControlNewUser(newPasswordField.getText(), confirmNewPasswordField.getText())) {
-            passwordHash = passwordEncryption(newPasswordField.getText());
+            passwordHash = PasswordEncryption.passwordEncryption(newPasswordField.getText());
             UUID uuid = UUID.randomUUID();
             User user = new User(app, uuid, username, firstname, lastname, passwordHash);
             CheckingAccount checkingAccount = new CheckingAccount(app, user);
@@ -122,10 +123,6 @@ public class NewUserScreenController {
             return false;
         }
         return true;
-    }
-
-    private String passwordEncryption(String confirmedPassword) {
-        return BCrypt.hashpw(confirmedPassword, BCrypt.gensalt());
     }
 
     private boolean checkUsernameUsage(String username) {
