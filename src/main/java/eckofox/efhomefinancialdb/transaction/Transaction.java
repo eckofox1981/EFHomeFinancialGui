@@ -69,15 +69,11 @@ public class Transaction implements DataBaseManager {
         }
     }
 
-
     @Override
     public void insertData() {
 
     }
 
-    /**
-     * reads of transaction file and sets the transaction fields.
-     */
     @Override
     public void fetchData() {
 
@@ -93,32 +89,6 @@ public class Transaction implements DataBaseManager {
         } catch (SQLException e) {
             System.err.println("Issue deleting transaction. " + e.getMessage());
         }
-    }
-
-
-    /**
-     * withdrawal are set as negative as to make it userId-friendlier (userId doesn't have to type -amount)
-     */
-    private void amountIsPositive() {
-        if (transactionType.equals(TransactionType.WITHDRAWAL)) {
-            this.amount = Math.abs(this.amount) * -1;
-        }
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public App getApplication() {
-        return app;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public TransactionType getTransactionType() {

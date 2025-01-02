@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,12 +32,13 @@ public class MainScreenController {
         this.app = app;
     }
 
-    public void initData (Stage stage){
+    public void initData(Stage stage) {
         this.stage = stage;
         settingUpDashBoard();
         initializeTransactionPane();
         accordion.setExpandedPane(dashboardPane);
     }
+
     @FXML
     private Accordion accordion;
     //-----------------DASHBOARD-----------------
@@ -67,6 +69,8 @@ public class MainScreenController {
     @FXML
     private TitledPane transactionsPane;
     @FXML
+    private HBox enterTransactionHBox;
+    @FXML
     private ComboBox<Account> fromAccountDropDown;
     @FXML
     private DatePicker datePicker;
@@ -79,11 +83,15 @@ public class MainScreenController {
     @FXML
     private Button enterButton;
     @FXML
+    private HBox filterHbox;
+    @FXML
     private DatePicker firstDayPicker;
     @FXML
     private TextField searchField;
     @FXML
     private Button searchButton;
+    @FXML
+    private Button clearSearchButton;
     @FXML
     private CheckBox earningsCheckBox;
     @FXML
@@ -100,8 +108,7 @@ public class MainScreenController {
     private CheckBox monthCheckBox;
     @FXML
     private CheckBox yearCheckBox;
-    @FXML
-    private CheckBox getEarningsCheckBox;
+
     @FXML
     private Button deleteButton;
     @FXML
@@ -120,7 +127,7 @@ public class MainScreenController {
     @FXML
     private TitledPane helpPane;
 
-    public void settingUpDashBoard(){
+    public void settingUpDashBoard() {
         app.getActiveUser().getAcountList().forEach(Account::fetchData);
         app.getTransactionManager().gatherAllTransactions();
         userNameLabel.setText("- " + app.getActiveUser().getUsername() + " -");
@@ -147,6 +154,7 @@ public class MainScreenController {
             public String toString(Account account) {
                 return (account != null) ? account.getName() : "";
             }
+
             public Account fromString(String string) {
                 if (string == null || string.isEmpty()) {
                     return null;
@@ -174,7 +182,7 @@ public class MainScreenController {
     }
 
     @FXML
-    private void updatingAccountDisplay (){
+    private void updatingAccountDisplay() {
         app.getActiveUser().getAcountList().forEach(Account::setBalanceFromTransactions);
         checkingAccountLabel.setText(String.format(new Locale("sv", "SE"), "%s: %, .2f SEK",
                 app.getActiveUser().getAcountList().getFirst().getName(),
@@ -184,8 +192,9 @@ public class MainScreenController {
                 app.getActiveUser().getAcountList().getLast().getBalance()));
     }
 
+    //---------------------------------- TRANSACTION FUNCTIONS----------------------------------------------------------
     @FXML
-    private void enter() {
+    private void enterTransaction() {
         Double amount = 0.0;
         Date date = null;
         try {
@@ -203,6 +212,7 @@ public class MainScreenController {
         System.out.println(typeDropDown.getValue());
         Transaction transaction = new Transaction(app, app.getActiveUser(), UUID.randomUUID(), typeDropDown.getValue(), fromAccountDropDown.getValue(),
                 date, amount, commentField.getText());
+
         transaction.saving();
 
         app.getActiveUser().getAcountList().forEach(Account::setBalanceFromTransactions);
@@ -212,120 +222,7 @@ public class MainScreenController {
     }
 
     @FXML
-    private void setEarningsCheckBox (){
-        if (earningsCheckBox.isSelected()){
-            spendingsCheckBox.selectedProperty().setValue(false);
-            transferCheckBox.selectedProperty().setValue(false);
-        }
-        filteringTransactions();
-    }
-
-    @FXML
-    private void setSpendingsCheckBox (){
-        if (spendingsCheckBox.isSelected()){
-            earningsCheckBox.selectedProperty().setValue(false);
-            transferCheckBox.selectedProperty().setValue(false);
-        }
-        filteringTransactions();
-    }
-
-    @FXML
-    private void setTransferCheckBox (){
-        if (transferCheckBox.isSelected()){
-            spendingsCheckBox.selectedProperty().setValue(false);
-            earningsCheckBox.selectedProperty().setValue(false);
-        }
-        filteringTransactions();
-    }
-
-    @FXML
-    private void setAllTimeCheckBox (){
-        if (allTimeCheckBox.isSelected()) {
-            dayCheckBox.selectedProperty().setValue(false);
-            weekCheckBox.selectedProperty().setValue(false);
-            monthCheckBox.selectedProperty().setValue(false);
-            yearCheckBox.selectedProperty().setValue(false);
-            firstDayPicker.setValue(null);
-        }
-        filteringTransactions();
-    }
-
-    @FXML
-    private void setDayCheckBox (){
-        if(dayCheckBox.isSelected()){
-            allTimeCheckBox.selectedProperty().setValue(false);
-            weekCheckBox.selectedProperty().setValue(false);
-            monthCheckBox.selectedProperty().setValue(false);
-            yearCheckBox.selectedProperty().setValue(false);
-        }
-        filteringTransactions();
-    }
-
-    @FXML
-    private void setWeekCheckBox (){
-        if(weekCheckBox.isSelected()){
-            allTimeCheckBox.selectedProperty().setValue(false);
-            dayCheckBox.selectedProperty().setValue(false);
-            monthCheckBox.selectedProperty().setValue(false);
-            yearCheckBox.selectedProperty().setValue(false);
-        }
-        filteringTransactions();
-    }
-    @FXML
-    private void setMonthCheckBox (){
-        if(monthCheckBox.isSelected()){
-            allTimeCheckBox.selectedProperty().setValue(false);
-            dayCheckBox.selectedProperty().setValue(false);
-            weekCheckBox.selectedProperty().setValue(false);
-            yearCheckBox.selectedProperty().setValue(false);
-        }
-        filteringTransactions();
-    }
-
-    @FXML
-    private void setYearCheckBox () {
-        if(yearCheckBox.isSelected()){
-            allTimeCheckBox.selectedProperty().setValue(false);
-            dayCheckBox.selectedProperty().setValue(false);
-            weekCheckBox.selectedProperty().setValue(false);
-            monthCheckBox.selectedProperty().setValue(false);
-        }
-        filteringTransactions();
-    }
-
-    @FXML
-    private void filteringTransactions() {
-        if (firstDayPicker.getValue() == null && !allTimeCheckBox.isSelected()){
-            msgBox.setText("Period selection enabled but first day undefined. Please select a date.");
-
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(event -> msgBox.setText(""));
-            pause.play();
-        }
-
-        msgBox.setText(filteringMsg());
-
-        app.getTransactionManager().transactionFilter(firstDayPicker.getValue(), searchField.getText(),
-                earningsCheckBox.isSelected(), spendingsCheckBox.isSelected(), transferCheckBox.isSelected(), dayCheckBox.isSelected(),
-                weekCheckBox.isSelected(), monthCheckBox.isSelected(), yearCheckBox.isSelected());
-
-        filteredTransactionsTable.getItems().setAll(app.getFilteredTransactionList());
-    }
-
-    @FXML
-    private void enterPressed () {
-
-    }
-
-    @FXML
-    private void deletePressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode().equals(KeyCode.DELETE)) {
-            deleteSelectedTransaction();
-        }
-    }
-
-    @FXML
-    private void deleteSelectedTransaction(){
+    private void deleteSelectedTransaction() {
         if (filteredTransactionsTable.getSelectionModel().isEmpty()) {
             msgBox.setTextFill(Color.ORANGE);
             msgBox.setText("You need to select a transaction to be deleted.");
@@ -356,9 +253,127 @@ public class MainScreenController {
         filteringTransactions();
     }
 
+    //---------------------------------- FILTER FUNCTIONS---------------------------------------------------------------
     @FXML
-    private  void resettingMsgColor() {
+    private void setEarningsCheckBox() {
+        if (earningsCheckBox.isSelected()) {
+            spendingsCheckBox.selectedProperty().setValue(false);
+            transferCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
 
+    @FXML
+    private void setSpendingsCheckBox() {
+        if (spendingsCheckBox.isSelected()) {
+            earningsCheckBox.selectedProperty().setValue(false);
+            transferCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setTransferCheckBox() {
+        if (transferCheckBox.isSelected()) {
+            spendingsCheckBox.selectedProperty().setValue(false);
+            earningsCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setAllTimeCheckBox() {
+        if (allTimeCheckBox.isSelected()) {
+            dayCheckBox.selectedProperty().setValue(false);
+            weekCheckBox.selectedProperty().setValue(false);
+            monthCheckBox.selectedProperty().setValue(false);
+            yearCheckBox.selectedProperty().setValue(false);
+            firstDayPicker.setValue(null);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setDayCheckBox() {
+        if (dayCheckBox.isSelected()) {
+            allTimeCheckBox.selectedProperty().setValue(false);
+            weekCheckBox.selectedProperty().setValue(false);
+            monthCheckBox.selectedProperty().setValue(false);
+            yearCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setWeekCheckBox() {
+        if (weekCheckBox.isSelected()) {
+            allTimeCheckBox.selectedProperty().setValue(false);
+            dayCheckBox.selectedProperty().setValue(false);
+            monthCheckBox.selectedProperty().setValue(false);
+            yearCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setMonthCheckBox() {
+        if (monthCheckBox.isSelected()) {
+            allTimeCheckBox.selectedProperty().setValue(false);
+            dayCheckBox.selectedProperty().setValue(false);
+            weekCheckBox.selectedProperty().setValue(false);
+            yearCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setYearCheckBox() {
+        if (yearCheckBox.isSelected()) {
+            allTimeCheckBox.selectedProperty().setValue(false);
+            dayCheckBox.selectedProperty().setValue(false);
+            weekCheckBox.selectedProperty().setValue(false);
+            monthCheckBox.selectedProperty().setValue(false);
+        }
+        filteringTransactions();
+    }
+
+    @FXML
+    private void setClearSearchButton() {
+        firstDayPicker.setValue(null);
+        searchField.clear();
+        earningsCheckBox.selectedProperty().setValue(false);
+        spendingsCheckBox.selectedProperty().setValue(false);
+        transferCheckBox.selectedProperty().setValue(false);
+        allTimeCheckBox.selectedProperty().setValue(true);
+        dayCheckBox.selectedProperty().setValue(false);
+        weekCheckBox.selectedProperty().setValue(false);
+        monthCheckBox.selectedProperty().setValue(false);
+        yearCheckBox.selectedProperty().setValue(false);
+    }
+
+    @FXML
+    private void filteringTransactions() {
+        if (firstDayPicker.getValue() == null && !allTimeCheckBox.isSelected()) {
+            msgBox.setText("Period selection enabled but first day undefined. Please select a date.");
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event -> msgBox.setText(""));
+            pause.play();
+        }
+
+        msgBox.setText(filteringMsg());
+
+        app.getTransactionManager().transactionFilter(firstDayPicker.getValue(), searchField.getText(),
+                earningsCheckBox.isSelected(), spendingsCheckBox.isSelected(), transferCheckBox.isSelected(), dayCheckBox.isSelected(),
+                weekCheckBox.isSelected(), monthCheckBox.isSelected(), yearCheckBox.isSelected());
+
+        filteredTransactionsTable.getItems().setAll(app.getFilteredTransactionList());
+    }
+
+    //---------------------------------- MSG BOX FUNCTIONS--------------------------------------------------------------
+    @FXML
+    private void resettingMsgColor() {
+        msgBox.setTextFill(Color.BLACK);
     }
 
     private String filteringMsg() {
@@ -386,6 +401,28 @@ public class MainScreenController {
         return new String(message);
     }
 
+
+    //---------------------------------- KEY EVENTS -----------------------------------------------------------------
+    @FXML
+    private void enterPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (enterTransactionHBox.isFocused() && datePicker.getValue() != null && amountField != null) {
+                enterTransaction();
+            }
+            if (filterHbox.isFocused()) {
+                filteringTransactions();
+            }
+        }
+    }
+
+    @FXML
+    private void deletePressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.DELETE)) {
+            deleteSelectedTransaction();
+        }
+    }
+
+    //---------------------------------- OTHER -------------------------------------------------------------------------
     private String getJoinedMonthAndYear() {
         String joinedDate = "error fetching enrollment date.";
         try (PreparedStatement fetchDateStatement = app.getConnection().prepareStatement("SELECT created_at FROM users WHERE username = ?;")) {

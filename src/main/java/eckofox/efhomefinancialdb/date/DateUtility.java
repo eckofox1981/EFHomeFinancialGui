@@ -17,6 +17,7 @@ public class DateUtility {
      * Calendar is quite practical when it comes to adding a time-period.
      * The following function splits a string (pre-approved by checkIsDate) into year, month, day
      * and converts it a Calendar object
+     *
      * @param sDate (string to be split)
      * @return Calendar object.
      */
@@ -79,6 +80,7 @@ public class DateUtility {
 
     /**
      * converts the transaction date into a StringProperty displayable on the tableview
+     *
      * @param date
      * @return a date string formated according to set standard below.
      */

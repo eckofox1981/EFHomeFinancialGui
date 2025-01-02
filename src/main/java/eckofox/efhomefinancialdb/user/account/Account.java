@@ -99,6 +99,7 @@ public abstract class Account implements DataBaseManager {
      */
     public void setBalanceFromTransactions() {
         double updatedBalance = 0.0;
+        System.out.println("setBalanceFromTransactions for " + name);
         for (Transaction transaction : app.getAllTransactionsList()) {
             if (transaction.getFromAccount().getAccountId().equals(accountId)) {
                 updatedBalance += transaction.getAmount();

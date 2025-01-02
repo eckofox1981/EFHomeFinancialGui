@@ -49,7 +49,7 @@ public class LoginScreenController {
 
     }
 
-    public void initData (Stage stage){
+    public void initData(Stage stage) {
         this.stage = stage;
     }
 
@@ -139,8 +139,8 @@ public class LoginScreenController {
         return app;
     }
 
-    public boolean loginCheck(String username, String password){
-        if (!loginService.userNameExists(username)){
+    public boolean loginCheck(String username, String password) {
+        if (!loginService.userNameExists(username)) {
             msgForUsers.setText("This username doesn't exist.\nPlease check spelling or register.");
             return false;
         }
@@ -153,7 +153,6 @@ public class LoginScreenController {
         loginService.setActiveUser(username);
         return true;
     }
-
 
 
 }

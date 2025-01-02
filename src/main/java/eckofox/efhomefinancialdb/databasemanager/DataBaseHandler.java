@@ -64,7 +64,7 @@ public class DataBaseHandler {
             Statement createAccountTableStatement = app.getConnection().createStatement();
             createAccountTableStatement.execute(
                     "CREATE TABLE IF NOT EXISTS accounts (accountid UUID UNIQUE PRIMARY KEY, name TEXT, balance DECIMAL, userid UUID, " +
-                            "FOREIGN KEY (userid) REFERENCES users(userid));");
+                            "FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE);");
         } catch (SQLException e) {
             System.err.println("Issue with createAccountTableStatement. " + e.getMessage());
         }
@@ -74,9 +74,10 @@ public class DataBaseHandler {
         try {
             Statement createTransactionTableStatement = app.getConnection().createStatement();
             createTransactionTableStatement.execute(
-                    "CREATE TABLE IF NOT EXISTS transactions (id UUID UNIQUE PRIMARY KEY, date DATE, " +
-                            "transactiontype TEXT CHECK (transactiontype IN ('WITHDRAWAL', 'DEPOSIT', 'TRANSFER')), " +
-                            "amount DECIMAL, comment TEXT, accountid UUID, FOREIGN KEY (accountid) REFERENCES accounts(accountid));");
+                        "CREATE TABLE IF NOT EXISTS transactions (id UUID UNIQUE PRIMARY KEY, date DATE, " +
+                                "transactiontype TEXT CHECK (transactiontype IN ('WITHDRAWAL', 'DEPOSIT', 'TRANSFER')), " +
+                                "amount DECIMAL, comment TEXT, accountid UUID, " +
+                                "FOREIGN KEY (accountid) REFERENCES accounts(accountid) ON DELETE CASCADE);");
 
         } catch (SQLException exception) {
             System.err.println("Issue with create transaction table. " + exception.getMessage());

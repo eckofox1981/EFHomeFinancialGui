@@ -60,10 +60,10 @@ public class NewUserScreenController {
         String lastname = lastNameField.getText();
         String passwordHash;
 
-        if (checkUsernameUsage(username)){
+        if (checkUsernameUsage(username)) {
             return;
         }
-        if (passwordMatchControlNewUser(newPasswordField.getText(), confirmNewPasswordField.getText())){
+        if (passwordMatchControlNewUser(newPasswordField.getText(), confirmNewPasswordField.getText())) {
             passwordHash = passwordEncryption(newPasswordField.getText());
             UUID uuid = UUID.randomUUID();
             User user = new User(app, uuid, username, firstname, lastname, passwordHash);
@@ -116,31 +116,31 @@ public class NewUserScreenController {
     }
 
 
-
     //----------------------------------------------------------------------------------------------------------------
-    private boolean passwordMatchControlNewUser(String password, String confirmPassword){
-        if (!password.equals(confirmPassword)){
+    private boolean passwordMatchControlNewUser(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
             return false;
         }
         return true;
     }
 
-    private String passwordEncryption (String confirmedPassword){
+    private String passwordEncryption(String confirmedPassword) {
         return BCrypt.hashpw(confirmedPassword, BCrypt.gensalt());
     }
 
-    private boolean checkUsernameUsage (String username){
-        try{
+    private boolean checkUsernameUsage(String username) {
+        try {
             app.getDataBaseHandler().connectToDatabase();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.err.println("Could not connect to database in checkUsernameUsage. " + e.getMessage());
         }
+
         try (PreparedStatement usernameIsUsedStatement =
-                app.getConnection().prepareStatement("SELECT username FROM users WHERE username = ?;")){
+                     app.getConnection().prepareStatement("SELECT username FROM users WHERE username = ?;")) {
             usernameIsUsedStatement.setString(1, username);
             try (ResultSet result = usernameIsUsedStatement.executeQuery()) {
                 while (result.next()) {
-                    if (result.getString("username").equals(username)){
+                    if (result.getString("username").equals(username)) {
                         msgForNewUsers.setText("The username '" + username + "' is already in used.");
                         return true;
                     }

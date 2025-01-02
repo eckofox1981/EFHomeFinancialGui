@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="578.0" prefWidth="1097.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controller.MainScreenController">
+<AnchorPane fx:id="mainScreenAnchor" onMouseClicked="#resettingMsgColor" prefHeight="578.0" prefWidth="1097.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eckofox.efhomefinancialdb.controller.MainScreenController">
    <children>
       <Accordion fx:id="accordion" prefHeight="578.0" prefWidth="1097.0">
         <panes>
@@ -70,10 +70,10 @@
                               </Label>
                               <TableView fx:id="allTransactionsTable" prefHeight="242.0" prefWidth="947.0">
                                 <columns>
-                                  <TableColumn fx:id="fiveDateColumn" prefWidth="105.0" text="Date" />
-                                  <TableColumn fx:id="fiveTypeColumn" prefWidth="121.0" text="Type" />
-                                    <TableColumn fx:id="fiveAmountColumn" prefWidth="168.0" text="Amount" />
-                                    <TableColumn fx:id="fiveCommentColumn" editable="false" prefWidth="702.0" text="Comment" />
+                                  <TableColumn fx:id="fiveDateColumn" prefWidth="105.0" style="-fx-alignment: CENTER;" text="Date" />
+                                  <TableColumn fx:id="fiveTypeColumn" prefWidth="121.0" style="-fx-alignment: CENTER;" text="Type" />
+                                    <TableColumn fx:id="fiveAmountColumn" prefWidth="168.0" style="-fx-alignment: CENTER-RIGHT;" text="Amount" />
+                                    <TableColumn fx:id="fiveCommentColumn" editable="false" prefWidth="702.0" style="-fx-alignment: CENTER;" text="Comment" />
                                 </columns>
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" />
@@ -94,7 +94,7 @@
                      <children>
                         <VBox layoutX="2.0" layoutY="2.0" prefHeight="480.0" prefWidth="1097.0">
                            <children>
-                              <HBox prefHeight="34.0" prefWidth="923.0" style="-fx-border-color: black;">
+                              <HBox fx:id="enterTransactionHBox" prefHeight="34.0" prefWidth="923.0" style="-fx-border-color: black;">
                                  <children>
                                     <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="148.0" text="Enter transaction:" textAlignment="RIGHT" wrapText="true">
                                        <font>
@@ -147,7 +147,7 @@
                                           <Insets bottom="1.0" left="-1.0" top="2.0" />
                                        </opaqueInsets>
                                     </TextField>
-                                    <Button fx:id="enterButton" minHeight="-Infinity" mnemonicParsing="false" onAction="#enter" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="94.0" text="Enter">
+                                    <Button fx:id="enterButton" minHeight="-Infinity" mnemonicParsing="false" onAction="#enterTransaction" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="94.0" text="Enter">
                                        <opaqueInsets>
                                           <Insets bottom="1.0" left="-1.0" top="2.0" />
                                        </opaqueInsets>
@@ -160,8 +160,7 @@
                                     <Insets left="5.0" right="5.0" />
                                  </VBox.margin>
                               </HBox>
-                              <HBox prefHeight="40.0" prefWidth="1097.0" />
-                              <HBox prefHeight="458.0" prefWidth="1097.0">
+                              <HBox fx:id="filterHbox" prefHeight="458.0" prefWidth="1097.0">
                                  <children>
                                     <VBox onMouseClicked="#resettingMsgColor" prefHeight="369.0" prefWidth="268.0">
                                        <children>
@@ -195,6 +194,11 @@
                                              <opaqueInsets>
                                                 <Insets bottom="1.0" left="-1.0" top="2.0" />
                                              </opaqueInsets>
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                          <Button fx:id="clearSearchButton" mnemonicParsing="false" onAction="#setClearSearchButton" prefHeight="30.0" prefWidth="191.0" text="Clear search">
                                              <VBox.margin>
                                                 <Insets top="5.0" />
                                              </VBox.margin>
@@ -295,6 +299,9 @@
                                        </HBox.margin>
                                     </TableView>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets top="7.0" />
+                                 </VBox.margin>
                               </HBox>
                               <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0">
                                  <children>
@@ -306,7 +313,7 @@
                                           <Insets right="-1.0" />
                                        </padding>
                                        <HBox.margin>
-                                          <Insets left="10.0" />
+                                          <Insets bottom="5.0" left="10.0" top="5.0" />
                                        </HBox.margin>
                                     </Button>
                                  </children>
@@ -332,6 +339,9 @@
                                        </font>
                                     </Label>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets right="10.0" />
+                                 </VBox.margin>
                               </HBox>
                            </children>
                         </VBox>

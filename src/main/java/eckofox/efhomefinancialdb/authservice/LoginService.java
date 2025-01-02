@@ -20,7 +20,7 @@ public class LoginService {
         this.app = app;
     }
 
-    public boolean userNameExists (String username) {
+    public boolean userNameExists(String username) {
         try (PreparedStatement usernameIsPresentStatement =
                      app.getConnection().prepareStatement("SELECT username FROM users WHERE username = ?;")) {
             usernameIsPresentStatement.setString(1, username);
@@ -37,14 +37,14 @@ public class LoginService {
         return false;
     }
 
-    public boolean passwordCheck (String username, String password) {
+    public boolean passwordCheck(String username, String password) {
         String passwordHash = "";
 
         try (PreparedStatement checkPasswordHashStatement =
-                     app.getConnection().prepareStatement("SELECT passwordhash FROM users WHERE username =?")){
+                     app.getConnection().prepareStatement("SELECT passwordhash FROM users WHERE username =?")) {
             checkPasswordHashStatement.setString(1, username);
 
-            try (ResultSet result = checkPasswordHashStatement.executeQuery()){
+            try (ResultSet result = checkPasswordHashStatement.executeQuery()) {
                 if (result.next()) {
                     passwordHash = result.getString("passwordhash");
                 }
@@ -62,10 +62,10 @@ public class LoginService {
         return false;
     }
 
-    public void setActiveUser(String username){
+    public void setActiveUser(String username) {
         User user = new User();
 
-        try (PreparedStatement selectAllStatement = app.getConnection().prepareStatement("SELECT * FROM users WHERE username = ?;")){
+        try (PreparedStatement selectAllStatement = app.getConnection().prepareStatement("SELECT * FROM users WHERE username = ?;")) {
             selectAllStatement.setString(1, username);
             try (ResultSet result = selectAllStatement.executeQuery()) {
                 while (result.next()) {
@@ -78,12 +78,12 @@ public class LoginService {
                 System.err.println("Error while creating userId at setActiveUser. " + e.getMessage());
             }
 
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             System.err.println("Error with prepared statement in setActiveUser. " + sqlException.getMessage());
         }
     }
 
-    private User userFromResult (ResultSet result) throws SQLException {
+    private User userFromResult(ResultSet result) throws SQLException {
         UUID userid = UUID.fromString(result.getString("userid"));
         String username = result.getString("username");
         String firstname = result.getString("firstname");

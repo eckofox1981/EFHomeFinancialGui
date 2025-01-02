@@ -41,9 +41,10 @@ public class TransactionManager {
                 "SELECT transactions.id, transactions.date, transactions.transactiontype, " +
                         "transactions.amount, transactions.comment, transactions.accountid FROM transactions " +
                         "JOIN accounts ON transactions.accountid = accounts.accountid " +
-                        "WHERE accounts.accountid = ? ORDER BY transactions.date DESC"
+                        "WHERE accounts.accountid = ? OR accounts.accountid = ? ORDER BY transactions.date DESC"
         )) {
             selectAllTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
+            selectAllTransactionsStatement.setObject(2, app.getActiveUser().getAcountList().getLast().getAccountId());
 
             ResultSet resultSet = selectAllTransactionsStatement.executeQuery();
 
@@ -126,7 +127,6 @@ public class TransactionManager {
         if (datePicker == null) {
             return "";
         }
-        System.out.println("dateselect running");
         String firstDay = datePicker.toString();
         if (dayCheckBox) {
             return "transactions.date = '" + firstDay + "'";
@@ -140,7 +140,6 @@ public class TransactionManager {
 
         String lastDay = dateFormat.format(lastDayC.getTime());
 
-        System.out.println(lastDay);
         return "transactions.date BETWEEN '" + firstDay + "' AND '" + lastDay + "' ";
     }
 
