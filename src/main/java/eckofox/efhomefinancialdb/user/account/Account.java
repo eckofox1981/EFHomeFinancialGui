@@ -78,9 +78,7 @@ public abstract class Account implements DataBaseManager {
         } catch (SQLException e) {
             System.err.println("Issue with account fetch data statement=> " + name + ". " + e.getMessage());
         }
-        System.out.println("avant (apres fetch): " + balance);
-        setBalanceFromTransactions();
-        System.out.println("apres (apres fetch):" + balance);
+
     }
 
     @Override
