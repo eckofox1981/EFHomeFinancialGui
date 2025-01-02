@@ -113,8 +113,20 @@ public class User implements DataBaseManager {
         return lastname;
     }
 
-    public String getDirPath() {
-        return "dirPath";
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public List<Account> getAcountList() {
