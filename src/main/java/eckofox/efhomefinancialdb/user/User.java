@@ -66,22 +66,18 @@ public class User implements DataBaseManager {
     }
 
     @Override
-    public void insertData() {
+    public void insertUpdateData() {
         try (PreparedStatement updateStatement = app.getConnection().prepareStatement(
                 "UPDATE users SET username = ?, firstname = ?, lastname = ?, passwordhash = ? WHERE userid = ?")){
-            System.out.println("DEBUG: insert " + username);
             updateStatement.setString(1, username);
-            System.out.println("DEBUG: insert " + firstname);
             updateStatement.setString(2, firstname);
-            System.out.println("DEBUG: insert " + lastname);
             updateStatement.setString(3, lastname);
-            System.out.println("DEBUG: insert " + passwordHash);
             updateStatement.setString(4, passwordHash);
             updateStatement.setObject(5, userID);
             updateStatement.executeUpdate();
 
         }catch (SQLException e) {
-            System.err.println("Issue with updateStatement");
+            System.err.println("Issue with user.updateStatement");
         }
     }
 

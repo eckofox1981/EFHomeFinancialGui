@@ -25,7 +25,7 @@ public abstract class Account implements DataBaseManager {
         this.user = user;
         accountId = UUID.randomUUID();
         userId = user.getUserID();
-        setBalance(0.0); //TODO proper fetching
+        setBalance(0.0);
     }
 
     public void saving(){
@@ -45,7 +45,7 @@ public abstract class Account implements DataBaseManager {
      * after calling file creation, account data is appended onto on file
      */
     @Override
-    public void insertData() {
+    public void insertUpdateData() {
         try (PreparedStatement updateBalanceStatement = app.getConnection().prepareStatement(
                 "UPDATE accounts SET balance = ? where accountid = ?;")) {
             updateBalanceStatement.setDouble(1, balance);
@@ -94,12 +94,10 @@ public abstract class Account implements DataBaseManager {
     }
 
     /**
-     * setBalance will set the balance from the account but needs to be implemented differently
-     * for Transfer-type transactions.
+     *
      */
     public void setBalanceFromTransactions() {
         double updatedBalance = 0.0;
-        System.out.println("setBalanceFromTransactions for " + name);
         for (Transaction transaction : app.getAllTransactionsList()) {
             if (transaction.getFromAccount().getAccountId().equals(accountId)) {
                 updatedBalance += transaction.getAmount();
@@ -112,7 +110,7 @@ public abstract class Account implements DataBaseManager {
 
         balance = updatedBalance;
 
-        insertData();
+        insertUpdateData();
     }
 
     public UUID getAccountId() {

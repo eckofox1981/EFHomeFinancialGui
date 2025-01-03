@@ -43,16 +43,26 @@ public class LoginScreenController {
     @FXML
     private Label msgForUsers;
 
+    /** normally controller don't have parameter dependant constructor but i want to access various
+     * variables and objects without the use of static, and therefore I have modified the way the all the controllers
+     * are initialized, see App.ln 55 or here @ ln 112.
+     * @param app
+     */
     public LoginScreenController(App app) {
         this.app = app;
         this.loginService = new LoginService(app);
-
     }
 
     public void initData(Stage stage) {
         this.stage = stage;
     }
 
+    /** sets the event of a click of the login button:
+     * 1. gathers the info from the fields (could have been included directly in if-statements but I kept in "cleaner)
+     * 2. runs it through loginCheck -> username check -> password check -> set active user (sent to App)
+     * 3. if all checks pass the main screen opens, else a message i displayed to the user.
+     * @param event
+     */
     @FXML
     public void setLoginButton(javafx.event.ActionEvent event) {
         String username = usernameField.getText();
@@ -63,11 +73,12 @@ public class LoginScreenController {
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             pause.setOnFinished(e -> openMainScreen());
             pause.play();
-
         }
-        //nothing
     }
 
+    /** opens the new user screen
+     * @param event
+     */
     @FXML
     public void setRegisterButton(javafx.event.ActionEvent event) {
         try {
@@ -100,6 +111,9 @@ public class LoginScreenController {
         }
     }
 
+    /**
+     * opens the main screen after the login check is validated
+     */
     private void openMainScreen() {
         try {
             Stage currenStage = (Stage) loginButton.getScene().getWindow();
@@ -131,14 +145,12 @@ public class LoginScreenController {
         }
     }
 
-    public void setApp(App app) {
-        this.app = app;
-    }
-
-    public App getApp() {
-        return app;
-    }
-
+    /**
+     * sends the parameters the LoginServices for validation.
+     * @param username -> to check if username exists and if compatible with password
+     * @param password -> to compare with username password hash in database
+     * @return boolean to validate (or not) the login.
+     */
     public boolean loginCheck(String username, String password) {
         if (!loginService.userNameExists(username)) {
             msgForUsers.setText("This username doesn't exist.\nPlease check spelling or register.");

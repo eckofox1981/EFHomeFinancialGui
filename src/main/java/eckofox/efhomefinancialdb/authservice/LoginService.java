@@ -20,6 +20,11 @@ public class LoginService {
         this.app = app;
     }
 
+    /** connects to database to see if username exists, response will either be used to continue an operation (for login)
+     * or stop it (for user registration or change of username)
+     * @param username to be checked in database
+     * @return boolean
+     */
     public boolean userNameExists(String username) {
         try (PreparedStatement usernameIsPresentStatement =
                      app.getConnection().prepareStatement("SELECT username FROM users WHERE username = ?;")) {
@@ -37,6 +42,11 @@ public class LoginService {
         return false;
     }
 
+    /** checks password hash in database     *
+     * @param username -> to look up relevant user
+     * @param password -> be checked through BCrypt.checkpw() (ln 68)
+     * @return
+     */
     public boolean passwordCheck(String username, String password) {
         String passwordHash = "";
 
@@ -62,6 +72,11 @@ public class LoginService {
         return false;
     }
 
+    /** sets the active user in App, this allows for access of user object in various classes.
+     * sets up the accounts in an account list (see Account, CheckingAccount and SavingAccount)
+     * results from the query are handled in userFromResult for cleaner code.
+     * @param username self-explanatory
+     */
     public void setActiveUser(String username) {
         User user = new User();
 
@@ -83,6 +98,11 @@ public class LoginService {
         }
     }
 
+    /** create a user from result
+     * @param result from SQL query above
+     * @return the created user based on the query.
+     * @throws SQLException not handled here since it has to be handled in setActiveUser anyway.
+     */
     private User userFromResult(ResultSet result) throws SQLException {
         UUID userid = UUID.fromString(result.getString("userid"));
         String username = result.getString("username");
@@ -92,5 +112,6 @@ public class LoginService {
 
         return new User(app, userid, username, firstname, lastname, passwordHash);
     }
+
 
 }

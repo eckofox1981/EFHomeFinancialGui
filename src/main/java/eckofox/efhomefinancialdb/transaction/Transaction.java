@@ -70,7 +70,7 @@ public class Transaction implements DataBaseManager {
     }
 
     @Override
-    public void insertData() {
+    public void insertUpdateData() {
 
     }
 

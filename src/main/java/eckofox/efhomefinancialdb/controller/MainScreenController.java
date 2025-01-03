@@ -33,10 +33,16 @@ public class MainScreenController {
     private App app;
     private Stage stage;
 
+    /** see LoginScreen ln 46
+     * @param app
+     */
     public MainScreenController(App app) {
         this.app = app;
     }
 
+    /** initializes the window and expands the dashboard section of the window.
+     * @param stage
+     */
     public void initData(Stage stage) {
         this.stage = stage;
         settingUpDashBoard();
@@ -136,6 +142,11 @@ public class MainScreenController {
     @FXML
     private TitledPane helpPane;
 
+    /** sets up the dashboard part of the window, separated from transaction and help parts because refreshed more
+     * regularly than the other windows. This happen when:
+     *      - the accounts' balances are refreshed when tansactions are added/deleted
+     *      - the "all transaction" table is refreshed for the same reasons.
+     */
     public void settingUpDashBoard() {
         app.getActiveUser().getAcountList().forEach(Account::fetchData);
         app.getTransactionManager().gatherAllTransactions();
@@ -153,13 +164,20 @@ public class MainScreenController {
         allTransactionsTable.getItems().setAll(app.getAllTransactionsList());
     }
 
+    /**
+     * initializes the Transaction pane with its dropdown menus and the "unfiltered" transaction table.
+     * Contrary to settingUpDashBoard it only happens once.
+     */
     @FXML
     private void initializeTransactionPane() {
-        //initializes dashboard, dropdown-menus and tables.
+        //initializes dropdown-menus and tables.
         typeDropDown.getItems().setAll(FXCollections.observableArrayList(EnumSet.allOf(TransactionType.class)));
         fromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
 
-        fromAccountDropDown.setConverter(new StringConverter<>() { //to be used as String and Object
+        /**
+         * this allows me to use the dropdown menu as an "object container" for the accounts
+         */
+        fromAccountDropDown.setConverter(new StringConverter<>() {
             public String toString(Account account) {
                 return (account != null) ? account.getName() : "";
             }
@@ -178,7 +196,7 @@ public class MainScreenController {
         });
 
         typeDropDown.setValue(TransactionType.valueOf("WITHDRAWAL"));
-        fromAccountDropDown.setValue(fromAccountDropDown.getItems().get(0));
+        fromAccountDropDown.setValue(fromAccountDropDown.getItems().get(0)); //sets default value of account dropdown menu
 
         dateColumn.setCellValueFactory(cellData -> DateUtility.datePropertyFormat(cellData.getValue().getDate()));
         typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTransactionType().toString()));
@@ -187,6 +205,9 @@ public class MainScreenController {
 
         searchFromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
 
+        /**
+         * see ln 178
+         */
         searchFromAccountDropDown.setConverter(new StringConverter<Account>() {
             public String toString(Account account) {
                 return (account != null) ? account.getName() : "";
@@ -213,6 +234,9 @@ public class MainScreenController {
         filteredTransactionsTable.getItems().setAll(app.getFilteredTransactionList());
     }
 
+    /**
+     * updates the balances of the accounts in the dashboard pane.
+     */
     @FXML
     private void updatingAccountDisplay() {
         app.getActiveUser().getAcountList().forEach(Account::setBalanceFromTransactions);
@@ -225,6 +249,12 @@ public class MainScreenController {
     }
 
     //---------------------------------- TRANSACTION FUNCTIONS----------------------------------------------------------
+
+    /**
+     * create a transaction based on the various fields after checking they're valid for usage.
+     * uses the Transaction.saving method to save it in the database
+     * refreshes dashboard and refilters transactions
+     */
     @FXML
     private void enterTransaction() {
         Double amount = 0.0;
@@ -253,6 +283,12 @@ public class MainScreenController {
         filteringTransactions();
     }
 
+    /**
+     * if no transaction is selected in the table returns an error message.
+     * if a transaction is selected, a pop-up asks for confirmation before deleting.
+     * uses the Transaction.delete method
+     * refreshes dashboard and refilters transactions
+     */
     @FXML
     private void deleteSelectedTransaction() {
         if (filteredTransactionsTable.getSelectionModel().isEmpty()) {
@@ -282,10 +318,14 @@ public class MainScreenController {
             msgBox.setText("Transaction not deleted.");
         }
 
+        settingUpDashBoard();
         filteringTransactions();
     }
 
     //---------------------------------- FILTER FUNCTIONS---------------------------------------------------------------
+    /**
+     * FOLLOWING CHECKBOXES HAVE METHODS TO ENSURE FILTERING LOGIC (EX: CAN'T SELECT DAY AND MONTH FILTERING)
+     */
     @FXML
     private void setEarningsCheckBox() {
         if (earningsCheckBox.isSelected()) {
@@ -369,6 +409,9 @@ public class MainScreenController {
         filteringTransactions();
     }
 
+    /**
+     * resets the filtering parameters to defaults
+     */
     @FXML
     private void setClearSearchButton() {
         firstDayPicker.setValue(null);
@@ -384,6 +427,8 @@ public class MainScreenController {
         yearCheckBox.selectedProperty().setValue(false);
     }
 
+    /** prepares the parameters to be used for filtering in TransactionManager
+     */
     @FXML
     private void filteringTransactions() {
         if (firstDayPicker.getValue() == null && !allTimeCheckBox.isSelected()) {
@@ -404,11 +449,20 @@ public class MainScreenController {
     }
 
     //---------------------------------- MSG BOX FUNCTIONS--------------------------------------------------------------
+
+    /**
+     * resets the color of the msgBox (message box), happens when the user interacts with the window after the color
+     * has been changed.
+     */
     @FXML
     private void resettingMsgColor() {
         msgBox.setTextFill(Color.BLACK);
     }
 
+    /**
+     * writes a message specifying the filtering parameters for better understanding.
+     * @return
+     */
     private String filteringMsg() {
         StringBuilder message = new StringBuilder("Showing ");
         if (!earningsCheckBox.isSelected() && !spendingsCheckBox.isSelected() && !transferCheckBox.isSelected()) {
@@ -441,6 +495,7 @@ public class MainScreenController {
 
 
     //---------------------------------- KEY EVENTS -----------------------------------------------------------------
+
     @FXML
     private void enterPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {

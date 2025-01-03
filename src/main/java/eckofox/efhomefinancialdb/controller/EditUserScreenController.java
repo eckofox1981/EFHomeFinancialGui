@@ -4,7 +4,6 @@ import eckofox.efhomefinancialdb.application.App;
 import eckofox.efhomefinancialdb.authservice.LoginService;
 import eckofox.efhomefinancialdb.authservice.PasswordEncryption;
 import eckofox.efhomefinancialdb.user.account.Account;
-import eu.hansolo.tilesfx.skins.TestTileSkin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -85,7 +84,7 @@ public class EditUserScreenController {
         if (!lastNameField.getText().isBlank()) {
             app.getActiveUser().setLastname(lastNameField.getText());
         }
-        app.getActiveUser().insertData();
+        app.getActiveUser().insertUpdateData();
         initializeLeftPane();
         nameMsgBox.setTextFill(Color.BLACK);
         nameMsgBox.setText("User details updated.");
@@ -105,7 +104,7 @@ public class EditUserScreenController {
         }
         app.getActiveUser().setPasswordHash(PasswordEncryption.passwordEncryption(newPassField.getText()));
 
-        app.getActiveUser().insertData();
+        app.getActiveUser().insertUpdateData();
         passMsgBox.setTextFill(Color.BLACK);
         passMsgBox.setText("Password updated.");
     }

@@ -71,9 +71,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
 
-
-        launch(); //NOTE: launch makes an instance of app
-
+        launch(); //NOTE: launch makes an instance of app and therefore runs through the constructor (ln 41)
 
     }
 
