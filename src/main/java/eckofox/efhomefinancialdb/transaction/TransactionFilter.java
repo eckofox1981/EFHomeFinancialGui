@@ -31,7 +31,7 @@ public class TransactionFilter {
      * Gathering process in short:
      * the allTransactionsList is cleared (to avoid to add all transactions again)
      * A SQL query gathers all items from the 'transactions' table
-     * resulting Resultset is used to make new Transaction which are added directly to the filteredTransactionList
+     * resulting resulset is used to make new Transaction which are added directly to the filteredTransactionList
      * Error-handling accordingly
      */
     public void gatherAllTransactions() {
@@ -55,7 +55,7 @@ public class TransactionFilter {
                     TransactionType transactionType = TransactionType.valueOf(resultSet.getString("transactiontype"));
                     Account fromAccount = transactionAccountCheck((UUID) resultSet.getObject("accountid"));
                     Date date = resultSet.getDate("date");
-                    Double amount = resultSet.getDouble("amount");
+                    double amount = resultSet.getDouble("amount");
                     String comment = resultSet.getString("comment");
 
                     Transaction transaction = new Transaction(app, app.getActiveUser(), id, transactionType, fromAccount, date,
@@ -121,7 +121,7 @@ public class TransactionFilter {
                     TransactionType transactionType = TransactionType.valueOf(resultSet.getString("transactiontype"));
                     Account fromAccount = transactionAccountCheck((UUID) resultSet.getObject("accountid"));
                     Date date = resultSet.getDate("date");
-                    Double amount = resultSet.getDouble("amount");
+                    double amount = resultSet.getDouble("amount");
                     String comment = resultSet.getString("comment");
                     Transaction transaction = new Transaction(app, app.getActiveUser(), id, transactionType, fromAccount, date,
                             amount, comment);
@@ -136,6 +136,10 @@ public class TransactionFilter {
         }
     }
 
+    /** adds the AND word in the SQL query if necessary
+     * @param selectStatementPart if the preceding statement in the query is blank, returns a blank string
+     * @return the string " AND " if necessary for the SQL query
+     */
     private String isAndWord(String selectStatementPart) {
         if (!Objects.equals(selectStatementPart, "")) {
             return "AND ";
@@ -143,6 +147,10 @@ public class TransactionFilter {
         return "";
     }
 
+    /** if an account is given in the search parameters this method return the proper SQL query accordingly
+     * @param account could also be blank
+     * @return the query accordingly
+     */
     private String accountSelect (Account account) {
         if (account == null) {
             return "accounts.accountid = ? OR accounts.accountid = ? ";
@@ -151,6 +159,15 @@ public class TransactionFilter {
         return "accounts.accountid = ? ";
     }
 
+    /** edits the date part of the SQL query based on the following parameters
+     * @param datePicker used to set the day of filtering or first day of period, converted to Calendar format for easier
+     *                   handling (see DateUtility)
+     * @param dayCheckBox if true will skip the Calendar conversion and return the query with the date unconverted
+     * @param weekCheckBox uses the Calendar-converted date in the addPeriodAccordingly to set the last day of the query
+     * @param monthCheckBox uses the Calendar-converted date in the addPeriodAccordingly to set the last day of the query
+     * @param yearCheckBox uses the Calendar-converted date in the addPeriodAccordingly to set the last day of the query
+     * @return the SQL query according to the given parameters
+     */
     private String dateSelect(LocalDate datePicker, boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
 
         if (datePicker == null) {
@@ -172,6 +189,13 @@ public class TransactionFilter {
         return "transactions.date BETWEEN '" + firstDay + "' AND '" + lastDay + "' ";
     }
 
+    /** see usage above
+     * @param firstDay of the period
+     * @param weekCheckBox adds a week
+     * @param monthCheckBox adds a month
+     * @param yearCheckBox adds a year
+     * @return the last day of the period depending on given parameters
+     */
     private Calendar addPeriodAccordingly(Calendar firstDay, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
         Calendar lastDay = firstDay; //had to initialize
         if (weekCheckBox) {
@@ -184,6 +208,12 @@ public class TransactionFilter {
         return lastDay;
     }
 
+    /** edits the transactiontype part of the SQL query, will return blank if type is chosen     *
+     * @param earningCheckBox for DEPOSIT
+     * @param spendingCheckBox for WITHDRAWAL
+     * @param transferCheckBox for TRANSFER
+     * @return the SQL query part for the transaction type
+     */
     private String typeSelect(boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox) {
         if (!earningCheckBox && !spendingCheckBox && !transferCheckBox) {
             return "";
@@ -194,12 +224,15 @@ public class TransactionFilter {
         if (spendingCheckBox) {
             return "transactions.transactiontype = 'WITHDRAWAL' ";
         }
-        if (transferCheckBox) {
-            return "transactions.transactiontype = 'TRANSFER' ";
-        }
-        return "";
+        //no if statement necessary for transfer as only possible outcome
+        return "transactions.transactiontype = 'TRANSFER' ";
+
     }
 
+    /** edits a part of the SQL query for a broader search in comments, transaction-type or account names
+     * @param searchWord originally written by the user
+     * @return part of the query for a search of the word in the transactions table.
+     */
     private String searchTermSelect(String searchWord) {
         if (searchWord.equals("")) {
             return "";
@@ -208,7 +241,11 @@ public class TransactionFilter {
                 searchWord.toUpperCase() + "%' OR accounts.name LIKE '%" + searchWord + "%') ";
     }
 
-
+    /**
+     * gathers an account ID and check which of the account in the user account list the transaction belongs to.
+     * @param accountId from the resultset
+     * @return the account used in the transaction
+     */
     private Account transactionAccountCheck(UUID accountId) {
         for (Account account : app.getActiveUser().getAcountList()) {
             if (account.getAccountId().equals(accountId)) {
