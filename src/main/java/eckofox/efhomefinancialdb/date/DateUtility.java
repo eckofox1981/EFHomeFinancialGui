@@ -17,7 +17,6 @@ public class DateUtility {
      * Calendar is quite practical when it comes to adding a time-period.
      * The following function splits a string (pre-approved by checkIsDate) into year, month, day
      * and converts it a Calendar object
-     *
      * @param sDate (string to be split)
      * @return Calendar object.
      */
@@ -34,9 +33,9 @@ public class DateUtility {
     }
 
     /***
-     * use the convertDateString to see if userId input is Ok to be used as transaction date.
-     * @param sDate (userId input)
-     * @return a boolean that is used to approve sDate or ask the userId for a new, corrected, input.
+     * leftover from other applications, not used for this project, could be used if user was allowed to manually input
+     * date in date picker (would be used in an if-statement to check the user has written a date)
+     * saved for eventual future uses.
      */
     public static boolean checkIsDate(String sDate) {
         try {
@@ -79,8 +78,7 @@ public class DateUtility {
     }
 
     /**
-     * converts the transaction date into a StringProperty displayable on the tableview
-     *
+     * converts the transaction date into a StringProperty displayable on the tableview (JavaFX)
      * @param date
      * @return a date string formated according to set standard below.
      */

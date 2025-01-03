@@ -427,7 +427,7 @@ public class MainScreenController {
         yearCheckBox.selectedProperty().setValue(false);
     }
 
-    /** prepares the parameters to be used for filtering in TransactionManager
+    /** prepares the parameters to be used for filtering in TransactionFilter
      */
     @FXML
     private void filteringTransactions() {

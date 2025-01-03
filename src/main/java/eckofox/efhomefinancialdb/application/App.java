@@ -3,7 +3,7 @@ package eckofox.efhomefinancialdb.application;
 import eckofox.efhomefinancialdb.controller.LoginScreenController;
 import eckofox.efhomefinancialdb.databasemanager.DataBaseHandler;
 import eckofox.efhomefinancialdb.transaction.Transaction;
-import eckofox.efhomefinancialdb.transaction.TransactionManager;
+import eckofox.efhomefinancialdb.transaction.TransactionFilter;
 import eckofox.efhomefinancialdb.user.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,14 +33,14 @@ public class App extends Application {
 
     //private NewUserScreenController newUserMenu;
     private Transaction transaction;
-    private TransactionManager transactionManager;
+    private TransactionFilter transactionFilter;
     public Scanner scanner;
     private Connection connection;
     private DataBaseHandler dataBaseHandler;
 
     public App() {
         this.transaction = new Transaction(this);
-        this.transactionManager = new TransactionManager(this);
+        this.transactionFilter = new TransactionFilter(this);
         this.dataBaseHandler = new DataBaseHandler(this);
         scanner = new Scanner(System.in);
         dataBaseHandler.settingUpConnectionAndTables();
@@ -92,8 +92,8 @@ public class App extends Application {
         return allTransactionsList;
     }
 
-    public TransactionManager getTransactionManager() {
-        return transactionManager;
+    public TransactionFilter getTransactionManager() {
+        return transactionFilter;
     }
 
     public Connection getConnection() {

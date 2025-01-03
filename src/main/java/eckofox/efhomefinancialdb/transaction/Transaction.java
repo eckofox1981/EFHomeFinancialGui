@@ -51,7 +51,9 @@ public class Transaction implements DataBaseManager {
         this.comment = comment;
     }
 
-
+    /**
+     * saves transaction in SQL database
+     */
     @Override
     public void saving() {
         try (PreparedStatement savingTransactionStatements = app.getConnection().prepareStatement(
@@ -69,16 +71,23 @@ public class Transaction implements DataBaseManager {
         }
     }
 
+    /**
+     * not used for this project yet but could be used to allow for transaction editing (if user wanted to change
+     * transaction data). TODO if time allows
+     */
     @Override
     public void insertUpdateData() {
 
     }
 
     @Override
-    public void fetchData() {
+    public void fetchData() { /** NOT USED IN THIS CLASS, transaction info fetched in TransactionFilter*/
 
     }
 
+    /**
+     * deletes the transaction from the database
+     */
     @Override
     public void deleteData() {
         try (PreparedStatement deleteStatement = app.getConnection().prepareStatement(

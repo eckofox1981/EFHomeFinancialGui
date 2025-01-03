@@ -20,17 +20,17 @@ import java.util.UUID;
  * a quick and easy way to gather transactions. Used for displaying transaction, erasing transaction and
  * calculating account balances.
  */
-public class TransactionManager {
+public class TransactionFilter {
     private App app;
 
-    public TransactionManager(App app) {
+    public TransactionFilter(App app) {
         this.app = app;
     }
 
     /**
      * Gathering process in short:
-     * the filteredTransactionList is cleared (to avoid to add all transactions again)
-     * an SQL statement is put edited depeinding on the user selections in the UI.
+     * the allTransactionsList is cleared (to avoid to add all transactions again)
+     * A SQL query gathers all items from the 'transactions' table
      * resulting Resultset is used to make new Transaction which are added directly to the filteredTransactionList
      * Error-handling accordingly
      */
@@ -72,6 +72,21 @@ public class TransactionManager {
         }
     }
 
+    /** filters transactions based on user requirement
+     * the filteredTransactionsList is cleared to avoid adding all transactions to it again
+     * The SQL query is put together depending on the parameters, gathered in the
+     * MainScreenController.filteringTransaction()
+     * @param datePicker sets the firstdate of time period (or the day)
+     * @param searchWord allows a word to be searched in various column
+     * @param account sets which active account the transaction was made from (blank returns all)
+     * @param earningCheckBox for  deposits, no choices -> all types
+     * @param spendingCheckBox for  withdrawals, no choices -> all types
+     * @param transferCheckBox for  transfers, no choices -> all types
+     * @param dayCheckBox for transaction on the date set above
+     * @param weekCheckBox for the week following the date set above
+     * @param monthCheckBox for the month following the date above
+     * @param yearCheckBox for the year following the date set above
+     */
     public void transactionFilter(LocalDate datePicker, String searchWord, Account account, boolean earningCheckBox, boolean spendingCheckBox, boolean transferCheckBox,
                                   boolean dayCheckBox, boolean weekCheckBox, boolean monthCheckBox, boolean yearCheckBox) {
         app.getFilteredTransactionList().clear();
@@ -186,7 +201,7 @@ public class TransactionManager {
     }
 
     private String searchTermSelect(String searchWord) {
-        if (searchWord == "") {
+        if (searchWord.equals("")) {
             return "";
         }
         return "(transactions.comment LIKE '%" + searchWord + "%' OR transactions.transactiontype LIKE '%" +
