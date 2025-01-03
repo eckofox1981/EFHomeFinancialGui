@@ -123,7 +123,8 @@ public class MainScreenController {
     private CheckBox monthCheckBox;
     @FXML
     private CheckBox yearCheckBox;
-
+    @FXML
+    private Button editButton;
     @FXML
     private Button deleteButton;
     @FXML
@@ -283,11 +284,49 @@ public class MainScreenController {
         filteringTransactions();
     }
 
+    @FXML
+    private void setEditTransactionButton () {
+        if (filteredTransactionsTable.getSelectionModel().isEmpty()) {
+            msgBox.setTextFill(Color.ORANGE);
+            msgBox.setText("You need to select a transaction to be edited.");
+            return;
+        }
+        Transaction transactionToBeEdited = filteredTransactionsTable.getSelectionModel().getSelectedItem();
+
+        try {
+            Stage currenStage = (Stage) editButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/eckofox/efhomefinancialdb/edittransaction-screen.fxml"));
+
+            fxmlLoader.setControllerFactory(type -> {
+                if (type == EditTransactionScreenController.class) {
+                    return new EditTransactionScreenController(app); // To be able to pass the app variable.
+                }
+                return null;
+            });
+
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/logo.png"))));
+            stage.setTitle("EF Home Financial - Edit transaction");
+            stage.setScene(new Scene(root));
+
+            EditTransactionScreenController controller = fxmlLoader.getController();
+            controller.initData(stage, transactionToBeEdited);
+
+            stage.showAndWait();
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.getStackTrace();
+        }
+    }
+
     /**
      * if no transaction is selected in the table returns an error message.
      * if a transaction is selected, a pop-up asks for confirmation before deleting.
      * uses the Transaction.deleteData method
-     * refreshes dashboard and refilters transactions
+     * refreshes dashboard and re-filters transactions
      */
     @FXML
     private void deleteSelectedTransaction() {

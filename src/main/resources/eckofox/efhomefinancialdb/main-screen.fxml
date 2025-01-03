@@ -335,6 +335,17 @@
                                           <Insets bottom="5.0" left="10.0" top="5.0" />
                                        </HBox.margin>
                                     </Button>
+                                    <Button fx:id="editButton" alignment="CENTER" contentDisplay="RIGHT" minHeight="-Infinity" mnemonicParsing="false" onAction="#setEditTransactionButton" prefHeight="30.0" prefWidth="140.0" text="Edit transaction">
+                                       <font>
+                                          <Font name="Calibri Bold" size="12.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets right="-1.0" />
+                                       </padding>
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Button>
                                  </children>
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: solid;">
