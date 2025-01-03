@@ -107,13 +107,14 @@ public class TransactionFilter {
                 standardSelect + accountSelect +andDate + dateSelect + andType + typeSelect + andSearch + searchTermSelect +
                         "ORDER BY transactions.date DESC;"
         )) {
+
             if (account == null) {
                 selectFilteredTransactionsStatement.setObject(1, app.getActiveUser().getAcountList().getFirst().getAccountId());
                 selectFilteredTransactionsStatement.setObject(2, app.getActiveUser().getAcountList().getLast().getAccountId());
             } else {
                 selectFilteredTransactionsStatement.setObject(1, account.getAccountId());
             }
-
+            System.out.println(selectFilteredTransactionsStatement);
             ResultSet resultSet = selectFilteredTransactionsStatement.executeQuery();
             try {
                 while (resultSet.next()) {
@@ -153,7 +154,7 @@ public class TransactionFilter {
      */
     private String accountSelect (Account account) {
         if (account == null) {
-            return "accounts.accountid = ? OR accounts.accountid = ? ";
+            return "(accounts.accountid = ? OR accounts.accountid = ?) ";
         }
 
         return "accounts.accountid = ? ";

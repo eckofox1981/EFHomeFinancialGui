@@ -315,6 +315,7 @@ public class MainScreenController {
             controller.initData(stage, transactionToBeEdited);
 
             stage.showAndWait();
+            filteringTransactions();
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -464,6 +465,7 @@ public class MainScreenController {
         weekCheckBox.selectedProperty().setValue(false);
         monthCheckBox.selectedProperty().setValue(false);
         yearCheckBox.selectedProperty().setValue(false);
+        filteringTransactions();
     }
 
     /** prepares the parameters to be used for filtering in TransactionFilter
@@ -476,6 +478,7 @@ public class MainScreenController {
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event -> msgBox.setText(""));
             pause.play();
+            return;
         }
 
         msgBox.setText(filteringMsg());

@@ -88,14 +88,26 @@ public class DateUtility {
         return new SimpleStringProperty(localDate.format(formatter));
     }
 
-    public static LocalDate sqlDateToLocalDateConverter (java.util.Date date) {
-        if (date == null) {
-            return null;
+    /** converts the transaction.getDate to LocalDate
+     * the problem is when transaction date is retrieved trhough the SQL query in TransactionFilter it returns a
+     * java.sql.Date which can mix with the original java.util.Date set in the Transaction class.
+     * Instead of converting directly in TransactionFilter I toolk the opportunity to work with generics to keep
+     * the knowledge fresh.
+     * @param date could be either java.util.Date or java.sql.Date
+     * @return LocalDate
+     * @param <T> either java.util.Date or java.sql.Date
+     */
+    public static <T> LocalDate dateToLocalDateConverter (T date) {
+        java.util.Date utilDate = null;
+        Class clazz = date.getClass();
+        if (clazz.equals(java.sql.Date.class)) {
+            utilDate = new java.util.Date(((java.sql.Date) date).getTime());
         }
-            //TODO fIX THE FUCKING THING (TIPS: ON YOUR OWN)
-        // Directly convert java.sql.Date to LocalDate
-        return date.toInstant()  // Convert to Instant
-                .atZone(ZoneId.systemDefault())  // Convert to ZonedDateTime using system default time zone
+        if (clazz.equals(java.util.Date.class)) {
+            utilDate = (Date) date;
+        }
+        return utilDate.toInstant()
+                .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }
 

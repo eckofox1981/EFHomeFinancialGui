@@ -71,13 +71,24 @@ public class Transaction implements DataBaseManager {
         }
     }
 
-    /**
-     * not used for this project yet but could be used to allow for transaction editing (if user wanted to change
-     * transaction data). TODO if time allows
+    /**edits changes in transactions table
      */
     @Override
     public void insertUpdateData() {
+        try (PreparedStatement updateTransactionStatement = app.getConnection().prepareStatement(
+                "UPDATE transactions SET date = ?, transactiontype = ?, amount = ?, comment = ?, accountid = ? " +
+                        "WHERE id = ?;")) {
+            updateTransactionStatement.setDate(1, new java.sql.Date(date.getTime()));
+            updateTransactionStatement.setString(2, String.valueOf(transactionType));
+            updateTransactionStatement.setDouble(3, amount);
+            updateTransactionStatement.setString(4, comment);
+            updateTransactionStatement.setObject(5, fromAccount.getAccountId());
+            updateTransactionStatement.setObject(6, id);
+            updateTransactionStatement.executeUpdate();
 
+        } catch (SQLException e) {
+            System.out.println("Issue with upDateTransactionStatement. " + e.getMessage());
+        }
     }
 
     @Override
@@ -124,6 +135,23 @@ public class Transaction implements DataBaseManager {
         return new SimpleDoubleProperty(amount);
     }
 
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
 
+    public void setFromAccount(Account fromAccount) {
+        this.fromAccount = fromAccount;
+    }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }
