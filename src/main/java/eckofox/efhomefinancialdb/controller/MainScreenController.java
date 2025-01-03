@@ -253,7 +253,7 @@ public class MainScreenController {
     /**
      * create a transaction based on the various fields after checking they're valid for usage.
      * uses the Transaction.saving method to save it in the database
-     * refreshes dashboard and refilters transactions
+     * refreshes dashboard and re-filters transactions
      */
     @FXML
     private void enterTransaction() {
@@ -286,7 +286,7 @@ public class MainScreenController {
     /**
      * if no transaction is selected in the table returns an error message.
      * if a transaction is selected, a pop-up asks for confirmation before deleting.
-     * uses the Transaction.delete method
+     * uses the Transaction.deleteData method
      * refreshes dashboard and refilters transactions
      */
     @FXML
@@ -508,6 +508,9 @@ public class MainScreenController {
     }
 
     //---------------------------------- OTHER -------------------------------------------------------------------------
+
+    /** opens the user edit screen
+     */
     @FXML
     private void openEditUserScreen () {
         try {
@@ -540,6 +543,12 @@ public class MainScreenController {
         }
     }
 
+    /** just a gimmick to fill up the dashboard due to lack of creativity, not ideal to mix SQL code here but
+     * considered harmless in this case
+     * checks the created_at column in the database for activeUser and converts the result to a month-year string to
+     * be displayed
+     * @return
+     */
     private String getJoinedMonthAndYear() {
         String joinedDate = "error fetching enrollment date.";
         try (PreparedStatement fetchDateStatement = app.getConnection().prepareStatement("SELECT created_at FROM users WHERE username = ?;")) {

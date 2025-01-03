@@ -17,6 +17,9 @@ public class DataBaseHandler {
         this.app = app;
     }
 
+    /**
+     * connects to the database and sets up the SQL tables
+     */
     public void settingUpConnectionAndTables(){
         try {
             connectToDatabase();
@@ -26,6 +29,10 @@ public class DataBaseHandler {
         settingUpTables();
     }
 
+    /** uses the dbconnection.txt file to connect to the database
+     * IO exception handled in house.
+     * @throws SQLException handled in settingUpConnectionAndTables
+     */
     public void connectToDatabase() throws SQLException {
         File file = new File("src/main/resources/dbconnection.txt");
         String connectionString = "";
@@ -39,15 +46,23 @@ public class DataBaseHandler {
         app.setConnection(DriverManager.getConnection(connectionString));
     }
 
+    /**
+     * sets up the SQL table in logical order:
+     * users (primary key to account)
+ *          -> accounts (references user and primary to transactions)
+     *             -> transactions (references accounts)
+     */
     public void settingUpTables(){
         settingUpUserTable();
         settingUpAccountTable();
         settingUpTransactionTable();
     }
 
+    /** creates users table in SQL database
+     * columns are: userid (UUID PRIMARY KEY), username (TEXT UNIQUE),first- and lastname (TEXT), created_at (TIMESTAMP)
+     */
     private void settingUpUserTable() {
         try {
-            //TODO: add account and transactions history to table
             Statement createUserTableStatement = app.getConnection().createStatement();
             createUserTableStatement.execute(
                     "CREATE TABLE IF NOT EXISTS users (userid UUID UNIQUE PRIMARY KEY, " +
@@ -59,6 +74,11 @@ public class DataBaseHandler {
         }
     }
 
+    /** creates accounts table in SQL database
+     * columns are:
+     * accountid (UUID PRIMARY KEY), name (TEXT), balance (DECIMAL), userid (UUID ref to users.userid)
+     * ON DELETE CASCADE so the accounts are deleted with the users.
+     */
     private void settingUpAccountTable(){
         try {
             Statement createAccountTableStatement = app.getConnection().createStatement();
@@ -70,6 +90,12 @@ public class DataBaseHandler {
         }
     }
 
+    /** creates transactions table in SQL database
+     * columns are:
+     * id (UUID PRIMARY KEY), date (DATE) transactiontype (TEXT with CHECK), amount (DECIMAL), comment (TEXT),
+     * accountid (UUID ref to accounts.accountid)
+     * ON DELETE CASCADE so the accounts are deleted with the account (deleted with user).
+     */
     private void settingUpTransactionTable(){
         try {
             Statement createTransactionTableStatement = app.getConnection().createStatement();

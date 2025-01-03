@@ -61,6 +61,8 @@ public class EditUserScreenController {
     @FXML
     private Label passMsgBox;
 
+    /** sets up user info in a similar manner as the dashboard in MainScreenController.settingUpDashBoard()
+     */
     private void initializeLeftPane () {
         app.getActiveUser().getAcountList().forEach(Account::fetchData);
         app.getTransactionManager().gatherAllTransactions();
@@ -68,6 +70,13 @@ public class EditUserScreenController {
         realNameLabel.setText(app.getActiveUser().getFirstname() + " " + app.getActiveUser().getLastname());
     }
 
+    /** allows to change username, first name and last name of the user.
+     * if username has been modified, the new username is checked in LoginService.userNameExists. If username is
+     * already used, the informationis displayed in the nameMsgBox. Otherwise, it is approved and the process continues.
+     * other data is simply approved (i.e the user could write identical data to the one already existing)
+     * After approval, the activeUser is updated and the User.insertUpdate() method saves the new data in the database.
+     * The left pane is then refreshed.
+     */
     @FXML
     private void editName () {
         if ((!app.getActiveUser().getUsername().equals(usernameField.getText()) || !usernameField.getText().isEmpty())
@@ -90,6 +99,13 @@ public class EditUserScreenController {
         nameMsgBox.setText("User details updated.");
     }
 
+    /** allows to change the password
+     * The old password is first checked in LoginService.passwordCheck and if return is true the new password and its
+     * confirmation are checked.
+     * If the new password checks out, it is hashed and saved to the activeUser.
+     * Finally, the passwords are updated in the database through the User.insertUpdateData method.
+     * All errors are displayed to the user in the passMsgBox.
+     */
     @FXML
     private void changePassword () {
         if (!loginService.passwordCheck(app.getActiveUser().getUsername(), oldPassField.getText())) {
@@ -109,6 +125,9 @@ public class EditUserScreenController {
         passMsgBox.setText("Password updated.");
     }
 
+    /**
+     * opens the main screen.
+     */
     @FXML
     private void setExitButton () {
         try {
@@ -141,6 +160,10 @@ public class EditUserScreenController {
         }
     }
 
+    /**
+     * deletes the user from the database and returns to the loginscreen
+     * uses the User.deleteData method
+     */
     @FXML
     private void setDeleteButton() {
         Alert deleteAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -158,6 +181,9 @@ public class EditUserScreenController {
         }
     }
 
+    /**
+     * opens the login screen after user account deletion.
+     */
     private void openLoginScreen () {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/eckofox/efhomefinancialdb/login-screen.fxml"));
