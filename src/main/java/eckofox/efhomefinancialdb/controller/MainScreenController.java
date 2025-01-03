@@ -496,18 +496,10 @@ public class MainScreenController {
 
     //---------------------------------- KEY EVENTS -----------------------------------------------------------------
 
-    @FXML
-    private void enterPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            if (enterTransactionHBox.isFocused() && datePicker.getValue() != null && amountField != null) {
-                enterTransaction();
-            }
-            if (filterHbox.isFocused()) {
-                filteringTransactions();
-            }
-        }
-    }
-
+    /**
+     * if delete is pressed => activates the deleteTransaction() method
+     * @param keyEvent
+     */
     @FXML
     private void deletePressed(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.DELETE)) {
