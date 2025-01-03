@@ -136,7 +136,7 @@
                                           <Insets bottom="1.0" left="-1.0" top="2.0" />
                                        </opaqueInsets>
                                     </ChoiceBox>
-                                    <TextField fx:id="amountField" minHeight="-Infinity" onKeyPressed="#enterPressed" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="117.0" promptText="Enter amount">
+                                    <TextField fx:id="amountField" minHeight="-Infinity" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="117.0" promptText="Enter amount">
                                        <HBox.margin>
                                           <Insets bottom="1.0" right="5.0" top="1.0" />
                                        </HBox.margin>
@@ -144,7 +144,7 @@
                                           <Insets bottom="1.0" left="-1.0" top="2.0" />
                                        </opaqueInsets>
                                     </TextField>
-                                    <TextField fx:id="commentField" minHeight="-Infinity" onKeyPressed="#enterPressed" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="293.0" promptText="Enter comment">
+                                    <TextField fx:id="commentField" minHeight="-Infinity" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="293.0" promptText="Enter comment">
                                        <HBox.margin>
                                           <Insets bottom="1.0" right="5.0" top="1.0" />
                                        </HBox.margin>
@@ -190,7 +190,7 @@
                                                 <Insets top="25.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <TextField fx:id="searchField" minHeight="-Infinity" onKeyPressed="#enterPressed" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="293.0" promptText="type keyword to look for">
+                                          <TextField fx:id="searchField" minHeight="-Infinity" onMouseClicked="#resettingMsgColor" prefHeight="30.0" prefWidth="293.0" promptText="type keyword to look for">
                                              <opaqueInsets>
                                                 <Insets bottom="1.0" left="-1.0" top="2.0" />
                                              </opaqueInsets>

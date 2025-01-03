@@ -88,4 +88,15 @@ public class DateUtility {
         return new SimpleStringProperty(localDate.format(formatter));
     }
 
+    public static LocalDate sqlDateToLocalDateConverter (java.util.Date date) {
+        if (date == null) {
+            return null;
+        }
+            //TODO fIX THE FUCKING THING (TIPS: ON YOUR OWN)
+        // Directly convert java.sql.Date to LocalDate
+        return date.toInstant()  // Convert to Instant
+                .atZone(ZoneId.systemDefault())  // Convert to ZonedDateTime using system default time zone
+                .toLocalDate();
+    }
+
 }

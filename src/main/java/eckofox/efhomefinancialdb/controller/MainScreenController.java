@@ -176,7 +176,7 @@ public class MainScreenController {
         fromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
 
         /**
-         * this allows me to use the dropdown menu as an "object container" for the accounts
+         * this allows to use the dropdown menu as an "object container" for the accounts
          */
         fromAccountDropDown.setConverter(new StringConverter<>() {
             public String toString(Account account) {
