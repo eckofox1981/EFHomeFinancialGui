@@ -49,7 +49,6 @@ public class NewUserScreenController {
     private TextField lastNameField;
 
     /** see LoginScreen ln 46
-     * @param app
      */
     public NewUserScreenController(App app) {
         this.app = app;

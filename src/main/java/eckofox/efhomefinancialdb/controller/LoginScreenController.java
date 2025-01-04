@@ -60,7 +60,8 @@ public class LoginScreenController {
     /** sets the event of a click of the login button:
      * 1. gathers the info from the fields (could have been included directly in if-statements but I kept in "cleaner)
      * 2. runs it through loginCheck -> username check -> password check -> set active user (sent to App)
-     * 3. if all checks pass the main screen opens, else a message i displayed to the user.
+     * 3. if all checks pass the main screen opens after welcome message is displayed for 1.5 sec
+     *      - if checks fail -> a message is displayed to the user.
      * @param event
      */
     @FXML
@@ -70,7 +71,7 @@ public class LoginScreenController {
         if (loginCheck(username, password)) {
             msgForUsers.setText("Welcome " + app.getActiveUser().getFirstname() + "!");
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
             pause.setOnFinished(e -> openMainScreen());
             pause.play();
         }

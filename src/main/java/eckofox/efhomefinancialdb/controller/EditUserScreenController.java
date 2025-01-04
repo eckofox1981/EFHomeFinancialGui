@@ -22,6 +22,8 @@ public class EditUserScreenController {
     private Stage stage;
     private LoginService loginService;
 
+    /** see LoginScreen ln 46
+     */
     public EditUserScreenController(App app) {
         this.app = app;
         this.loginService = new LoginService(app);
@@ -65,7 +67,7 @@ public class EditUserScreenController {
      */
     private void initializeLeftPane () {
         app.getActiveUser().getAcountList().forEach(Account::fetchData);
-        app.getTransactionManager().gatherAllTransactions();
+        app.getTransactionFilter().gatherAllTransactions();
         userNameLabel.setText("- " + app.getActiveUser().getUsername() + " -");
         realNameLabel.setText(app.getActiveUser().getFirstname() + " " + app.getActiveUser().getLastname());
     }

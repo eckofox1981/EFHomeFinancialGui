@@ -29,17 +29,13 @@ public class App extends Application {
     private User activeUser;
     private List<Transaction> filteredTransactionList;
     private List<Transaction> allTransactionsList;
-    public boolean running = true;
 
-    //private NewUserScreenController newUserMenu;
-    private Transaction transaction;
     private TransactionFilter transactionFilter;
     public Scanner scanner;
     private Connection connection;
     private DataBaseHandler dataBaseHandler;
 
     public App() {
-        this.transaction = new Transaction(this);
         this.transactionFilter = new TransactionFilter(this);
         this.dataBaseHandler = new DataBaseHandler(this);
         scanner = new Scanner(System.in);
@@ -92,7 +88,7 @@ public class App extends Application {
         return allTransactionsList;
     }
 
-    public TransactionFilter getTransactionManager() {
+    public TransactionFilter getTransactionFilter() {
         return transactionFilter;
     }
 
@@ -104,7 +100,4 @@ public class App extends Application {
         this.connection = connection;
     }
 
-    public DataBaseHandler getDataBaseHandler() {
-        return dataBaseHandler;
-    }
 }

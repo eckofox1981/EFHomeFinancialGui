@@ -34,7 +34,6 @@ public class MainScreenController {
     private Stage stage;
 
     /** see LoginScreen ln 46
-     * @param app
      */
     public MainScreenController(App app) {
         this.app = app;
@@ -150,7 +149,7 @@ public class MainScreenController {
      */
     public void settingUpDashBoard() {
         app.getActiveUser().getAcountList().forEach(Account::fetchData);
-        app.getTransactionManager().gatherAllTransactions();
+        app.getTransactionFilter().gatherAllTransactions();
         userNameLabel.setText("- " + app.getActiveUser().getUsername() + " -");
         realNameLabel.setText(app.getActiveUser().getFirstname() + " " + app.getActiveUser().getLastname());
         joinedLabel.setText(getJoinedMonthAndYear());
@@ -468,7 +467,7 @@ public class MainScreenController {
         filteringTransactions();
     }
 
-    /** prepares the parameters to be used for filtering in TransactionFilter
+    /** prepares the parameters to be used for filtering in before sending them TransactionFilter.transactionFilter
      */
     @FXML
     private void filteringTransactions() {
@@ -483,7 +482,7 @@ public class MainScreenController {
 
         msgBox.setText(filteringMsg());
 
-        app.getTransactionManager().transactionFilter(firstDayPicker.getValue(), searchField.getText(), (Account) searchFromAccountDropDown.getValue(),
+        app.getTransactionFilter().transactionFilter(firstDayPicker.getValue(), searchField.getText(), (Account) searchFromAccountDropDown.getValue(),
                 earningsCheckBox.isSelected(), spendingsCheckBox.isSelected(), transferCheckBox.isSelected(), dayCheckBox.isSelected(),
                 weekCheckBox.isSelected(), monthCheckBox.isSelected(), yearCheckBox.isSelected());
 
