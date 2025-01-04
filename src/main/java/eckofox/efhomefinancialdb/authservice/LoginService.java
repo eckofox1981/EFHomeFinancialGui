@@ -86,6 +86,7 @@ public class LoginService {
                 while (result.next()) {
                     user = userFromResult(result);
                     app.setActiveUser(user);
+                    app.getActiveUser().getAcountList().clear();
                     app.getActiveUser().getAcountList().add(new CheckingAccount(app, user));
                     app.getActiveUser().getAcountList().add(new SavingAccount(app, user));
                 }
