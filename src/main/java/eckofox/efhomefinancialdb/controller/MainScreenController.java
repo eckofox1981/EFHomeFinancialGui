@@ -41,7 +41,7 @@ public class MainScreenController {
     }
 
     /** initializes the window and expands the dashboard section of the window.
-     * @param stage
+     * @param stage to initialize stage
      */
     public void initData(Stage stage) {
         this.stage = stage;
@@ -177,9 +177,7 @@ public class MainScreenController {
         typeDropDown.getItems().setAll(FXCollections.observableArrayList(EnumSet.allOf(TransactionType.class)));
         fromAccountDropDown.getItems().addAll(app.getActiveUser().getAcountList());
 
-        /**
-         * this allows to use the dropdown menu as an "object container" for the accounts
-         */
+        //this allows to use the dropdown menu as an "object container" for the accounts
         fromAccountDropDown.setConverter(new StringConverter<>() {
             public String toString(Account account) {
                 return (account != null) ? account.getName() : "";
@@ -239,6 +237,7 @@ public class MainScreenController {
 
     /**
      * updates the balances of the accounts in the dashboard pane.
+     * force set to swedish local format for my own personal comfort :)
      */
     @FXML
     private void updatingAccountDisplay() {
