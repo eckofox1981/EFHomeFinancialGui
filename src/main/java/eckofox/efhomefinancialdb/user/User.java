@@ -47,8 +47,7 @@ public class User implements DataBaseManager {
 
     }
 
-    /**
-     * sets userId paths, creates directory and file and writes username and passwordHash
+    /** sends user details into SQL database
      */
     @Override
     public void saving() {
@@ -65,6 +64,8 @@ public class User implements DataBaseManager {
         }
     }
 
+    /** updates user data in SQL database
+     */
     @Override
     public void insertUpdateData() {
         try (PreparedStatement updateStatement = app.getConnection().prepareStatement(
@@ -84,6 +85,9 @@ public class User implements DataBaseManager {
     @Override
     public void fetchData() {/*not used in this class*/}
 
+    /** deletes user data, since 'accounts' and 'transactions' table are referencing to each other and the 'users' table
+     *  using the ON DELETE CASCADE constraint, all accounts and transactions related to the users will be removed
+     */
     @Override
     public void deleteData() {
         try (PreparedStatement deleteStatement = app.getConnection().prepareStatement(
@@ -95,6 +99,9 @@ public class User implements DataBaseManager {
         }
     }
 
+    /**
+     * adds the default accounts for the user
+     */
     public void createAccounts() {
         acountList.add(new CheckingAccount(app, this));
         acountList.add(new SavingAccount(app, this));

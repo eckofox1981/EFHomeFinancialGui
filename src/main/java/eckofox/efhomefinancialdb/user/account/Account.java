@@ -28,6 +28,9 @@ public abstract class Account implements DataBaseManager {
         setBalance(0.0);
     }
 
+    /**
+     * saves newly created (called during initial account creation) to SQL database table (accounts)
+     */
     public void saving(){
         try (PreparedStatement newAccountStatement =
                      app.getConnection().prepareStatement("INSERT INTO accounts (accountid, name, balance, userid) VALUES (?, ?, ?, ?);")){
@@ -41,8 +44,8 @@ public abstract class Account implements DataBaseManager {
         }
     }
 
-    /**
-     * after calling file creation, account data is appended onto on file
+    /** updates account info in SQL database table (accounts)
+     * only used to update balance as of now
      */
     @Override
     public void insertUpdateData() {
@@ -56,8 +59,7 @@ public abstract class Account implements DataBaseManager {
         }
     }
 
-    /**
-     * gather account data read from account file.
+    /** fetches account data from QL database table (accounts)
      */
     @Override
     public void fetchData() {
@@ -81,6 +83,9 @@ public abstract class Account implements DataBaseManager {
 
     }
 
+    /** would delete account from QL database table (accounts)
+     * but actually handled through SQL database table (accounts) with the constraint ON DELETE CASCADE
+     */
     @Override
     public void deleteData() {
         try (PreparedStatement deleteStatement = app.getConnection().prepareStatement(
@@ -93,8 +98,8 @@ public abstract class Account implements DataBaseManager {
         }
     }
 
-    /**
-     *
+    /** uses the allTransactionsList to check the balance of relevant account
+     * calls the Account.insertUpdateData() to update database
      */
     public void setBalanceFromTransactions() {
         double updatedBalance = 0.0;

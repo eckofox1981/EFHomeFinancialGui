@@ -136,7 +136,7 @@ public class EditTransactionScreenController {
         currenStage.close();
     }
 
-    /** @param keyEvent calls setEditlButton
+    /** @param keyEvent calls setEditButton
      */
     @FXML
     private void enterKey (KeyEvent keyEvent) {
