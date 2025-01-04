@@ -76,7 +76,7 @@ public class TransactionFilter {
      * the filteredTransactionsList is cleared to avoid adding all transactions to it again
      * The SQL query is put together depending on the parameters, gathered in the
      * MainScreenController.filteringTransaction()
-     * @param datePicker sets the firstdate of time period (or the day)
+     * @param datePicker sets the firstdate of time period (or the day for single day filter)
      * @param searchWord allows a word to be searched in various column
      * @param account sets which active account the transaction was made from (blank returns all)
      * @param earningCheckBox for  deposits, no choices -> all types
