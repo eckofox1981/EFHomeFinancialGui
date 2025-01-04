@@ -1,0 +1,51 @@
+two accounts to be created with code below, only the franko-one has transactions. code can be copy-pasted to generate some
+transactions to test filtering functions
+
+password for both account: 'nice' (without single quotes)
+
+INSERT INTO users (userid, username, firstname, lastname, passwordhash, created_at) VALUES
+('fa339666-a0b5-4180-8df9-af1affbbf947', 'franko', 'Franklin', 'Eck', '$2a$14$rK5snAsRvrd36ezPDsPnUOWleAWzR4nxeCiGtsCEAqA1o47mHTlB2', '2025-01-03 10:12:19.819791'),
+('839f71f4-9810-4039-ba21-1293834e3259', 'rastagod', 'Robert', 'Marley', '$2a$14$h8hsO6uY8IcCS4EdF/pDDeear9lKJQwvbkB7eVDhu3YyTPDBPhLMu', '2025-01-04 13:13:46.290623');
+
+INSERT INTO accounts (accountid, name, balance, userid) VALUES
+('96edab46-1ed8-44a5-a5cc-e0b2ad71c130', 'Checking account', -14890, '839f71f4-9810-4039-ba21-1293834e3259'),
+('6ae7a25c-6bcd-44a6-9593-d27dfa227033', 'Saving account', 12300, '839f71f4-9810-4039-ba21-1293834e3259'),
+('bcbd5a69-6abd-4e04-93bc-2994d3610e89', 'Checking account', 2070, 'fa339666-a0b5-4180-8df9-af1affbbf947'),
+('3a1ff59c-89e7-4cfe-a4a2-1271aacf5589', 'Saving account', 1650, 'fa339666-a0b5-4180-8df9-af1affbbf947');
+
+INSERT INTO transactions (id, date, transactiontype, amount, comment, accountid) VALUES
+('3f36a775-bb02-4311-a7f0-1edb0a404bfa', '2024-01-10', 'DEPOSIT', 1000.00, 'Initial deposit', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('cbfa6783-9b4b-4000-b072-d9122d9b40bc', '2024-02-15', 'WITHDRAWAL', -200.00, 'ATM withdrawal', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('65bc2ef3-694d-468b-8e19-7731c1d5c3d6', '2024-03-22', 'DEPOSIT', 500.00, 'Paycheck deposit', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('8159e160-5c96-4853-bdc2-f78f73501ed5', '2024-04-05', 'WITHDRAWAL', -50.00, 'Groceries', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('6f9b4f0a-b5c7-4a77-b90e-9cd1063ac52b', '2024-05-10', 'TRANSFER', -150.00, 'Payment to savings account', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('f08a3c2d-ff72-4c85-a71d-41c1e59e5506', '2024-06-20', 'WITHDRAWAL', -300.00, 'Rent payment', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('8d95fdba-27e2-4e27-bd74-b9b3e0cd2284', '2024-07-12', 'TRANSFER', -250.00, 'Transfer to checking account', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('08b44a5c-1f2b-4d96-b332-17e9d7647f5e', '2024-08-03', 'DEPOSIT', 800.00, 'Online payment', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('993dbb33-cc89-471d-9b8a-c9cde91b3df0', '2024-09-05', 'WITHDRAWAL', -100.00, 'Utilities', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('5813477a-9a96-4519-b3bb-c5451a96cd69', '2024-10-07', 'TRANSFER', -400.00, 'Payment to external account', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('72355d7c-084e-4ae0-9c81-bc18c658fa68', '2024-11-20', 'DEPOSIT', 1200.00, 'Gift from family', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('d4738cb4-d77f-46c5-b8ad-b67e4c0f1651', '2024-12-25', 'WITHDRAWAL', -150.00, 'Restaurant dining', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('29dfd183-b9d9-4f7c-b190-4a5b1f3b462f', '2025-01-03', 'TRANSFER', -220.00, 'Transfer to another account', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('cce80487-4fc5-44b9-b9d7-c9fc9e1a6095', '2024-07-08', 'WITHDRAWAL', -50.00, 'Coffee', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('39a37b5e-6c6d-4561-b68a-e0933404e08a', '2024-09-10', 'DEPOSIT', 600.00, 'Refund from vendor', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('ef9d02c7-2b76-4d36-b9b3-f15cbdd87698', '2024-06-01', 'TRANSFER', -100.00, 'Sending to friend', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('8f8e25db-02e1-44ac-8ac5-0fe67f75b4a1', '2024-11-10', 'DEPOSIT', 400.00, 'Cash deposit', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('a4ab4404-8fdb-4888-b4d5-d7e6b4464d1f', '2024-05-25', 'TRANSFER', -500.00, 'Payment to business partner', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('f05302b4-9009-4d4f-8e3f-b77fcb6d4783', '2024-01-15', 'WITHDRAWAL', -170.00, 'Entertainment', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('3c1a90ea-2e9f-4e85-bfe1-9de0a07374a3', '2024-04-25', 'TRANSFER', -180.00, 'PayPal transfer', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('0a0b4f90-63e4-4e4d-b8b3-b12c99c3cfcf', '2024-10-18', 'WITHDRAWAL', -220.00, 'Shopping', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('1f6d396e-91c7-4501-bd62-7eb4102b8bc0', '2024-08-10', 'DEPOSIT', 350.00, 'Refund from service', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('93b10c89-cf77-40c5-9e3a-40782e440a93', '2024-09-15', 'TRANSFER', -300.00, 'Transfer to external account', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('db65d8fa-83b3-44ad-b16b-e383650b547d', '2024-12-12', 'WITHDRAWAL', -170.00, 'Entertainment', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('5d8e2bba-3892-4ed4-99e5-15e58a29292f', '2025-01-04', 'DEPOSIT', 650.00, 'Salary deposit', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('19d7ffed-e6d7-4b28-8db7-fc48e4d38c04', '2024-11-30', 'TRANSFER', -450.00, 'Transfer to other account', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('b7730a47-8a7c-48f8-8b71-df0d36542063', '2025-01-03', 'DEPOSIT', 200.00, 'Reimbursement for tickets', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('2f1b55f5-f6a0-4ffb-b1ea-d4b21d4b899b', '2024-06-25', 'WITHDRAWAL', -250.00, 'Medical expenses', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('3a1ff59c-89e7-4cfe-a4a2-1271aacf5589', '2025-01-02', 'TRANSFER', -100.00, 'Payment to friend', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('02a4f2a9-9f13-4770-b579-49dfb1794171', '2024-08-15', 'WITHDRAWAL', -320.00, 'Vacation spending', 'bcbd5a69-6abd-4e04-93bc-2994d3610e89'),
+('5b82a1c4-070a-4027-bce7-b1c74b19c3e1', '2024-03-11', 'TRANSFER', -100.00, 'Unexpected medical expense', '3a1ff59c-89e7-4cfe-a4a2-1271aacf5589'),
+('6d50d45f-5420-4325-a7e5-6cb3708a8f85', '2024-04-18', 'TRANSFER', -200.00, 'Emergency car repair', '3a1ff59c-89e7-4cfe-a4a2-1271aacf5589'),
+('9f5ba1bc-b7a7-4c9c-8ad1-c6a6f95ff4d7', '2024-05-25', 'TRANSFER', -150.00, 'Unexpected travel costs', '3a1ff59c-89e7-4cfe-a4a2-1271aacf5589'),
+('2f04a2d1-c3de-4fe3-a07d-5b5b8b5b0576', '2024-07-10', 'TRANSFER', -250.00, 'Emergency home repair', '3a1ff59c-89e7-4cfe-a4a2-1271aacf5589'),
+('fae6d010-5973-4a6b-bd60-cbe60c877533', '2024-08-21', 'TRANSFER', -300.00, 'Urgent family matter', '3a1ff59c-89e7-4cfe-a4a2-1271aacf5589');

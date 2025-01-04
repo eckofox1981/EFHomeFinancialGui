@@ -104,7 +104,6 @@ public class Transaction implements DataBaseManager {
         try (PreparedStatement deleteStatement = app.getConnection().prepareStatement(
                 "DELETE FROM transactions WHERE transactions.id = ?;")) {
             deleteStatement.setObject(1, id);
-            System.out.println("check if " + id.toString() + " deleted");
             deleteStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Issue deleting transaction. " + e.getMessage());

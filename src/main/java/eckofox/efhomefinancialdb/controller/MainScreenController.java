@@ -264,16 +264,17 @@ public class MainScreenController {
         try {
             amount = Double.parseDouble(amountField.getText());
         } catch (NumberFormatException e) {
+            msgBox.setTextFill(Color.ORANGE);
             msgBox.setText("Could not read amount, please check input. " + e.getMessage());
             return;
         }
         try {
             date = DateUtility.convertDateString(datePicker.getValue().toString());
         } catch (ParseException e) {
+            msgBox.setTextFill(Color.ORANGE);
             msgBox.setText("Could not recognize date, please check input. " + e.getMessage());
         }
 
-        System.out.println(typeDropDown.getValue());
         Transaction transaction = new Transaction(app, app.getActiveUser(), UUID.randomUUID(), typeDropDown.getValue(), fromAccountDropDown.getValue(),
                 date, amount, commentField.getText());
 
@@ -359,6 +360,7 @@ public class MainScreenController {
             msgBox.setTextFill(Color.ORANGE);
             msgBox.setText("Transaction '" + transactionDescription + "' deleted.");
         } else if (result.get() == ButtonType.CANCEL) {
+            msgBox.setTextFill(Color.BLACK);
             msgBox.setText("Transaction not deleted.");
         }
 

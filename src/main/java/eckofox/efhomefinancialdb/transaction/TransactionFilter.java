@@ -114,7 +114,7 @@ public class TransactionFilter {
             } else {
                 selectFilteredTransactionsStatement.setObject(1, account.getAccountId());
             }
-            System.out.println(selectFilteredTransactionsStatement);
+
             ResultSet resultSet = selectFilteredTransactionsStatement.executeQuery();
             try {
                 while (resultSet.next()) {
