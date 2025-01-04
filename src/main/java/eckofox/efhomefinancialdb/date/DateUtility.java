@@ -32,10 +32,10 @@ public class DateUtility {
         return calendarDate;
     }
 
-    /***
-     * leftover from other applications, not used for this project, could be used if user was allowed to manually input
-     * date in date picker (would be used in an if-statement to check the user has written a date)
-     * saved for eventual future uses.
+    /*** NOT USED IN THIS PROJECT (YET)
+     * leftover from previous versions, could be used if user was allowed to manually input
+     * date in date picker (maybe in an if-statement to check the user has written a date in the proper format)
+     * saved for future uses.
      */
     public static boolean checkIsDate(String sDate) {
         try {
@@ -79,7 +79,7 @@ public class DateUtility {
 
     /**
      * converts the transaction date into a StringProperty displayable on the tableview (JavaFX)
-     * @param date
+     * @param date java.util.Date to be formated
      * @return a date string formated according to set standard below.
      */
     public static StringProperty datePropertyFormat(Date date) {
@@ -89,17 +89,17 @@ public class DateUtility {
     }
 
     /** converts the transaction.getDate to LocalDate
-     * the problem is when transaction date is retrieved trhough the SQL query in TransactionFilter it returns a
+     * the problem is when transaction date is retrieved through the SQL query in TransactionFilter it returns a
      * java.sql.Date which can mix with the original java.util.Date set in the Transaction class.
-     * Instead of converting directly in TransactionFilter I toolk the opportunity to work with generics to keep
-     * the knowledge fresh.
+     * Instead of converting directly in TransactionFilter I took the opportunity to work with generics to keep
+     * my knowledge about generics fresh.
      * @param date could be either java.util.Date or java.sql.Date
      * @return LocalDate
      * @param <T> either java.util.Date or java.sql.Date
      */
     public static <T> LocalDate dateToLocalDateConverter (T date) {
         java.util.Date utilDate = null;
-        Class clazz = date.getClass();
+        Class<?> clazz = date.getClass();
         if (clazz.equals(java.sql.Date.class)) {
             utilDate = new java.util.Date(((java.sql.Date) date).getTime());
         }

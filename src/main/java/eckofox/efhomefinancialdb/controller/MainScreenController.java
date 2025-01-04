@@ -283,6 +283,10 @@ public class MainScreenController {
         filteringTransactions();
     }
 
+    /** opens the edittransaction-screen
+     * note the stage.showAndWait, main-screen remains open during transaction editing. When edit is cmplete (or cancelled)
+     * the filteringTransaction() is called upon for refreshing of filteredTransactionsTable.
+     */
     @FXML
     private void setEditTransactionButton () {
         if (filteredTransactionsTable.getSelectionModel().isEmpty()) {
@@ -293,7 +297,6 @@ public class MainScreenController {
         Transaction transactionToBeEdited = filteredTransactionsTable.getSelectionModel().getSelectedItem();
 
         try {
-            Stage currenStage = (Stage) editButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/eckofox/efhomefinancialdb/edittransaction-screen.fxml"));
 
             fxmlLoader.setControllerFactory(type -> {
