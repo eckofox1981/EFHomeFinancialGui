@@ -1,6 +1,7 @@
 package eckofox.efhomefinancialdb.controller;
 
 import eckofox.efhomefinancialdb.application.App;
+import eckofox.efhomefinancialdb.authservice.LoginService;
 import eckofox.efhomefinancialdb.date.DateUtility;
 import eckofox.efhomefinancialdb.transaction.Transaction;
 import eckofox.efhomefinancialdb.transaction.TransactionType;
@@ -62,6 +63,8 @@ public class MainScreenController {
     private Label joinedLabel;
     @FXML
     private Button editUserButton;
+    @FXML
+    private Button logoutButton;
     @FXML
     private Label checkingAccountLabel;
     @FXML
@@ -587,6 +590,24 @@ public class MainScreenController {
         }
     }
 
+    /** logs the user out and returns to login-screen
+     * user is first asked to confirm
+     * activeUser is set to null before returning to loginscreen.
+     */
+    @FXML
+    private void setLogoutButton () {
+        LoginService loginService = new LoginService(app);
+        loginService.setActiveUser(null);
+
+        Alert logoutAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        logoutAlert.setTitle("Loging out");
+        logoutAlert.setContentText(app.getActiveUser().getFirstname() + ", you are about to logout.\n" +
+                "Are you sure you want to logout?");
+        Optional<ButtonType> result = logoutAlert.showAndWait();
+
+        openLoginScreen();
+    }
+
     /** just a gimmick to fill up the dashboard due to lack of creativity, not ideal to mix SQL code here but
      * considered harmless in this case
      * checks the created_at column in the database for activeUser and converts the result to a month-year string to
@@ -612,5 +633,39 @@ public class MainScreenController {
             System.err.println("Error with getJoinedMonthAndYear statement. " + e.getMessage());
         }
         return joinedDate;
+    }
+
+    /** opens loginscreen after cosing this main-screen
+     */
+    private void openLoginScreen() {
+        try {
+            Stage currenStage = (Stage) logoutButton.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/eckofox/efhomefinancialdb/login-screen.fxml"));
+
+            fxmlLoader.setControllerFactory(type -> {
+                if (type == LoginScreenController.class) {
+                    return new LoginScreenController(app); // To be able to pass the app variable.
+                }
+                return null;
+            });
+
+            Parent root;
+
+            root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("/logo.png"))));
+            stage.setTitle("EF Home Financial - login");
+            stage.setScene(new Scene(root));
+
+            LoginScreenController controller = fxmlLoader.getController();
+            controller.initData(stage);
+
+            currenStage.close();
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.getStackTrace();
+        }
     }
 }

@@ -46,7 +46,12 @@
                               </Label>
                               <Button fx:id="editUserButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openEditUserScreen" prefWidth="126.0" text="Edit user" textAlignment="JUSTIFY">
                                  <VBox.margin>
-                                    <Insets left="500.0" right="500.0" />
+                                    <Insets left="500.0" right="500.0" top="8.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="logoutButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setLogoutButton" prefWidth="126.0" text="Logout" textAlignment="JUSTIFY">
+                                 <VBox.margin>
+                                    <Insets left="500.0" right="500.0" top="8.0" />
                                  </VBox.margin>
                               </Button>
                               <Label fx:id="checkingAccountLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="1097.0" text="Checking Account: 2202020 SEK" textFill="#1d00f5" textOverrun="CENTER_ELLIPSIS">
