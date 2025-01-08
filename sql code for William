@@ -4,7 +4,7 @@ transactions to test filtering functions
 password for both account: 'nice' (without single quotes)
 
 INSERT INTO users (userid, username, firstname, lastname, passwordhash, created_at) VALUES
-('fa339666-a0b5-4180-8df9-af1affbbf947', 'franko', 'Franklin', 'Eck', '$2a$14$rK5snAsRvrd36ezPDsPnUOWleAWzR4nxeCiGtsCEAqA1o47mHTlB2', '2025-01-03 10:12:19.819791'),
+('fa339666-a0b5-4180-8df9-af1affbbf947', 'franko', 'Franklin', 'Rooselvelt', '$2a$14$rK5snAsRvrd36ezPDsPnUOWleAWzR4nxeCiGtsCEAqA1o47mHTlB2', '2025-01-03 10:12:19.819791'),
 ('839f71f4-9810-4039-ba21-1293834e3259', 'rastagod', 'Robert', 'Marley', '$2a$14$h8hsO6uY8IcCS4EdF/pDDeear9lKJQwvbkB7eVDhu3YyTPDBPhLMu', '2025-01-04 13:13:46.290623');
 
 INSERT INTO accounts (accountid, name, balance, userid) VALUES

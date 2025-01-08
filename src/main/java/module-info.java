@@ -13,7 +13,7 @@ module eckofox.efhomefinancialdb {
     requires java.desktop;
     requires jbcrypt;
 
-    opens eckofox.efhomefinancialdb to javafx.fxml;
+    opens eckofox.efhomefinancialdb.application to javafx.fxml;
     exports eckofox.efhomefinancialdb.application;
     opens eckofox.efhomefinancialdb.controller to javafx.fxml;
 }
